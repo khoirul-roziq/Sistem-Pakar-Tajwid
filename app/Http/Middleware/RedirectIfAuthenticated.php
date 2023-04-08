@@ -17,6 +17,10 @@ class RedirectIfAuthenticated
      */
     public function handle(Request $request, Closure $next, string ...$guards): Response
     {
+        if(Auth::guard('user')->check()){
+            return redirect()->route('dashboard');
+        }
+
         $guards = empty($guards) ? [null] : $guards;
 
         foreach ($guards as $guard) {

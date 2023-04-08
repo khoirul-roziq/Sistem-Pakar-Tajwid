@@ -3,21 +3,35 @@
 // color
 $primary-color: rgb(0, 180, 180);
 
+$alert: (
+    'danger' : #e53935,
+    'success' : green,
+    'warning' : yellow
+);
+
 // style
-$br-card: 8px;
+$br-card: 10px;
 
-#card-login {
+.login {
     border-radius: $br-card;
-    padding: 2rem;
 
-    header {
+    &-header {
         text-align: center;
         margin-bottom: 2rem;
     }
 
     form {
+
         .row {
-            margin-bottom: 0;
+            .login-mi {
+                margin-bottom: -15px;
+            }
+            .login-mc {
+                margin-top: -10px;
+            }
+        }
+        .helper-text {
+            color: map-get($map: $alert, $key: 'danger');
         }
     }
 }

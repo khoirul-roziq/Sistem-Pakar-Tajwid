@@ -17,6 +17,20 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/login', function () {
-    return view('auth/login');
-});
+Route::group(
+    [
+        'prefix' => config('prefix'),
+        'namespace' => 'App\\Http\\Controllers',
+    ],
+    function () {
+        Route::get('login', 'AuthController@formLogin')->name('login');
+        Route::post('login', 'AuthController@login');
+        Route::post('logout', 'AuthController@logout')->name('logout');
+
+        Route::middleware(['auth:user', 'can:role,"admin","pengguna"'])->group(function () {
+            Route::get('/dashboard', function () {
+                return view('modules.dashboard.index');
+            })->name('dashboard');
+        });
+    }
+);

@@ -1,11 +1,16 @@
-#card-login {
-  border-radius: 8px;
-  padding: 2rem;
+.login {
+  border-radius: 10px;
 }
-#card-login header {
+.login-header {
   text-align: center;
   margin-bottom: 2rem;
 }
-#card-login form .row {
-  margin-bottom: 0;
+.login form .row .login-mi {
+  margin-bottom: -15px;
+}
+.login form .row .login-mc {
+  margin-top: -10px;
+}
+.login form .helper-text {
+  color: #e53935;
 }/*# sourceMappingURL=login.css.map */
