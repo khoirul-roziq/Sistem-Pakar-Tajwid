@@ -132,6 +132,10 @@ return [
         'attribute-name' => [
             'rule-name' => 'custom-message',
         ],
+        'email' => [
+            'exists'         => ':attribute yang anda masukkan tidak terdaftar.',
+            'failed'    => 'Identitas tersebut tidak cocok dengan data kami.'
+        ]
     ],
 
     /*

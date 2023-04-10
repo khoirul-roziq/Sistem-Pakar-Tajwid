@@ -39,4 +39,8 @@ class AuthController extends Controller
         Auth::guard('user')->logout();
         return redirect()->route('login');
     }
+
+    public function formRegistration () {
+        return view('auth/registration');
+    }
 }

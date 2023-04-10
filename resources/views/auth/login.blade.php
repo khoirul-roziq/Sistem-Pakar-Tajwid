@@ -9,15 +9,15 @@
     <link rel="stylesheet" href="{{ asset('assets/vendor/materialize-src/sass/materialize.css') }}">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-    <link rel="stylesheet" href="{{ asset('assets/styles/css/login.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/styles/css/auth.css') }}">
 
-    <title>Login</title>
+    <title>Login | Sistem Pakar Tajwid</title>
 </head>
 
-<body>
+<body style="background-image: url({{ asset('assets/images/background/islamic-new-year-concept-with-copy-space.jpg') }});">
+    <a href="https://www.freepik.com/free-photo/islamic-new-year-concept-with-copyspace_9259618.htm#query=al%20quran&position=6&from_view=search&track=ais" class="login-source-bg">Source background</a>
 
     <div class="row">
-        <div class="col-12"></div>
         <div class="container mt-4">
             <div class="col s12 m8 l6  offset-l3 offset-m2 z-depth-4 card-panel login"
                 style="padding: 2rem; box-sizing: border-box;">
@@ -47,7 +47,9 @@
                         <div class="row">
                             <div class="input-field col s12 login-mi">
                                 <i class="material-icons prefix">key</i>
-                                <input id="password" type="password" class="validate {{ $errors->has('password') ? ' is-invalid' : '' }}" name="password">
+                                <input id="password" type="password"
+                                    class="validate {{ $errors->has('password') ? ' is-invalid' : '' }}"
+                                    name="password">
                                 <label for="password">Kata Sandi</label>
                                 @if ($errors->has('password'))
                                     @error('password')
@@ -63,7 +65,7 @@
                             <div class="input-field col s12 login-mc">
                                 <p>
                                     <label>
-                                        <input type="checkbox" checked="checked" name="remember" />
+                                        <input type="checkbox" checked="" name="remember" />
                                         <span>Ingat Saya</span>
                                     </label>
                                 </p>
@@ -73,10 +75,10 @@
                         <div class="row">
                             <div class="input-field col s12">
                                 <button type="submit" class="waves-effect waves-light btn-large col s12"><i
-                                        class="material-icons right">forward</i>Masuk</button>
+                                        class="material-icons right">input</i>Masuk</button>
                             </div>
                             <div class="input-field col s12 login-mc">
-                                <a class="waves-effect waves-light btn-small col s12"><i
+                                <a href="{{ route('registration') }}" class="waves-effect waves-light btn-small col s12"><i
                                         class="material-icons right">person_add</i>Registrasi</a>
                             </div>
                         </div>
@@ -84,6 +86,7 @@
                 </div>
             </div>
         </div>
+
     </div>
 
     {{-- Source --}}

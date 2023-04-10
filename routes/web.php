@@ -26,6 +26,7 @@ Route::group(
         Route::get('login', 'AuthController@formLogin')->name('login');
         Route::post('login', 'AuthController@login');
         Route::post('logout', 'AuthController@logout')->name('logout');
+        Route::get('registrasi', 'AuthController@formRegistration')->name('registration');
 
         Route::middleware(['auth:user', 'can:role,"admin","pengguna"'])->group(function () {
             Route::get('/dashboard', function () {

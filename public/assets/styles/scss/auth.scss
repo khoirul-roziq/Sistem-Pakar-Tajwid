@@ -14,6 +14,8 @@ $br-card: 10px;
 
 .login {
     border-radius: $br-card;
+    opacity: 0.97;
+    margin-top: 2rem;
 
     &-header {
         text-align: center;
@@ -34,4 +36,16 @@ $br-card: 10px;
             color: map-get($map: $alert, $key: 'danger');
         }
     }
+}
+
+body {
+    background-size: cover;
+}
+
+.login-source-bg {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    color: silver;
+    margin: 5px;
 }
