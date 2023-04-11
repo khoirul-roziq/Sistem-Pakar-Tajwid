@@ -15,7 +15,6 @@ $br-card: 10px;
 .login {
     border-radius: $br-card;
     opacity: 0.97;
-    margin-top: 2rem;
 
     &-header {
         text-align: center;
@@ -25,11 +24,11 @@ $br-card: 10px;
     form {
 
         .row {
-            .login-mi {
-                margin-bottom: -15px;
+            .auth-mi {
+                margin-bottom: 5px;
             }
-            .login-mc {
-                margin-top: -10px;
+            .auth-mc {
+                margin-top: 0px;
             }
         }
         .helper-text {

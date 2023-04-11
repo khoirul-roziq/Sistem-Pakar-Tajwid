@@ -1,17 +1,16 @@
 .login {
   border-radius: 10px;
   opacity: 0.97;
-  margin-top: 2rem;
 }
 .login-header {
   text-align: center;
   margin-bottom: 2rem;
 }
-.login form .row .login-mi {
-  margin-bottom: -15px;
+.login form .row .auth-mi {
+  margin-bottom: 5px;
 }
-.login form .row .login-mc {
-  margin-top: -10px;
+.login form .row .auth-mc {
+  margin-top: 0px;
 }
 .login form .helper-text {
   color: #e53935;

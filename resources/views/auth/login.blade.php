@@ -1,26 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
+{{-- Retrive auth layout --}}
+@extends('layouts.auth')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+{{-- Send title to auth page --}}
+@section('title', 'Login')
 
-    <link rel="stylesheet" href="{{ asset('assets/vendor/materialize-src/sass/materialize.css') }}">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
+{{-- Send style to auth page --}}
+@section('styles')
     <link rel="stylesheet" href="{{ asset('assets/styles/css/auth.css') }}">
+@endsection
 
-    <title>Login | Sistem Pakar Tajwid</title>
-</head>
-
-<body style="background-image: url({{ asset('assets/images/background/islamic-new-year-concept-with-copy-space.jpg') }});">
+{{-- Send content --}}
+@section('app')
     <a href="https://www.freepik.com/free-photo/islamic-new-year-concept-with-copyspace_9259618.htm#query=al%20quran&position=6&from_view=search&track=ais" class="login-source-bg">Source background</a>
 
     <div class="row">
         <div class="container mt-4">
-            <div class="col s12 m8 l6  offset-l3 offset-m2 z-depth-4 card-panel login"
-                style="padding: 2rem; box-sizing: border-box;">
+            <div class="col s12 m8 l5  offset-l1 offset-m2 z-depth-4 card-panel login">
                 <div class="login-header">
                     <h5>Sistem Pakar Tajwid</h5>
                     <h6>Login</h6>
@@ -29,7 +24,7 @@
                     <form class="col s12" action="" method="post">
                         @csrf
                         <div class="row">
-                            <div class="input-field col s12 login-mi">
+                            <div class="input-field col s12 auth-mi">
                                 <i class="material-icons prefix">email</i>
                                 <input id="email" type="email"
                                     class="validate {{ $errors->has('email') ? ' is-invalid' : '' }}" name="email">
@@ -45,7 +40,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="input-field col s12 login-mi">
+                            <div class="input-field col s12 auth-mi">
                                 <i class="material-icons prefix">key</i>
                                 <input id="password" type="password"
                                     class="validate {{ $errors->has('password') ? ' is-invalid' : '' }}"
@@ -62,7 +57,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="input-field col s12 login-mc">
+                            <div class="input-field col s12 auth-mc">
                                 <p>
                                     <label>
                                         <input type="checkbox" checked="" name="remember" />
@@ -77,7 +72,7 @@
                                 <button type="submit" class="waves-effect waves-light btn-large col s12"><i
                                         class="material-icons right">input</i>Masuk</button>
                             </div>
-                            <div class="input-field col s12 login-mc">
+                            <div class="input-field col s12 auth-mc">
                                 <a href="{{ route('registration') }}" class="waves-effect waves-light btn-small col s12"><i
                                         class="material-icons right">person_add</i>Registrasi</a>
                             </div>
@@ -89,12 +84,4 @@
 
     </div>
 
-    {{-- Source --}}
-
-    <script src="{{ asset('assets/vendor/materialize-src/js/bin/materialize.js') }}"></script>
-
-    {{-- END: Source --}}
-
-</body>
-
-</html>
+@endsection

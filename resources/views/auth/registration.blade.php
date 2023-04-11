@@ -1,28 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
+{{-- Retrive auth layout --}}
+@extends('layouts.auth')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+{{-- Send title to auth page --}}
+@section('title', 'Registrasi')
 
-    <link rel="stylesheet" href="{{ asset('assets/vendor/materialize-src/sass/materialize.css') }}">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
+{{-- Send style to auth page --}}
+@section('styles')
     <link rel="stylesheet" href="{{ asset('assets/styles/css/auth.css') }}">
+@endsection
 
-    <title>Registrasi | Sistem Pakar Tajwid</title>
-</head>
-
-<body
-    style="background-image: url({{ asset('assets/images/background/islamic-new-year-concept-with-copy-space.jpg') }});">
+{{-- Send content --}}
+@section('app')
     <a href="https://www.freepik.com/free-photo/islamic-new-year-concept-with-copyspace_9259618.htm#query=al%20quran&position=6&from_view=search&track=ais"
         class="login-source-bg">Source background</a>
 
     <div class="row">
         <div class="container mt-4">
-            <div class="col s12 m8 l6  offset-l3 offset-m2 z-depth-4 card-panel login"
-                style="padding: 2rem; box-sizing: border-box;">
+            <div class="col s12 m8 l6  offset-l1 offset-m2 z-depth-4 card-panel login">
                 <div class="login-header">
                     <h5>Sistem Pakar Tajwid</h5>
                     <h6>Registrasi</h6>
@@ -47,12 +41,12 @@
                         <div class="row">
                             <div class="input-field col s6">
                                 <i class="material-icons prefix">lock</i>
-                                <input id="icon_prefix" type="text" class="validate">
+                                <input id="icon_prefix" type="password" class="validate">
                                 <label for="icon_prefix">Kata Sandi</label>
                             </div>
                             <div class="input-field col s6">
                                 <i class="material-icons prefix">lock_outline</i>
-                                <input id="icon_telephone" type="tel" class="validate">
+                                <input id="icon_telephone" type="password" class="validate">
                                 <label for="icon_telephone">Konfirmasi Kata Sandi</label>
                             </div>
                         </div>
@@ -71,15 +65,6 @@
                 </div>
             </div>
         </div>
-
     </div>
 
-    {{-- Source --}}
-
-    <script src="{{ asset('assets/vendor/materialize-src/js/bin/materialize.js') }}"></script>
-
-    {{-- END: Source --}}
-
-</body>
-
-</html>
+@endsection
