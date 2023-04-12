@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home/index');
 });
 
 Route::group(
@@ -30,7 +30,7 @@ Route::group(
 
         Route::middleware(['auth:user', 'can:role,"admin","pengguna"'])->group(function () {
             Route::get('/dashboard', function () {
-                return view('modules.dashboard.index');
+                return view('admin.dashboard.index');
             })->name('dashboard');
         });
     }

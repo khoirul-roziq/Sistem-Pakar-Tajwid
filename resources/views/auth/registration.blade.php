@@ -52,9 +52,21 @@
                         </div>
 
                         <div class="row">
+                            <div class="input-field col s6">
+                                <i class="material-icons prefix">wc</i>
+                                <select>
+                                  <option value="" disabled selected>Jenis Kelamin</option>
+                                  <option value="1">Laki-laki</option>
+                                  <option value="2">Perempuan</option>
+                                </select>
+                                {{-- <label>Jenis Kelamin</label> --}}
+                              </div>
+                        </div>
+
+                        <div class="row">
                             <div class="input-field col s12">
                                 <button type="submit" class="waves-effect waves-light btn-large col s12"><i
-                                        class="material-icons right">create</i>Daftar</button>
+                                        class="material-icons right">send</i>Daftar</button>
                             </div>
                             <div class="input-field col s12">
                                 <a href="{{ route('login') }}" class="waves-effect waves-light col s12"><i
@@ -67,4 +79,9 @@
         </div>
     </div>
 
+@endsection
+
+{{-- Send Script --}}
+@section('scripts')
+    <script src="{{ asset('assets/vendor/materialize-src/js/plugins.min.js') }}"></script>
 @endsection

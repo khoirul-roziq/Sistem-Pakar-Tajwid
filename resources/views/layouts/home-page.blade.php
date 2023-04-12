@@ -8,14 +8,24 @@
 
 {{-- Send custom body to skeleton --}}
 @section('custom-body')
-    <body style="background-image: url({{ asset('assets/images/background/auth-bg.jpg') }});">
+    <body>
 @endsection
 
-{{-- Retrive content from page and send main to skeleton --}}
+{{-- Include modules home page and send main to skeleton --}}
 @section('app')
+
+  <header>
+    @include('partials.home.header')
+  </header>
+
   <main>
-    @yield('content')
+    @include('modules.home-page.jumbotron')
   </main>
+
+  <footer>
+    @include('partials.home.footer')
+  </footer>
+
 @endsection
 
 {{-- Retrive from page and send script to skeleton --}}
