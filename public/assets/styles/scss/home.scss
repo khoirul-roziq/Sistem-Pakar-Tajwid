@@ -1,0 +1,28 @@
+header {
+    // Navbar
+    nav {
+        position: fixed;
+        z-index: 1;
+        background-color: transparent;
+        box-shadow: none;
+    }
+
+    // Carousel
+    .carousel {
+        height: 40rem !important;
+    }
+}
+
+main {
+    text-align: center;
+    margin: 2rem;
+
+    section {
+        margin-top: 5rem;
+
+        p {
+            font-size: 17px;
+        }
+    }
+}
+

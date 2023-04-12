@@ -19,10 +19,10 @@
   </header>
 
   <main>
-    @include('modules.home-page.jumbotron')
+    @include('partials.home.main')
   </main>
 
-  <footer>
+  <footer class="page-footer">
     @include('partials.home.footer')
   </footer>
 

@@ -1,1 +1,2 @@
-<h1>ini header</h1>
+@include('partials.home.navbar')
+@include('partials.home.carousel')
