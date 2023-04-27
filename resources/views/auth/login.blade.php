@@ -10,7 +10,7 @@
 @endsection
 
 {{-- Send content --}}
-@section('app')
+@section('main')
     <a href="https://www.freepik.com/free-photo/islamic-new-year-concept-with-copyspace_9259618.htm#query=al%20quran&position=6&from_view=search&track=ais" class="login-source-bg">Source background</a>
 
     <div class="row">

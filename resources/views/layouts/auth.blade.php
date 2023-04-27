@@ -1,24 +1,42 @@
-{{-- Retrive skeleton --}}
-@extends('layouts.skeleton')
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-{{-- Retrive styles from page and send to skeleton --}}
-@section('styles')
-  @yield('styles')   
-@endsection
+    <!-- BEGIN: VENDOR CSS-->
 
-{{-- Send custom body to skeleton --}}
-@section('custom-body')
-    <body style="background-image: url({{ asset('assets/images/background/auth-bg.jpg') }});">
-@endsection
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendor/materialize-src/css/vendors.min.css') }}">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendor/materialize-src/css/materialize.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendor/materialize-src/css/style.min.css') }}">
 
-{{-- Retrive content from page and send main to skeleton --}}
-@section('app')
-  <main>
-    @yield('content')
-  </main>
-@endsection
+    <!-- END: VENDOR CSS-->
 
-{{-- Retrive from page and send script to skeleton --}}
-@section('scripts')
-  @yield('scripts')   
-@endsection
+    
+    <!-- BEGIN: Custom CSS-->
+    @yield('styles')
+    <!-- END: Custom CSS-->
+
+
+    <title>@yield('title') &mdash; Sistem Pakar Tajwid</title>
+
+</head>
+
+<body style="background-image: url({{ asset('assets/images/background/auth-bg.jpg') }});">
+
+<main>
+  @yield('main')
+</main>
+
+    
+    <!-- BEGIN VENDOR JS-->
+    <script src="{{ asset('assets/vendor/materialize-src/js/vendors.min.js') }}"></script>
+    <!-- BEGIN PAGE VENDOR JS-->
+
+    <!-- BEGIN PAGE LEVEL JS-->
+    @yield('scripts') 
+    <!-- END PAGE LEVEL JS-->
+</body>
+</html>

@@ -19,12 +19,3 @@
         <p class="white-text">This is your fourth panel</p>
     </div>
 </div>
-
-@section('scripts')
-    <script>
-        $('.carousel.carousel-slider').carousel({
-            fullWidth: true,
-            indicators: true
-        });
-    </script>
-@endsection

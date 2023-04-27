@@ -4,6 +4,14 @@ header nav {
   background-color: transparent;
   box-shadow: none;
 }
+header nav .container {
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+header nav .container a {
+  font-size: 18px;
+  font-weight: bold;
+}
 header .carousel {
   height: 40rem !important;
 }
@@ -17,4 +25,11 @@ main section {
 }
 main section p {
   font-size: 17px;
+}
+
+footer {
+  margin-top: 5rem;
+}
+footer .sosmed a {
+  background-color: rgb(0, 180, 180) !important;
 }/*# sourceMappingURL=home.css.map */

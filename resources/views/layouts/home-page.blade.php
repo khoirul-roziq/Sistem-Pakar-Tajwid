@@ -1,34 +1,55 @@
-{{-- Retrive skeleton --}}
-@extends('layouts.skeleton')
+<!DOCTYPE html>
+<html lang="en">
 
-{{-- Retrive styles from page and send to skeleton --}}
-@section('styles')
-  @yield('styles')   
-@endsection
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-{{-- Send custom body to skeleton --}}
-@section('custom-body')
-    <body>
-@endsection
+    <!-- BEGIN: VENDOR CSS-->
 
-{{-- Include modules home page and send main to skeleton --}}
-@section('app')
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendor/materialize-src/css/vendors.min.css') }}">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" type="text/css"
+            href="{{ asset('assets/vendor/materialize-src/css/materialize.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendor/materialize-src/css/style.min.css') }}">
 
-  <header>
-    @include('partials.home.header')
-  </header>
+    <!-- END: VENDOR CSS-->
 
-  <main>
-    @include('partials.home.main')
-  </main>
 
-  <footer class="page-footer">
-    @include('partials.home.footer')
-  </footer>
+    <!-- BEGIN: Custom CSS-->
+        @yield('styles')
+    <!-- END: Custom CSS-->
 
-@endsection
 
-{{-- Retrive from page and send script to skeleton --}}
-@section('scripts')
-  @yield('scripts')   
-@endsection
+    <title>@yield('title') &mdash; Sistem Pakar Tajwid</title>
+
+</head>
+
+<body>
+
+    <header>
+            @include('partials.home.header')
+    </header>
+
+    <main>
+            @include('partials.home.main')
+    </main>
+
+    <footer class="page-footer">
+            @include('partials.home.footer')
+            @include('modules.home.sosmed')
+            @include('partials.home.scripts')
+    </footer>
+
+
+    <!-- BEGIN VENDOR JS-->
+    <script src="{{ asset('assets/vendor/materialize-src/js/vendors.min.js') }}"></script>
+    <!-- BEGIN PAGE VENDOR JS-->
+
+    <!-- BEGIN PAGE LEVEL JS-->
+        @yield('scripts')
+    <!-- END PAGE LEVEL JS-->
+</body>
+
+</html>

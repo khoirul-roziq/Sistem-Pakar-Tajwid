@@ -1,0 +1,15 @@
+.sidenav-main .actived {
+  background-color: #26a69a;
+  border-radius: 0 8px 8px 0;
+  color: white;
+  box-shadow: 1px 1px 10px rgba(38, 166, 153, 0.5764705882);
+}
+.sidenav-main .actived i {
+  color: white !important;
+}
+.sidenav-main .actived:hover {
+  color: black;
+}
+.sidenav-main .actived:hover i {
+  color: rgba(0, 0, 0, 0.54) !important;
+}/*# sourceMappingURL=admin.css.map */

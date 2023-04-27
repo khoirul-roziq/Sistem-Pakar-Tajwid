@@ -1,3 +1,6 @@
+// color
+$primary-color: rgb(0, 180, 180);
+
 header {
     // Navbar
     nav {
@@ -5,6 +8,16 @@ header {
         z-index: 1;
         background-color: transparent;
         box-shadow: none;
+
+        .container {
+            padding-left: 2rem;
+            padding-right: 2rem;
+            
+            a {
+                font-size: 18px;
+                font-weight: bold;
+            }
+        }
     }
 
     // Carousel
@@ -23,6 +36,14 @@ main {
         p {
             font-size: 17px;
         }
+    }
+}
+
+footer {
+    margin-top: 5rem;
+
+    .sosmed a {
+        background-color: $primary-color !important;
     }
 }
 

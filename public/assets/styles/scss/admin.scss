@@ -1,0 +1,20 @@
+.sidenav-main {
+    .actived {
+        background-color: #26a69a;
+        border-radius: 0 8px 8px 0;
+        color: white;
+        box-shadow: 1px 1px 10px #26a69993;
+
+        i {
+            color: white !important;
+        }
+
+        &:hover {
+            color: black;
+
+            i {
+                color: rgba(0,0,0,.54) !important;
+            }
+        }
+    }
+}
