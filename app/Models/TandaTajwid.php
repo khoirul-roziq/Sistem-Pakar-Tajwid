@@ -8,4 +8,16 @@ use Illuminate\Database\Eloquent\Model;
 class TandaTajwid extends Model
 {
     use HasFactory;
+
+    protected $table = 'tanda_tajwid';
+
+    protected $fillable = [
+        'kode',
+        'nama_tanda',
+        'unicode'
+    ];
+
+    public function roleBase() {
+        return $this->belongsToMany(RoleBase::class);
+    }
 }

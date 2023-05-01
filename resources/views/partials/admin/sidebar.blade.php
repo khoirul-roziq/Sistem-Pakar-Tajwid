@@ -14,13 +14,12 @@
   
   <li class="navigation-header"><a class="navigation-header-text">Basis Pengetahuan</a><i class="navigation-header-icon material-icons">more_horiz</i>
 
-  <li class="bold"><a class="{{ Route::is('nama-tajwid.*') ? 'actived' : '' }} waves-effect waves-cyan" href="{{ route('nama-tajwid.index') }}"><i class="material-icons">list</i><span class="menu-title">Nama Tajwid</span></a> 
+  <li class="bold"><a class="{{ Route::is('tajwid.*') ? 'actived' : '' }} waves-effect waves-cyan" href="{{ route('tajwid.index') }}"><i class="material-icons">apps</i><span class="menu-title">Data Tajwid</span></a> 
   <li class="bold"><a class="{{ Route::is('tanda-tajwid.*') ? 'actived' : '' }} waves-effect waves-cyan" href="{{ route('tanda-tajwid.index') }}"><i class="material-icons dp48">new_releases</i><span class="menu-title">Tanda Tajwid</span></a>
   <li class="bold"><a class="{{ Route::is('role-base.*') ? 'actived' : '' }} waves-effect waves-cyan" href="{{ route('role-base.index') }}"><i class="material-icons dp48">code</i><span class="menu-title">Role Base</span></a>  
-  <li class="bold"><a class="{{ Route::is('tajwid.*') ? 'actived' : '' }} waves-effect waves-cyan" href="{{ route('tajwid.index') }}"><i class="material-icons">apps</i><span class="menu-title">Kelola Tajwid</span></a> 
 
   @endcan
 </ul>
 
 {{-- active on mobile version. Dont delete this! --}}
-<div class="navigation-background"></div><a class="sidenav-trigger btn-sidenav-toggle btn-floating btn-medium waves-effect waves-light hide-on-large-only" href="#" data-target="slide-out"><i class="material-icons">menu</i></a>
+<div class="navigation-background"></div><a class="sidenav-trigger btn-sidenav-toggle btn-floating btn-medium waves-effect waves-light hide-on-large-only white" href="#" data-target="slide-out"><i class="material-icons">menu</i></a>

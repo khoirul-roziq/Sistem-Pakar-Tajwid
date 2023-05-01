@@ -15,7 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('kode');
             $table->integer('id_tajwid');
+            $table->string('deleted_tajwid_name')->nullable();
             $table->string('pattern');
+            $table->text('keterangan');
             $table->timestamps();
         });
     }

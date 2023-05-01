@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Redirect;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,7 +20,11 @@ Route::get('/', function () {
 
 Route::get('/home', function () {
     return view('home/index');
-});
+})->name('home');
+
+Route::get('/test', function () {
+    return view('test');
+})->name('test');
 
 Route::group(
     [
@@ -40,9 +45,6 @@ Route::group(
             // Data User Route
             Route::resource('data-user', DataUserController::class);
 
-            // Nama Tajwid Route
-            Route::resource('nama-tajwid', NamaTajwidController::class);
-
             // Tanda Tajwid Route
             Route::resource('tanda-tajwid', TandaTajwidController::class);
 
@@ -51,7 +53,6 @@ Route::group(
 
             // Tajwid Route
             Route::resource('tajwid', TajwidController::class);
-
 
         });
     }

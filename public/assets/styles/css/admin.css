@@ -12,4 +12,7 @@
 }
 .sidenav-main .actived:hover i {
   color: rgba(0, 0, 0, 0.54) !important;
+}
+.sidenav-main .btn-sidenav-toggle i {
+  color: teal !important;
 }/*# sourceMappingURL=admin.css.map */

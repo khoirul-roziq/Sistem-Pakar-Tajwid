@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\TandaTajwid;
 
 class TandaTajwidController extends Controller
 {
@@ -11,7 +12,8 @@ class TandaTajwidController extends Controller
      */
     public function index()
     {
-        return view('admin.tanda-tajwid.index');
+        $data = TandaTajwid::all();
+        return view('admin.tanda-tajwid.index', compact('data'));
     }
 
     /**
@@ -27,7 +29,13 @@ class TandaTajwidController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = TandaTajwid::create([
+            'nama_tanda' => $request->namaTanda,
+            'kode' => $request->kode,
+            'unicode' => $request->unicode,
+        ]);
+
+        return redirect('tanda-tajwid')->with('message', 'Berhasil menambahkan tanda tajwid!');
     }
 
     /**
@@ -35,7 +43,8 @@ class TandaTajwidController extends Controller
      */
     public function show(string $id)
     {
-        return view('admin.tanda-tajwid.show');
+        $data = TandaTajwid::findorfail($id);
+        return view('admin.tanda-tajwid.show', compact('data'));
     }
 
     /**
@@ -43,7 +52,8 @@ class TandaTajwidController extends Controller
      */
     public function edit(string $id)
     {
-        return view('admin.tanda-tajwid.edit');
+        $data = TandaTajwid::findorfail($id);
+        return view('admin.tanda-tajwid.edit', compact('data'));
     }
 
     /**
@@ -51,7 +61,13 @@ class TandaTajwidController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $data = TandaTajwid::where('id', $id)->update([
+            'nama_tanda' => $request->namaTanda,
+            'kode' => $request->kode,
+            'unicode' => $request->unicode,
+        ]);
+
+        return redirect('tanda-tajwid')->with('message', 'Berhasil mengubah tanda tajwid!');
     }
 
     /**
@@ -59,6 +75,7 @@ class TandaTajwidController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $data = TandaTajwid::findorfail($id)->delete();
+        return redirect('tanda-tajwid')->with('message', 'Berhasil menghapus data tanda tajwid!');
     }
 }

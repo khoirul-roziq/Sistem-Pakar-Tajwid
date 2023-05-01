@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Tajwid;
 
 class TajwidController extends Controller
 {
@@ -11,7 +12,9 @@ class TajwidController extends Controller
      */
     public function index()
     {
-        return view('admin.tajwid.index');
+        $data = Tajwid::all();
+
+        return view('admin.tajwid.index', compact('data'));
     }
 
     /**
@@ -27,7 +30,13 @@ class TajwidController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = Tajwid::create([
+            'kode' => $request->kode,
+            'nama_tajwid' => $request->namaTajwid,
+            'penjelasan' => $request->penjelasan,
+        ]);
+
+        return redirect('tajwid')->with('message', 'Berhasil menambahkan hukum tajwid!');
     }
 
     /**
@@ -35,7 +44,8 @@ class TajwidController extends Controller
      */
     public function show(string $id)
     {
-        return view('admin.tajwid.show');
+        $data = Tajwid::findorfail($id);
+        return view('admin.tajwid.show', compact('data'));
     }
 
     /**
@@ -43,7 +53,8 @@ class TajwidController extends Controller
      */
     public function edit(string $id)
     {
-        return view('admin.tajwid.edit');
+        $data = Tajwid::findorfail($id);
+        return view('admin.tajwid.edit', compact('data'));
     }
 
     /**
@@ -51,7 +62,13 @@ class TajwidController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $data = Tajwid::where('id', $id)->update([
+            'kode' => $request->kode,
+            'nama_tajwid' => $request->namaTajwid,
+            'penjelasan' => $request->penjelasan,
+        ]);
+
+        return redirect('tajwid')->with('message', 'Berhasil mengubah hukum tajwid!');
     }
 
     /**
@@ -59,6 +76,7 @@ class TajwidController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $data = Tajwid::findorfail($id)->delete();
+        return redirect('tajwid')->with('message', 'Berhasil menghapus data tajwid!');
     }
 }

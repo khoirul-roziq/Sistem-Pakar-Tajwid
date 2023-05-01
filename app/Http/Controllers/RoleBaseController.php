@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\RoleBase;
+use App\Models\Tajwid;
 
 class RoleBaseController extends Controller
 {
@@ -11,7 +13,13 @@ class RoleBaseController extends Controller
      */
     public function index()
     {
-        return view('admin.role-base.index');
+        $data = RoleBase::all();
+        // unicode to arabic
+        // $str1 = '\u0671\u0644\u0644\u0651\u064e\u0647\u064f'; // string unicode
+        // $str1 = json_decode('"' . $str1 . '"'); // convert unicode to string
+        // $str1 = html_entity_decode($str1, ENT_QUOTES, 'UTF-8'); // decode HTML entities
+
+        return view('admin.role-base.index', compact('data'));
     }
 
     /**
@@ -19,7 +27,8 @@ class RoleBaseController extends Controller
      */
     public function create()
     {
-        return view('admin.role-base.create');
+        $data = Tajwid::all();
+        return view('admin.role-base.create', compact('data'));
     }
 
     /**
@@ -27,7 +36,13 @@ class RoleBaseController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = RoleBase::create([
+            'kode' => $request->kode,
+            'id_tajwid' => $request->tajwid,
+            'pattern' => $request->pattern,
+        ]);
+
+        return redirect('role-base')->with('message', 'Berhasil menambahkan role base!');
     }
 
     /**
@@ -43,7 +58,17 @@ class RoleBaseController extends Controller
      */
     public function edit(string $id)
     {
-        return view('admin.role-base.edit');
+        $data = Tajwid::all();
+        $roleBase = RoleBase::findorfail($id);
+
+        // arabic to unicode
+        $str2 = 'ٱللَّهُ'; // string Arabic
+        $str2 = json_encode($str2); // convert string to JSON
+        $str2 = preg_replace('/\\\\u([0-9a-fA-F]{4})/', '\\\\u$1', $str2); // encode unicode
+
+        dd($str2);
+
+        return view('admin.role-base.edit', compact('data', 'roleBase', 'coba'));
     }
 
     /**
@@ -59,6 +84,7 @@ class RoleBaseController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $data = RoleBase::findorfail($id)->delete();
+        return redirect('role-base')->with('message', 'Berhasil menghapus data role base!');
     }
 }

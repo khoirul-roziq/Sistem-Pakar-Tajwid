@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('tanda_tajwid', function (Blueprint $table) {
             $table->id();
             $table->string('kode');
-            $table->string('nama');
-            $table->string('pattern');
+            $table->string('nama_tanda');
+            $table->string('unicode');
             $table->timestamps();
         });
     }
