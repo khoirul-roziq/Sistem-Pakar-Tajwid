@@ -6,6 +6,7 @@
 
 @section('styles')
     <link rel="stylesheet" href="{{ asset('assets/vendor/data-tables/css/style.css') }}">
+    <link rel="stylesheet" href="https://alquran.cloud/public/css/font-kitab.css?v=1">
 @endsection
 
 @section('content')
@@ -16,10 +17,10 @@
             <div class="container">
                 <div class="row">
                     <div class="col s10 m6 l6">
-                        <h5 class="breadcrumbs-title mt-0 mb-0"><b>TANDA TAJWID</b></h5>
+                        <h5 class="breadcrumbs-title mt-0 mb-0"><b>HURUF/ TANDA TAJWID</b></h5>
                         <ol class="breadcrumbs mb-0">
                             <li class="breadcrumb-item"><a href="{{ route('home') }}">Beranda</a></li>
-                            <li class="breadcrumb-item active white-text"><b>Tanda Tajwid</b></li>
+                            <li class="breadcrumb-item active white-text"><b>Huruf/ Tanda Tajwid</b></li>
                         </ol>
                     </div>
                 </div>
@@ -68,12 +69,13 @@
                                                     class="material-icons">add_circle</i></a>
                                         </div>
                                     </div>
+                                    
                                     <table id="datatable">
                                         <thead>
                                             <tr>
-                                                <th>Nama Tanda</th>
+                                                <th>Nama Huruf/ Tanda</th>
                                                 <th>Kode</th>
-                                                <th>Unicode</th>
+                                                <th>Representasi Arab</th>
                                                 <th>Aksi</th>
                                             </tr>
                                         </thead>
@@ -82,24 +84,24 @@
                                                 <tr>
                                                     <td>{{ $value->nama_tanda }}</td>
                                                     <td>{{ $value->kode }}</td>
-                                                    <td>{{ $value->unicode }}</td>
+                                                    <td><span class="font-kitab">{{ html_entity_decode(json_decode('"' . $value->unicode . '"'), ENT_QUOTES, 'UTF-8')}}</span></td>
                                                     <td>
                                                         <form action="{{ route('tanda-tajwid.destroy', $value->id) }}"
-                                                            method="post" class="delete" id="delete" name="delete">
+                                                            method="post" class="delete" id="delete{{ $value->id }}" name="delete">
                                                             @method('delete')
                                                             @csrf
                                                             <!-- Dropdown Trigger -->
                                                             <a class='dropdown-trigger btn-small teal white-text' href='#'
-                                                                data-target='aksi'><b>Pilih Aksi!</b></a>
+                                                                data-target='aksi{{ $value->id }}'><b>Pilih Aksi!</b></a>
 
                                                             <!-- Dropdown Structure -->
-                                                            <ul id='aksi' class='dropdown-content'>
+                                                            <ul id='aksi{{ $value->id }}' class='dropdown-content'>
                                                                 <li><a href="{{ route('tanda-tajwid.show', $value->id) }}"><i
                                                                             class="material-icons">remove_red_eye</i>Detail</a>
                                                                 </li>
                                                                 <li><a href="{{ route('tanda-tajwid.edit', $value->id) }}"><i
                                                                             class="material-icons">edit</i>Edit</a></li>
-                                                                <li><a onclick="fungsiDelete()"><i
+                                                                <li><a onclick="fungsiDelete({{$value->id}})"><i
                                                                             class="material-icons">delete</i>Hapus</a></li>
                                                             </ul>
                                                         </form>
@@ -129,9 +131,9 @@
     </script>
     <script src="{{ asset('assets/vendor/data-tables/js/script.js') }}"></script>
     <script>
-        function fungsiDelete() {
+        function fungsiDelete(id) {
             if(confirm('Apakah kamu yakin akan menghapus data ini?')) {
-                document.getElementById('delete').submit();
+                document.getElementById('delete' + id).submit();
             }
         }
     </script>

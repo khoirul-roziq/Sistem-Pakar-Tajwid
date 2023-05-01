@@ -82,11 +82,11 @@
                                             @foreach ($data as $value)
                                                 <tr>
                                                     <td>{{ $value->kode }}</td>
-                                                    <td>{!! $value->tajwid->nama_tajwid ?? $value->deleted_tajwid_name . '<small class="red-text"> (dihapus)</small>' !!}</td>
-                                                    <td><span class="font-kitab">{{ $str1 = html_entity_decode(json_decode('"' . $value->pattern . '"'), ENT_QUOTES, 'UTF-8')}}</span></td>
+                                                    <td>{!! $value->tajwid->nama_tajwid ?? $value->deleted_tajwid_name . '<small class="red-text" style="font-size: 8px;"> (dihapus)</small>' !!}</td>
+                                                    <td><span class="font-kitab">{{ html_entity_decode(json_decode('"' . $value->pattern . '"'), ENT_QUOTES, 'UTF-8')}}</span></td>
                                                     <td>
                                                         <form action="{{ route('role-base.destroy', $value->id) }}"
-                                                            method="post" class="delete" id="delete" name="delete">
+                                                            method="post" class="delete" id="delete{{ $value->id }}" name="delete">
                                                             @method('delete')
                                                             @csrf
                                                             <!-- Dropdown Trigger -->
@@ -101,7 +101,7 @@
                                                                 </li>
                                                                 <li><a href="{{ route('role-base.edit', $value->id) }}"><i
                                                                             class="material-icons">edit</i>Edit</a></li>
-                                                                <li><a onclick="fungsiDelete()"><i
+                                                                <li><a onclick="fungsiDelete({{ $value->id }})"><i
                                                                             class="material-icons">delete</i>Hapus</a></li>
                                                             </ul>
                                                         </form>
@@ -131,9 +131,9 @@
     </script>
     <script src="{{ asset('assets/vendor/data-tables/js/script.js') }}"></script>
     <script>
-        function fungsiDelete() {
+        function fungsiDelete(id) {
             if (confirm('Apakah kamu yakin akan menghapus data ini?')) {
-                document.getElementById('delete').submit();
+                document.getElementById('delete' + id).submit();
             }
         }
     </script>

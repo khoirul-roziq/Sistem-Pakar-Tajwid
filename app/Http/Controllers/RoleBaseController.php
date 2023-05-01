@@ -62,7 +62,7 @@ class RoleBaseController extends Controller
         $roleBase = RoleBase::findorfail($id);
 
         // arabic to unicode
-        $str2 = 'ٱللَّهُ'; // string Arabic
+        $str2 = 'ا'; // string Arabic
         $str2 = json_encode($str2); // convert string to JSON
         $str2 = preg_replace('/\\\\u([0-9a-fA-F]{4})/', '\\\\u$1', $str2); // encode unicode
 

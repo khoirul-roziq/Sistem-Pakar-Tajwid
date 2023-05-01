@@ -83,7 +83,7 @@
                                                     <td>{{ $value->kode }}</td>
                                                     <td>
                                                         <form action="{{ route('tajwid.destroy', $value->id) }}"
-                                                            method="post" class="delete" id="delete" name="delete">
+                                                            method="post" class="delete" id="delete{{$value->id}}" name="delete">
                                                             @method('delete')
                                                             @csrf
                                                             <!-- Dropdown Trigger -->
@@ -97,7 +97,7 @@
                                                                 </li>
                                                                 <li><a href="{{ route('tajwid.edit', $value->id) }}"><i
                                                                             class="material-icons">edit</i>Edit</a></li>
-                                                                <li><a onclick="fungsiDelete()"><i
+                                                                <li><a onclick="fungsiDelete({{$value->id}})"><i
                                                                             class="material-icons">delete</i>Hapus</a></li>
                                                             </ul>
                                                         </form>
@@ -127,9 +127,9 @@
     </script>
     <script src="{{ asset('assets/vendor/data-tables/js/script.js') }}"></script>
     <script>
-        function fungsiDelete() {
+        function fungsiDelete(id) {
             if(confirm('Apakah kamu yakin akan menghapus data ini?')) {
-                document.getElementById('delete').submit();
+                document.getElementById('delete' + id).submit();
             }
         }
     </script>
