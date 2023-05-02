@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('kode');
             $table->string('nama_tajwid');
-            $table->text('penjelasan');
+            $table->text('penjelasan')->nullable();
             $table->timestamps();
         });
     }

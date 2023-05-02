@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\RoleBase;
 use App\Models\Tajwid;
+use App\Models\TandaTajwid;
 
 class RoleBaseController extends Controller
 {
@@ -28,7 +29,8 @@ class RoleBaseController extends Controller
     public function create()
     {
         $data = Tajwid::all();
-        return view('admin.role-base.create', compact('data'));
+        $tandaTajwid = TandaTajwid::all();
+        return view('admin.role-base.create', compact('data', 'tandaTajwid'));
     }
 
     /**
@@ -65,6 +67,7 @@ class RoleBaseController extends Controller
         $str2 = 'ا'; // string Arabic
         $str2 = json_encode($str2); // convert string to JSON
         $str2 = preg_replace('/\\\\u([0-9a-fA-F]{4})/', '\\\\u$1', $str2); // encode unicode
+        $str2 = trim($str2, '"');
 
         dd($str2);
 
