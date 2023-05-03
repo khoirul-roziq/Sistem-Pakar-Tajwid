@@ -101,7 +101,7 @@
                             <div class="row">
 
                                 <div class="input-field col m6 s12">
-                                    <label for="kode">Kode<span class="red-text">*</span></label>
+                                    <label for="kode">Kode Role Base<span class="red-text">*</span></label>
                                     <input type="text" id="kode" name="kode"
                                         class="validate @error('kode') is-invalid @enderror" required
                                         value="{{ old('kode') }}">
@@ -130,9 +130,10 @@
                                     @enderror
                                 </div>
                             </div> --}}
+                            <input type="text" id="pattern" name="pattern" hidden>
 
                             <div class="row center-align">
-                                <span>Representasi Role Base</span>
+                                <span><b>Representasi Role Base</b></span>
                                 <div class="wrap">
                                     <div class="panel">
                                         <div class="content">
@@ -140,11 +141,14 @@
                                         </div>
                                     </div>
                                 </div>
-                                <input type="text" id="pattern" name="pattern" hidden>
+                                <div class="show-pattern">
+                                    <span id="value-pattern"></span>
+                                </div>
                             </div>
                         </form>
 
-                        <div class="row">
+                        <div class="row center">
+                            <div class="title mb-1" id="title-table"><b>Tabel Data</b></div>
                             <table id="table-role-base" class="show">
                                 <thead>
                                     <tr>
@@ -163,11 +167,11 @@
                             <div id="no-data" class="center-align mb-4 mt-2">
                                 <span>Tidak ada tanda yang dipilih</span>
                             </div>
-                            <div class="row center-align mt-4">
+                            <div class="row center-align mt-2">
                                 <button id="switch" class="btn-small">Sembunyikan Tabel</button>
                                 <button id="delete-btn" class="btn-small">Hapus semua data</button>
                             </div>
-                            <div class="row center-align">
+                            <div class="row center-align" id="key-button">
                                 @foreach ($tandaTajwid as $value)
                                     <button
                                         onclick="addRow(`{{ $value->kode }}`, `{{ $value->nama_tanda }}`, `{{ $value->unicode }}`, `{{ trim(preg_replace('/\\\\u([0-9a-fA-F]{4})/', '\\\\u$1', json_encode($value->unicode)), '"') }}`)"
@@ -249,15 +253,18 @@
         // Tampilkan atau Sembunyikan
         const switchButton = document.getElementById("switch");
         const table = document.getElementById("table-role-base");
-
+        const titleTable = document.getElementById("title-table");
+        const valuePatternParent = document.getElementById('value-pattern').parentNode;
         const noData = document.getElementById('no-data');
 
         // No Data
         function toggleNoData() {
             if (table.rows.length <= 1) {
                 noData.style.display = 'block';
+                valuePatternParent.style.display = 'none';
             } else {
                 noData.style.display = 'none';
+                valuePatternParent.style.display = 'block';
             }
         }
 
@@ -268,6 +275,7 @@
             table.classList.toggle("show");
             switchButton.classList.toggle("active");
             switchButton.innerText = "Tampilkan Tabel";
+            titleTable.style.display = 'none'
         });
 
         // Hilangkan table
@@ -286,6 +294,7 @@
                     table.style.opacity = 1;
                 }, 100);
                 switchButton.innerText = "Sembunyikan Tabel";
+                titleTable.style.display = 'block';
             } else {
                 table.style.opacity = 0;
                 setTimeout(() => {
@@ -314,10 +323,12 @@
             // Mendapatkan elemen div baru
             const combinedValuesDiv = document.getElementById('combinedValues');
             const inputPattern = document.getElementById('pattern');
+            const valuePattern = document.getElementById('value-pattern');
 
             // Menampilkan nilai gabungan pada elemen div baru            
             combinedValuesDiv.innerText = JSON.parse(`"${combinedValues}"`);
             inputPattern.value = combinedValues;
+            valuePattern.innerHTML = combinedValues;
         }
 
         updateCombinedValues();
@@ -340,7 +351,8 @@
             cell2.innerHTML = nama;
             cell3.innerHTML = representasi;
             cell4.innerHTML = unicode;
-            cell5.innerHTML = `<button class="btn-small" onclick="deleteRow(this.parentNode.parentNode.rowIndex)"><i class="material-icons">delete_sweep</i></button>`;
+            cell5.innerHTML =
+                `<button class="btn-small" onclick="deleteRow(this.parentNode.parentNode.rowIndex)"><i class="material-icons">delete_sweep</i></button>`;
 
 
             updateCombinedValues();
