@@ -68,7 +68,7 @@ class TajwidController extends Controller
             'penjelasan' => $request->penjelasan,
         ]);
 
-        return redirect('tajwid')->with('message', 'Berhasil mengubah hukum tajwid!');
+        return redirect('tajwid')->with('message', 'Berhasil mengubah data tajwid!');
     }
 
     /**

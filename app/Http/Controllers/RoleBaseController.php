@@ -44,6 +44,8 @@ class RoleBaseController extends Controller
             'pattern' => $request->pattern,
         ]);
 
+        $data->tandaTajwid()->sync($request->tandaTajwid);
+
         return redirect('role-base')->with('message', 'Berhasil menambahkan role base!');
     }
 
@@ -61,17 +63,16 @@ class RoleBaseController extends Controller
     public function edit(string $id)
     {
         $data = Tajwid::all();
+        $tandaTajwid = TandaTajwid::all();
         $roleBase = RoleBase::findorfail($id);
 
         // arabic to unicode
-        $str2 = 'ا'; // string Arabic
-        $str2 = json_encode($str2); // convert string to JSON
-        $str2 = preg_replace('/\\\\u([0-9a-fA-F]{4})/', '\\\\u$1', $str2); // encode unicode
-        $str2 = trim($str2, '"');
+        // $str2 = 'ا'; // string Arabic
+        // $str2 = json_encode($str2); // convert string to JSON
+        // $str2 = preg_replace('/\\\\u([0-9a-fA-F]{4})/', '\\\\u$1', $str2); // encode unicode
+        // $str2 = trim($str2, '"');
 
-        dd($str2);
-
-        return view('admin.role-base.edit', compact('data', 'roleBase', 'coba'));
+        return view('admin.role-base.edit', compact('data', 'tandaTajwid', 'roleBase'));
     }
 
     /**
@@ -79,7 +80,18 @@ class RoleBaseController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+
+        $roleBase = RoleBase::findOrFail($id);
+
+        $roleBase->kode = $request->kode;
+        $roleBase->id_tajwid = $request->tajwid;
+        $roleBase->pattern = $request->pattern;
+    
+        $roleBase->save();
+    
+        $roleBase->tandaTajwid()->sync($request->tandaTajwid);
+        
+        return redirect('role-base')->with('message', 'Berhasil mengubah data role base!');
     }
 
     /**

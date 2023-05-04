@@ -51,6 +51,7 @@
             opacity: 1;
             visibility: visible;
         }
+
     </style>
 @endsection
 
@@ -119,18 +120,12 @@
                                 </div>
 
                             </div>
-                            {{-- <div class="row">
-                                <div class="input-field col m12 s12">
-                                    <label for="pattern">Pattern<span class="red-text">*</span></label>
-                                    <input type="text" id="pattern" name="pattern"
-                                        class="validate @error('pattern') is-invalid @enderror" required
-                                        value="{{ old('pattern') }}">
-                                    @error('pattern')
-                                        <small class="red-text">{{ $message }}</small>
-                                    @enderror
-                                </div>
-                            </div> --}}
+
                             <input type="text" id="pattern" name="pattern" hidden>
+
+                            <div class="selectHiden" hidden>
+                                <select name="tandaTajwid[]" id="tanda-tajwid" multiple></select>
+                            </div>
 
                             <div class="row center-align">
                                 <span><b>Representasi Role Base</b></span>
@@ -174,7 +169,7 @@
                             <div class="row center-align" id="key-button">
                                 @foreach ($tandaTajwid as $value)
                                     <button
-                                        onclick="addRow(`{{ $value->kode }}`, `{{ $value->nama_tanda }}`, `{{ $value->unicode }}`, `{{ trim(preg_replace('/\\\\u([0-9a-fA-F]{4})/', '\\\\u$1', json_encode($value->unicode)), '"') }}`)"
+                                        onclick="addRow(`{{ $value->kode }}`, `{{ $value->nama_tanda }}`, `{{ $value->unicode }}`, `{{ trim(preg_replace('/\\\\u([0-9a-fA-F]{4})/', '\\\\u$1', json_encode($value->unicode)), '"') }}`, `{{ $value->id}}`)"
                                         class="btn-small tombol-tanda"><span class="font-kitab-bold">
                                             @if ($value->unicode == '&nbsp;')
                                                 <i class="material-icons">space_bar</i>
@@ -331,11 +326,44 @@
             valuePattern.innerHTML = combinedValues;
         }
 
-        updateCombinedValues();
-
         // Tambah
-        function addRow(kode, nama, representasi, unicode) {
+
+        function addOption(id) {
+            // ambil tag menggunakan id
+            let selectElement = document.getElementById("tanda-tajwid");
+
+            // buat elemen option
+            let optionElement = document.createElement("option");
+
+            // set value
+            optionElement.value = id;
+
+            // set atribut selected
+            optionElement.selected = true;
+
+            //tambahkan elemen option pada elemen select
+            selectElement.appendChild(optionElement);
+
+
+        }
+
+        function clearOption() {
+            // ambil tag menggunakan id
+            let selectElement = document.getElementById("tanda-tajwid");
+
+            selectElement.innerHTML = '';
+        }
+
+        function deleteOption(index) {
+            let selectElement = document.getElementById("tanda-tajwid");
+
+            selectElement.remove(index);
+        }
+
+        function addRow(kode, nama, representasi, unicode, id) {
             var table = document.getElementById("tbody-role-base");
+            
+
             var row = table.insertRow(-1);
 
             var cell1 = row.insertCell(0);
@@ -354,7 +382,7 @@
             cell5.innerHTML =
                 `<button class="btn-small" onclick="deleteRow(this.parentNode.parentNode.rowIndex)"><i class="material-icons">delete_sweep</i></button>`;
 
-
+            addOption(id);
             updateCombinedValues();
             toggleNoData(); // panggil fungsi untuk menampilkan atau menyembunyikan elemen no-data
         }
@@ -367,12 +395,15 @@
 
             tbody.innerHTML = '';
 
+            clearOption();
             updateCombinedValues();
             toggleNoData(); // panggil fungsi untuk menampilkan atau menyembunyikan elemen no-data
         });
 
         function deleteRow(rowIndex) {
             document.getElementById("table-role-base").deleteRow(rowIndex);
+
+            deleteOption(rowIndex-1);
             updateCombinedValues();
             toggleNoData(); // panggil fungsi untuk menampilkan atau menyembunyikan elemen no-data
         }

@@ -18,6 +18,14 @@ class RoleBase extends Model
         'deleted_tajwid_name'
     ];
 
+    protected static function boot() {
+        parent::boot();
+
+        static::deleting(function ($roleBase) {
+            $roleBase->tandaTajwid()->detach();
+        });
+    }
+
     public function tajwid() {
         return $this->belongsTo(Tajwid::class, 'id_tajwid');
     }
