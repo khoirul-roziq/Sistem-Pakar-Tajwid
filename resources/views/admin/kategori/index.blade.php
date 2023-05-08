@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('title')
-    Role Base
+    Kategori
 @endsection
 
 @section('styles')
@@ -17,10 +17,10 @@
             <div class="container">
                 <div class="row">
                     <div class="col s10 m6 l6">
-                        <h5 class="breadcrumbs-title mt-0 mb-0"><b>ROLE BASE</b></h5>
+                        <h5 class="breadcrumbs-title mt-0 mb-0"><b>KATEGORI</b></h5>
                         <ol class="breadcrumbs mb-0">
                             <li class="breadcrumb-item"><a href="{{ route('home') }}">Beranda</a></li>
-                            <li class="breadcrumb-item active white-text"><b>Role Base</b></li>
+                            <li class="breadcrumb-item active white-text"><b>Kategori</b></li>
                         </ol>
                     </div>
                 </div>
@@ -29,6 +29,7 @@
 
         <div class="col s12">
             <div class="container mt-3">
+                <!-- users list start -->
 
                 @if (session('message'))
                     <div class="card">
@@ -63,44 +64,42 @@
                                                     class="material-icons">search</i></a>
                                             <a href="#" class="modal-trigger waves-effect btn-flat nopadding"><i
                                                     class="material-icons">file_download</i></a>
-                                            <a href="{{ route('role-base.create') }}"
+                                            <a href="{{ route('kategori.create') }}"
                                                 class="modal-trigger waves-effect btn-flat nopadding"><i
                                                     class="material-icons">add_circle</i></a>
                                         </div>
                                     </div>
+                                    
                                     <table id="datatable">
                                         <thead>
                                             <tr>
+                                                <th>Nama Kategori</th>
                                                 <th>Kode</th>
-                                                <th>Nama Tajwid</th>
-                                                <th>Pattern</th>
                                                 <th>Aksi</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             @foreach ($data as $value)
                                                 <tr>
+                                                    <td>{{ $value->nama_kategori }}</td>
                                                     <td>{{ $value->kode }}</td>
-                                                    <td>{!! $value->tajwid->nama_tajwid ?? $value->deleted_tajwid_name . '<small class="red-text" style="font-size: 8px;"> (dihapus)</small>' !!}</td>
-                                                    <td><span class="font-kitab">{{ html_entity_decode(json_decode('"' . $value->pattern . '"'), ENT_QUOTES, 'UTF-8')}}</span></td>
                                                     <td>
-                                                        <form action="{{ route('role-base.destroy', $value->id) }}"
+                                                        <form action="{{ route('kategori.destroy', $value->id) }}"
                                                             method="post" class="delete" id="delete{{ $value->id }}" name="delete">
                                                             @method('delete')
                                                             @csrf
                                                             <!-- Dropdown Trigger -->
-                                                            <a class='dropdown-trigger btn-small teal white-text'
-                                                                href='#'
+                                                            <a class='dropdown-trigger btn-small teal white-text' href='#'
                                                                 data-target='aksi{{ $value->id }}'><b>Pilih Aksi!</b></a>
 
                                                             <!-- Dropdown Structure -->
                                                             <ul id='aksi{{ $value->id }}' class='dropdown-content'>
-                                                                <li><a href="{{ route('role-base.show', $value->id) }}"><i
+                                                                <li><a href="{{ route('kategori.show', $value->id) }}"><i
                                                                             class="material-icons">remove_red_eye</i>Detail</a>
                                                                 </li>
-                                                                <li><a href="{{ route('role-base.edit', $value->id) }}"><i
+                                                                <li><a href="{{ route('kategori.edit', $value->id) }}"><i
                                                                             class="material-icons">edit</i>Edit</a></li>
-                                                                <li><a onclick="fungsiDelete({{ $value->id }})"><i
+                                                                <li><a onclick="fungsiDelete({{$value->id}})"><i
                                                                             class="material-icons">delete</i>Hapus</a></li>
                                                             </ul>
                                                         </form>
@@ -131,7 +130,7 @@
     <script src="{{ asset('assets/vendor/data-tables/js/script.js') }}"></script>
     <script>
         function fungsiDelete(id) {
-            if (confirm('Apakah kamu yakin akan menghapus data ini?')) {
+            if(confirm('Apakah kamu yakin akan menghapus data ini?')) {
                 document.getElementById('delete' + id).submit();
             }
         }

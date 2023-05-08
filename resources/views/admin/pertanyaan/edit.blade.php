@@ -91,7 +91,8 @@
                 @endif
                 <div class="card">
                     <div class="card-content">
-                        <form action="{{ route('role-base.store') }}" method="post" enctype="multipart/form-data">
+                        <form action="{{ route('pertanyaan.update', $pertanyaan->id ) }}" method="post" enctype="multipart/form-data">
+                        @method('put')
                             @csrf
                             <div class="row">
                                 <div class="col m12 s12 mb-3">
@@ -102,32 +103,45 @@
                             <div class="row">
 
                                 <div class="input-field col m6 s12">
-                                    <label for="kode">Kode Role Base<span class="red-text">*</span></label>
+                                    <label for="kode">Kode Pertanyaan<span class="red-text">*</span></label>
                                     <input type="text" id="kode" name="kode"
                                         class="validate @error('kode') is-invalid @enderror" required
-                                        value="{{ old('kode') }}">
+                                        value="{{ $pertanyaan->kode }}">
                                     @error('kode')
                                         <small class="red-text">{{ $message }}</small>
                                     @enderror
                                 </div>
+
                                 <div class="input-field col m6 s12">
-                                    <select class="select2 browser-default" name="tajwid">
-                                        <option value="" disabled selected>--- Pilih Tajwid ---</option>
-                                        @foreach ($data as $value)
-                                            <option value="{{ $value->id }}">{{ $value->nama_tajwid }}</option>
+                                    <select class="select2 browser-default" name="kategori">
+                                        <option value="" disabled>--- Pilih Kategori ---</option>
+                                        @foreach ($kategori as $value)
+                                            <option value="{{ $value->id }}"
+                                                @if ($value->id == $pertanyaan->kategori_id) selected @endif>{{ $value->nama_kategori }}
+                                            </option>
                                         @endforeach
                                     </select>
                                 </div>
+                            </div>
 
+                            <div class="row">
+                                <div class="input-field col m12 s12">
+                                    <span>Pertanyaan</span>
+                                    <textarea id="soal" name="soal" rows="5">{{ $pertanyaan->soal }}</textarea>
+                                </div>
                             </div>
 
                             <input type="text" id="pattern" name="pattern" hidden>
 
                             <div class="selectHiden" hidden>
-                                <select name="tandaTajwid[]" id="tanda-tajwid" multiple></select>
+                                <select name="jawaban[]" id="tanda-tajwid" multiple>
+                                    @foreach($pertanyaan->jawaban as $value ) 
+                                        <option value="{{ $value->id }}" selected></option>
+                                    @endforeach
+                                </select>
                             </div>
 
-                            <div class="row center-align">
+                            <div class="row center-align" hidden>
                                 <span><b>Representasi Role Base</b></span>
                                 <div class="wrap">
                                     <div class="panel">
@@ -150,12 +164,22 @@
                                         <th>Kode</th>
                                         <th>Nama</th>
                                         <th>Representasi</th>
-                                        <th>Unicode</th>
+                                        <th>Value</th>
                                         <th>Hapus</th>
                                     </tr>
                                 </thead>
                                 <tbody id="tbody-role-base">
                                     <!-- data role base dari script -->
+                                    
+                                    @foreach($pertanyaan->jawaban as $value ) 
+                                        <tr>
+                                            <td>{{ $value->kode }}</td>
+                                            <td>{{ $value->nama_jawaban }}</td>
+                                            <td><span class="font-kitab">{{ html_entity_decode(json_decode('"' . $value->representasi . '"'), ENT_QUOTES, 'UTF-8') }}</span></td>
+                                            <td>{{ $value->representasi }}</td>
+                                            <td><button class="btn-small" onclick="deleteRow(this.parentNode.parentNode.rowIndex)"><i class="material-icons">delete_sweep</i></button></td>
+                                        </tr>
+                                    @endforeach
 
                                 </tbody>
                             </table>
@@ -167,14 +191,14 @@
                                 <button id="delete-btn" class="btn-small"><i class="material-icons left">clear_all</i> Hapus semua data</button>
                             </div>
                             <div class="row center-align" id="key-button">
-                                @foreach ($tandaTajwid as $value)
+                                @foreach ($jawaban as $value)
                                     <button
-                                        onclick="addRow(`{{ $value->kode }}`, `{{ $value->nama_tanda }}`, `{{ $value->unicode }}`, `{{ trim(preg_replace('/\\\\u([0-9a-fA-F]{4})/', '\\\\u$1', json_encode($value->unicode)), '"') }}`, `{{ $value->id}}`)"
+                                        onclick="addRow(`{{ $value->kode }}`, `{{ $value->nama_jawaban }}`, `{{ $value->representasi }}`, `{{ trim(preg_replace('/\\\\u([0-9a-fA-F]{4})/', '\\\\u$1', json_encode($value->representasi)), '"') }}`, `{{ $value->id}}`)"
                                         class="btn-small tombol-tanda"><span class="font-kitab-bold">
-                                            @if ($value->unicode == '&nbsp;')
+                                            @if ($value->representasi == '&nbsp;')
                                                 <i class="material-icons">space_bar</i>
                                             @else
-                                                {{ html_entity_decode(json_decode('"' . $value->unicode . '"'), ENT_QUOTES, 'UTF-8') }}
+                                                {{ html_entity_decode(json_decode('"' . $value->representasi . '"'), ENT_QUOTES, 'UTF-8') }}
                                             @endif
                                         </span></button>
                                 @endforeach
@@ -407,5 +431,99 @@
             updateCombinedValues();
             toggleNoData(); // panggil fungsi untuk menampilkan atau menyembunyikan elemen no-data
         }
+    </script>
+    <script src="{{ asset('assets/vendor/tinymce/tinymce.min.js') }}"></script>
+    <script>
+        // tinymce.init({
+        // 	selector: 'textarea'
+        // });
+        tinymce.init({
+            selector: 'textarea#soal',
+            plugins: 'print preview paste importcss searchreplace autolink autosave save directionality code visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists wordcount imagetools textpattern noneditable help charmap quickbars emoticons',
+            imagetools_cors_hosts: ['picsum.photos'],
+            menubar: 'file edit view insert format tools table help',
+            toolbar: 'undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist | forecolor backcolor removeformat | pagebreak | charmap emoticons | fullscreen  preview save print | insertfile image media template link anchor codesample | ltr rtl',
+            toolbar_sticky: true,
+            autosave_ask_before_unload: true,
+            autosave_interval: "30s",
+            autosave_prefix: "{path}{query}-{id}-",
+            autosave_restore_when_empty: false,
+            autosave_retention: "2m",
+            image_advtab: true,
+            /*content_css: '//www.tiny.cloud/css/codepen.min.css',*/
+            link_list: [{
+                    title: 'My page 1',
+                    value: 'https://www.codexworld.com'
+                },
+                {
+                    title: 'My page 2',
+                    value: 'https://www.xwebtools.com'
+                }
+            ],
+            image_list: [{
+                    title: 'My page 1',
+                    value: 'https://www.codexworld.com'
+                },
+                {
+                    title: 'My page 2',
+                    value: 'https://www.xwebtools.com'
+                }
+            ],
+            image_class_list: [{
+                    title: 'None',
+                    value: ''
+                },
+                {
+                    title: 'Some class',
+                    value: 'class-name'
+                }
+            ],
+            importcss_append: true,
+            file_picker_callback: function(callback, value, meta) {
+                /* Provide file and text for the link dialog */
+                if (meta.filetype === 'file') {
+                    callback('https://www.google.com/logos/google.jpg', {
+                        text: 'My text'
+                    });
+                }
+                /* Provide image and alt text for the image dialog */
+                if (meta.filetype === 'image') {
+                    callback('https://www.google.com/logos/google.jpg', {
+                        alt: 'My alt text'
+                    });
+                }
+                /* Provide alternative source and posted for the media dialog */
+                if (meta.filetype === 'media') {
+                    callback('movie.mp4', {
+                        source2: 'alt.ogg',
+                        poster: 'https://www.google.com/logos/google.jpg'
+                    });
+                }
+            },
+            templates: [{
+                    title: 'New Table',
+                    description: 'creates a new table',
+                    content: '<div class="mceTmpl"><table width="98%%"  border="0" cellspacing="0" cellpadding="0"><tr><th scope="col"> </th><th scope="col"> </th></tr><tr><td> </td><td> </td></tr></table></div>'
+                },
+                {
+                    title: 'Starting my story',
+                    description: 'A cure for writers block',
+                    content: 'Once upon a time...'
+                },
+                {
+                    title: 'New list with dates',
+                    description: 'New List with dates',
+                    content: '<div class="mceTmpl"><span class="cdate">cdate</span><br /><span class="mdate">mdate</span><h2>My List</h2><ul><li></li><li></li></ul></div>'
+                }
+            ],
+            template_cdate_format: '[Date Created (CDATE): %m/%d/%Y : %H:%M:%S]',
+            template_mdate_format: '[Date Modified (MDATE): %m/%d/%Y : %H:%M:%S]',
+            height: 600,
+            image_caption: true,
+            quickbars_selection_toolbar: 'bold italic | quicklink h2 h3 blockquote quickimage quicktable',
+            noneditable_noneditable_class: "mceNonEditable",
+            toolbar_mode: 'sliding',
+            contextmenu: "link image imagetools table",
+        });
     </script>
 @endsection

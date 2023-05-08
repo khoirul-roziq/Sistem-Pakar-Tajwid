@@ -2,6 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Redirect;
+use App\Http\Controllers\Guest\WelcomeController;
+use App\Http\Controllers\Guest\ConsultationController;
+use App\Http\Controllers\JawabanController;
+use App\Http\Controllers\KategoriController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,7 +43,7 @@ Route::group(
 
         Route::middleware(['auth:user', 'can:role,"admin"'])->group(function () {
 
-            // Nama Tajwid Route
+            // Dashboard Route
             Route::resource('dashboard', DashboardController::class);
 
             // Data User Route
@@ -54,6 +58,30 @@ Route::group(
             // Tajwid Route
             Route::resource('tajwid', TajwidController::class);
 
+            // pertanyaan
+            Route::resource('pertanyaan', PertanyaanController::class);
+
+            // jawaban
+            Route::resource('jawaban', JawabanController::class);
+
+            // kategori
+            Route::resource('kategori', KategoriController::class);
+        });
+
+        Route::middleware(['auth:user', 'can:role, "admin","guest"'])->group(function () {
+            // Welcome Route
+            Route::get('welcome', [WelcomeController::class, 'index'])->name('welcome.index');
+
+            Route::get('konsultasi', [ConsultationController::class, 'index'])->name('konsultasi.mulai');
+
+            // kategori
+            Route::get('kategori/{id}', [ConsultationController::class, 'kategori'])->name('kategori');
+
+            // ghunnah
+            Route::get('ghunnah/{page}', [ConsultationController::class, 'ghunnahView'])->name('ghunnah.view');
+            Route::post('ghunnah/{page}', [ConsultationController::class, 'ghunnah'])->name('ghunnah');
+
+            
         });
     }
 );

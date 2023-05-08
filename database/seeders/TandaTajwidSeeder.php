@@ -232,14 +232,28 @@ class TandaTajwidSeeder extends Seeder
 
         TandaTajwid::create([
             'kode' => 'T037',
+            'nama_tanda' => 'Dhommatain 2',
+            'unicode' => '\u08f1',
+        ]);
+
+        TandaTajwid::create([
+            'kode' => 'T038',
             'nama_tanda' => 'Sukun',
             'unicode' => '\u06e1',
         ]);
 
         TandaTajwid::create([
-            'kode' => 'T038',
+            'kode' => 'T039',
             'nama_tanda' => 'Syiddah/ Tasydid',
             'unicode' => '\u0651',
         ]);
+
+        TandaTajwid::create([
+            'kode' => 'T040',
+            'nama_tanda' => 'Spasi',
+            'unicode' => '&nbsp;',
+        ]);
+
+        
     }
 }

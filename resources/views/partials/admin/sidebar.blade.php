@@ -18,6 +18,11 @@
   <li class="bold"><a class="{{ Route::is('tanda-tajwid.*') ? 'actived' : '' }} waves-effect waves-cyan" href="{{ route('tanda-tajwid.index') }}"><i class="material-icons dp48">new_releases</i><span class="menu-title">Huruf/ Tanda Tajwid</span></a>
   <li class="bold"><a class="{{ Route::is('role-base.*') ? 'actived' : '' }} waves-effect waves-cyan" href="{{ route('role-base.index') }}"><i class="material-icons dp48">code</i><span class="menu-title">Role Base</span></a>  
 
+  <li class="navigation-header"><a class="navigation-header-text">Kelola Konsultasi</a><i class="navigation-header-icon material-icons">more_horiz</i>
+  <li class="bold"><a class="{{ Route::is('pertanyaan.*') ? 'actived' : '' }} waves-effect waves-cyan" href="{{ route('pertanyaan.index') }}"><i class="material-icons dp48">help</i><span class="menu-title">Pertanyaan</span></a>
+  <li class="bold"><a class="{{ Route::is('jawaban.*') ? 'actived' : '' }} waves-effect waves-cyan" href="{{ route('jawaban.index') }}"><i class="material-icons dp48">reply</i><span class="menu-title">Jawaban</span></a>  
+  <li class="bold"><a class="{{ Route::is('kategori.*') ? 'actived' : '' }} waves-effect waves-cyan" href="{{ route('kategori.index') }}"><i class="material-icons dp48">list</i><span class="menu-title">Kategori</span></a>  
+
   @endcan
 </ul>
 

@@ -22,10 +22,10 @@ class UserSeeder extends Seeder
         ]);
 
         User::create([
-            'name' => 'pengguna',
-            'email' => 'pengguna@user.com',
-            'role' => 'pengguna',
-            'password' => Hash::make('penggunasp'),
+            'name' => 'guest',
+            'email' => 'guest@user.com',
+            'role' => 'guest',
+            'password' => Hash::make('guestsp'),
         ]);
     }
 }

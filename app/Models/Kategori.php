@@ -5,20 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Tajwid extends Model
+class Kategori extends Model
 {
     use HasFactory;
 
-    protected $table = 'tajwid';
+    protected $table = 'kategori';
 
     protected $fillable = [
         'kode',
-        'nama_tajwid',
-        'penjelasan'
+        'nama_kategori',
     ];
 
-    public function roleBase() {
-        return $this->belongsToMany(RoleBase::class);
+    public function pertanyaan() {
+        return $this->belongsToMany(Pertanyaan::class);
     }
-
 }

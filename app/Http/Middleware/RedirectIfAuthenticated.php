@@ -18,7 +18,16 @@ class RedirectIfAuthenticated
     public function handle(Request $request, Closure $next, string ...$guards): Response
     {
         if(Auth::guard('user')->check()){
-            return redirect()->route('dashboard.index');
+            
+            if (Auth::guard('user')->user()->role === 'admin') {
+                // Pengguna memiliki peran admin
+                return redirect()->route('dashboard.index');
+            } elseif (Auth::guard('user')->user()->role === 'guest') {
+                // Pengguna memiliki peran guest
+                return redirect()->route('welcome.index');
+            } else {
+                // Pengguna memiliki peran lainnya
+            }
         }
 
         $guards = empty($guards) ? [null] : $guards;

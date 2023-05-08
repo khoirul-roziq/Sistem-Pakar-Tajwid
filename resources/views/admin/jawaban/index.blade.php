@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('title')
-    Role Base
+    Data Jawaban
 @endsection
 
 @section('styles')
@@ -17,10 +17,10 @@
             <div class="container">
                 <div class="row">
                     <div class="col s10 m6 l6">
-                        <h5 class="breadcrumbs-title mt-0 mb-0"><b>ROLE BASE</b></h5>
+                        <h5 class="breadcrumbs-title mt-0 mb-0"><b>Data Jawaban</b></h5>
                         <ol class="breadcrumbs mb-0">
                             <li class="breadcrumb-item"><a href="{{ route('home') }}">Beranda</a></li>
-                            <li class="breadcrumb-item active white-text"><b>Role Base</b></li>
+                            <li class="breadcrumb-item active white-text"><b>Data Jawaban</b></li>
                         </ol>
                     </div>
                 </div>
@@ -63,7 +63,7 @@
                                                     class="material-icons">search</i></a>
                                             <a href="#" class="modal-trigger waves-effect btn-flat nopadding"><i
                                                     class="material-icons">file_download</i></a>
-                                            <a href="{{ route('role-base.create') }}"
+                                            <a href="{{ route('jawaban.create') }}"
                                                 class="modal-trigger waves-effect btn-flat nopadding"><i
                                                     class="material-icons">add_circle</i></a>
                                         </div>
@@ -72,8 +72,8 @@
                                         <thead>
                                             <tr>
                                                 <th>Kode</th>
-                                                <th>Nama Tajwid</th>
-                                                <th>Pattern</th>
+                                                <th>Nama</th>
+                                                <th>Representasi</th>
                                                 <th>Aksi</th>
                                             </tr>
                                         </thead>
@@ -81,11 +81,20 @@
                                             @foreach ($data as $value)
                                                 <tr>
                                                     <td>{{ $value->kode }}</td>
-                                                    <td>{!! $value->tajwid->nama_tajwid ?? $value->deleted_tajwid_name . '<small class="red-text" style="font-size: 8px;"> (dihapus)</small>' !!}</td>
-                                                    <td><span class="font-kitab">{{ html_entity_decode(json_decode('"' . $value->pattern . '"'), ENT_QUOTES, 'UTF-8')}}</span></td>
+                                                    <td>{{ $value->nama_jawaban }}</td>
                                                     <td>
-                                                        <form action="{{ route('role-base.destroy', $value->id) }}"
-                                                            method="post" class="delete" id="delete{{ $value->id }}" name="delete">
+                                                        @if ($value->kategori == 'tanda')
+                                                        <span class="font-kitab">{{ html_entity_decode(json_decode('"' . $value->representasi . '"'), ENT_QUOTES, 'UTF-8')}}</span>
+                                                        @elseif($value->kategori == 'hukum')
+                                                        {{ $value->representasi }}
+                                                        @else
+                                                        -
+                                                        @endif
+                                                    </td>
+                                                    <td>
+                                                        <form action="{{ route('jawaban.destroy', $value->id) }}"
+                                                            method="post" class="delete" id="delete{{ $value->id }}"
+                                                            name="delete">
                                                             @method('delete')
                                                             @csrf
                                                             <!-- Dropdown Trigger -->
@@ -95,10 +104,10 @@
 
                                                             <!-- Dropdown Structure -->
                                                             <ul id='aksi{{ $value->id }}' class='dropdown-content'>
-                                                                <li><a href="{{ route('role-base.show', $value->id) }}"><i
+                                                                <li><a href="{{ route('jawaban.show', $value->id) }}"><i
                                                                             class="material-icons">remove_red_eye</i>Detail</a>
                                                                 </li>
-                                                                <li><a href="{{ route('role-base.edit', $value->id) }}"><i
+                                                                <li><a href="{{ route('jawaban.edit', $value->id) }}"><i
                                                                             class="material-icons">edit</i>Edit</a></li>
                                                                 <li><a onclick="fungsiDelete({{ $value->id }})"><i
                                                                             class="material-icons">delete</i>Hapus</a></li>

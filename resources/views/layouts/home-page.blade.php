@@ -38,7 +38,7 @@
 
     <footer class="page-footer">
             @include('partials.home.footer')
-            @include('modules.home.sosmed')
+            @include('partials.home.sosmed')
             @include('partials.home.scripts')
     </footer>
 
