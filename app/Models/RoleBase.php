@@ -14,8 +14,9 @@ class RoleBase extends Model
     protected $fillable = [
         'kode',
         'id_tajwid',
-        'pattern',
-        'deleted_tajwid_name'
+        'role',
+        'deleted_tajwid_name',
+        'keterangan'
     ];
 
     protected static function boot() {

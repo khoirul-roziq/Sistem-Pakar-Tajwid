@@ -5,6 +5,9 @@
 @endsection
 
 @section('styles')
+    <link rel="stylesheet"
+        href="https://pixinvent.com/materialize-material-design-admin-template/app-assets/vendors/select2/select2-materialize.css"
+        type="text/css">
 @endsection
 
 @section('content')
@@ -50,7 +53,7 @@
                             @csrf
 
                             <div class="row">
-                                <div class="input-field col m6 s12">
+                                <div class="input-field col m4 s12">
                                     <label for="namaTajwid">Nama Tajwid<span class="red-text">*</span></label>
                                     <input type="text" id="namaTajwid" name="namaTajwid"
                                         class="validate @error('namaTajwid') is-invalid @enderror" required
@@ -59,7 +62,7 @@
                                         <small class="red-text">{{ $message }}</small>
                                     @enderror
                                 </div>
-                                <div class="input-field col m6 s12">
+                                <div class="input-field col m4 s12">
                                     <label for="kode">Kode<span class="red-text">*</span></label>
                                     <input type="text" id="kode" name="kode"
                                         class="validate @error('kode') is-invalid @enderror" required
@@ -67,6 +70,19 @@
                                     @error('kode')
                                         <small class="red-text">{{ $message }}</small>
                                     @enderror
+                                </div>
+                                <div class="input-field col m4 s12">
+                                    <select class="select2 browser-default" name="kategori">
+                                        <option value="" disabled>--- Pilih Kategori ---</option>
+                                        @foreach ($kategori as $value)
+                                            @if ($value->kode != 'K000')
+                                                <option value="{{ $value->id }}"
+                                                    @if ($value->id == $data->kategori_id) selected @endif>
+                                                    {{ $value->nama_kategori }}
+                                                </option>
+                                            @endif
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
                             <div class="row">
@@ -93,6 +109,16 @@
 @endsection
 
 @section('scripts')
+    <script
+        src="https://pixinvent.com/materialize-material-design-admin-template/app-assets/vendors/select2/select2.full.min.js">
+    </script>
+    {{-- Select --}}
+    <script>
+        $(".select2").select2({
+            dropdownAutoWidth: true,
+            width: '100%'
+        });
+    </script>
     <script src="{{ asset('assets/vendor/tinymce/tinymce.min.js') }}"></script>
     <script>
         // tinymce.init({
@@ -111,7 +137,7 @@
             autosave_restore_when_empty: false,
             autosave_retention: "2m",
             image_advtab: true,
-            
+
             /*content_css: '//www.tiny.cloud/css/codepen.min.css',*/
             link_list: [{
                     title: 'My page 1',
@@ -187,6 +213,5 @@
             toolbar_mode: 'sliding',
             contextmenu: "link image imagetools table",
         });
-
     </script>
 @endsection

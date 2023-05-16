@@ -102,7 +102,7 @@
                             </div>
                             <div class="row">
 
-                                <div class="input-field col m6 s12">
+                                <div class="input-field col m4 s12">
                                     <label for="kode">Kode Pertanyaan<span class="red-text">*</span></label>
                                     <input type="text" id="kode" name="kode"
                                         class="validate @error('kode') is-invalid @enderror" required
@@ -112,12 +112,23 @@
                                     @enderror
                                 </div>
 
-                                <div class="input-field col m6 s12">
+                                <div class="input-field col m4 s12">
                                     <select class="select2 browser-default" name="kategori">
                                         <option value="" disabled>--- Pilih Kategori ---</option>
                                         @foreach ($kategori as $value)
                                             <option value="{{ $value->id }}"
                                                 @if ($value->id == $pertanyaan->kategori_id) selected @endif>{{ $value->nama_kategori }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                <div class="input-field col m4 s12">
+                                    <select class="select2 browser-default" name="tajwid">
+                                        <option value="" disabled>--- Pilih Tajwid ---</option>
+                                        @foreach ($tajwid as $value)
+                                            <option value="{{ $value->id }}"
+                                                @if ($value->id == $pertanyaan->tajwid_id) selected @endif>{{ $value->nama_tajwid }}
                                             </option>
                                         @endforeach
                                     </select>

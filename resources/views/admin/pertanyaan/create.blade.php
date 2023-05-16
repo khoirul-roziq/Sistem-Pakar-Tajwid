@@ -101,7 +101,7 @@
                             </div>
                             <div class="row">
 
-                                <div class="input-field col m6 s12">
+                                <div class="input-field col m4 s12">
                                     <label for="kode">Kode Pertanyaan<span class="red-text">*</span></label>
                                     <input type="text" id="kode" name="kode"
                                         class="validate @error('kode') is-invalid @enderror" required
@@ -111,11 +111,20 @@
                                     @enderror
                                 </div>
                                 
-                                <div class="input-field col m6 s12">
+                                <div class="input-field col m4 s12">
                                     <select class="select2 browser-default" name="kategori">
                                         <option value="" disabled selected>--- Pilih Kategori ---</option>
                                         @foreach ($kategori as $value)
                                             <option value="{{ $value->id }}">{{ $value->nama_kategori }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                <div class="input-field col m4 s12">
+                                    <select class="select2 browser-default" name="tajwid">
+                                        <option value="" disabled selected>--- Pilih Tajwid ---</option>
+                                        @foreach ($tajwid as $value)
+                                            <option value="{{ $value->id }}">{{ $value->nama_tajwid }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -175,7 +184,7 @@
                                 <button id="delete-btn" class="btn-small"><i class="material-icons left">clear_all</i> Hapus semua data</button>
                             </div>
                             <div class="row center-align" id="key-button">
-                                @foreach ($data as $value)
+                                @foreach ($jawaban as $value)
                                     <button
                                         onclick="addRow(`{{ $value->kode }}`, `{{ $value->nama_jawaban }}`, `{{ $value->representasi }}`, `{{ trim(preg_replace('/\\\\u([0-9a-fA-F]{4})/', '\\\\u$1', json_encode($value->representasi)), '"') }}`, `{{ $value->id}}`)"
                                         class="btn-small tombol-tanda"><span class="font-kitab-bold">

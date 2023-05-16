@@ -73,7 +73,7 @@
                                             <tr>
                                                 <th>Kode</th>
                                                 <th>Nama Tajwid</th>
-                                                <th>Pattern</th>
+                                                <th>role</th>
                                                 <th>Aksi</th>
                                             </tr>
                                         </thead>
@@ -82,7 +82,7 @@
                                                 <tr>
                                                     <td>{{ $value->kode }}</td>
                                                     <td>{!! $value->tajwid->nama_tajwid ?? $value->deleted_tajwid_name . '<small class="red-text" style="font-size: 8px;"> (dihapus)</small>' !!}</td>
-                                                    <td><span class="font-kitab">{{ html_entity_decode(json_decode('"' . $value->pattern . '"'), ENT_QUOTES, 'UTF-8')}}</span></td>
+                                                    <td><span class="font-kitab">{{ html_entity_decode(json_decode('"' . $value->role . '"'), ENT_QUOTES, 'UTF-8')}}</span></td>
                                                     <td>
                                                         <form action="{{ route('role-base.destroy', $value->id) }}"
                                                             method="post" class="delete" id="delete{{ $value->id }}" name="delete">

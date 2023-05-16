@@ -28,9 +28,26 @@ class RoleBaseController extends Controller
      */
     public function create()
     {
+        // Menghitung jumlah data role base
+        $countRoleBase = RoleBase::all()->count();
+
+        // Buat kode rolebase baru
+        $newKodeRoleBase = '';
+
+        if($countRoleBase < 9 ) {
+            $newKodeRoleBase = 'R00'. $countRoleBase+1;
+        } elseif ($countRoleBase < 99) {
+            $newKodeRoleBase = 'R0'. $countRoleBase+1;
+        } elseif($countRoleBase < 999) {
+            $newKodeRoleBase = 'R'. $countRoleBase+1;
+        } else {
+            $newKodeRoleBase = 'R'. $countRoleBase+1;
+        }
+
         $data = Tajwid::all();
         $tandaTajwid = TandaTajwid::all();
-        return view('admin.role-base.create', compact('data', 'tandaTajwid'));
+
+        return view('admin.role-base.create', compact('data', 'tandaTajwid', 'newKodeRoleBase'));
     }
 
     /**
@@ -41,7 +58,8 @@ class RoleBaseController extends Controller
         $data = RoleBase::create([
             'kode' => $request->kode,
             'id_tajwid' => $request->tajwid,
-            'pattern' => $request->pattern,
+            'role' => $request->role,
+            'keterangan' => $request->keterangan,
         ]);
 
         $data->tandaTajwid()->sync($request->tandaTajwid);
@@ -79,7 +97,8 @@ class RoleBaseController extends Controller
 
         $roleBase->kode = $request->kode;
         $roleBase->id_tajwid = $request->tajwid;
-        $roleBase->pattern = $request->pattern;
+        $roleBase->role = $request->role;
+        $roleBase->keterangan = $request->keterangan;
         
         $roleBase->save();
     

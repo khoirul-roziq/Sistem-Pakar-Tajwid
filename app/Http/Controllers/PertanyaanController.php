@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Jawaban;
 use Illuminate\Http\Request;
+use App\Models\Jawaban;
 use App\Models\Pertanyaan;
 use App\Models\Kategori;
+use App\Models\Tajwid;
 
 class PertanyaanController extends Controller
 {
@@ -24,10 +25,24 @@ class PertanyaanController extends Controller
      */
     public function create()
     {
-        $data = Jawaban::all();
-        $kategori = Kategori::all();
+        // Cek ketersediaan K000
+        if(Kategori::where('kode', 'K000')->exists()) {
+            $idK000 = Kategori::where('kode', 'K000')->first()->id;
+        }
 
-        return view('admin.pertanyaan.create', compact('data', 'kategori'));
+        // Cek apakah kode K000 (Inisialisasi kategori) sudah dipilih berdasarkan id
+        if(Pertanyaan::where('kategori_id', $idK000)->exists()) {
+            // ambil data kategori kecuali Inisialisasi kategori
+            $kategori = Kategori::whereNotIn('id', [$idK000])->get();
+        } else {
+            // ambil semua data kategori
+            $kategori = Kategori::all();
+        }
+
+        $jawaban = Jawaban::all(); 
+        $tajwid = Tajwid::all();       
+
+        return view('admin.pertanyaan.create', compact('jawaban', 'kategori', 'tajwid'));
     }
 
     /**
@@ -39,6 +54,7 @@ class PertanyaanController extends Controller
             'kode' => $request->kode,
             'soal' => $request->soal,
             'kategori_id' => $request->kategori,
+            'tajwid_id' => $request->tajwid,
         ]);
 
         $data->jawaban()->sync($request->jawaban);
@@ -62,8 +78,9 @@ class PertanyaanController extends Controller
         $pertanyaan = Pertanyaan::findorfail($id);
         $jawaban = Jawaban::all();
         $kategori = Kategori::all();
+        $tajwid = Tajwid::all();  
 
-        return view('admin.pertanyaan.edit', compact('pertanyaan', 'jawaban', 'kategori'));
+        return view('admin.pertanyaan.edit', compact('pertanyaan', 'jawaban', 'kategori', 'tajwid'));
     }
 
     /**
@@ -76,6 +93,7 @@ class PertanyaanController extends Controller
         $data->kode = $request->input('kode');
         $data->soal = $request->input('soal');
         $data->kategori_id = $request->input('kategori');
+        $data->tajwid_id = $request->input('tajwid');
 
         $data->save();
 

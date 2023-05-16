@@ -14,7 +14,8 @@ class Pertanyaan extends Model
     protected $fillable = [
         'kode',
         'soal',
-        'kategori_id'
+        'kategori_id',
+        'tajwid_id'
     ];
 
     protected static function boot() {
@@ -31,5 +32,9 @@ class Pertanyaan extends Model
 
     public function kategori() {
         return $this->belongsTo(Kategori::class, 'kategori_id');
+    }
+
+    public function tajwid() {
+        return $this->belongsTo(Tajwid::class, 'tajwid_id');
     }
 }

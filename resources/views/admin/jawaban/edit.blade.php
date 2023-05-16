@@ -60,6 +60,7 @@
                                     <select name="kategori" id="kategori">
                                         <option value="tanda" @if($data->kategori == 'tanda') selected @endif>Tanda</option>
                                         <option value="hukum" @if($data->kategori == 'hukum') selected @endif>Hukum</option>
+                                        <option value="kategori" @if($data->kategori == 'kategori') selected @endif>Kategori</option>
                                     </select>
                                 </div>
                             </div>

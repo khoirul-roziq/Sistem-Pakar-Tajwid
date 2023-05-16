@@ -83,9 +83,11 @@
                                                     <td>{{ $value->kode }}</td>
                                                     <td>{{ $value->nama_jawaban }}</td>
                                                     <td>
-                                                        @if ($value->kategori == 'tanda')
+                                                        @if ($value->type == 'tanda')
                                                         <span class="font-kitab">{{ html_entity_decode(json_decode('"' . $value->representasi . '"'), ENT_QUOTES, 'UTF-8')}}</span>
-                                                        @elseif($value->kategori == 'hukum')
+                                                        @elseif($value->type == 'hukum')
+                                                        {{ $value->representasi }}
+                                                        @elseif($value->type == 'kategori')
                                                         {{ $value->representasi }}
                                                         @else
                                                         -

@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('role_base', function (Blueprint $table) {
             $table->id();
-            $table->string('kode');
+            $table->string('kode')->unique();
             $table->integer('id_tajwid');
             $table->string('deleted_tajwid_name')->nullable();
-            $table->string('pattern');
+            $table->string('role')->unique();
             $table->text('keterangan');
             $table->timestamps();
         });

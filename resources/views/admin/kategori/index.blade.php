@@ -69,7 +69,7 @@
                                                     class="material-icons">add_circle</i></a>
                                         </div>
                                     </div>
-                                    
+
                                     <table id="datatable">
                                         <thead>
                                             <tr>
@@ -80,31 +80,37 @@
                                         </thead>
                                         <tbody>
                                             @foreach ($data as $value)
-                                                <tr>
-                                                    <td>{{ $value->nama_kategori }}</td>
-                                                    <td>{{ $value->kode }}</td>
-                                                    <td>
-                                                        <form action="{{ route('kategori.destroy', $value->id) }}"
-                                                            method="post" class="delete" id="delete{{ $value->id }}" name="delete">
-                                                            @method('delete')
-                                                            @csrf
-                                                            <!-- Dropdown Trigger -->
-                                                            <a class='dropdown-trigger btn-small teal white-text' href='#'
-                                                                data-target='aksi{{ $value->id }}'><b>Pilih Aksi!</b></a>
+                                                @if ($value->kode != 'K000')
+                                                    <tr>
+                                                        <td>{{ $value->nama_kategori }}</td>
+                                                        <td>{{ $value->kode }}</td>
+                                                        <td>
+                                                            <form action="{{ route('kategori.destroy', $value->id) }}"
+                                                                method="post" class="delete" id="delete{{ $value->id }}"
+                                                                name="delete">
+                                                                @method('delete')
+                                                                @csrf
+                                                                <!-- Dropdown Trigger -->
+                                                                <a class='dropdown-trigger btn-small teal white-text'
+                                                                    href='#'
+                                                                    data-target='aksi{{ $value->id }}'><b>Pilih
+                                                                        Aksi!</b></a>
 
-                                                            <!-- Dropdown Structure -->
-                                                            <ul id='aksi{{ $value->id }}' class='dropdown-content'>
-                                                                <li><a href="{{ route('kategori.show', $value->id) }}"><i
-                                                                            class="material-icons">remove_red_eye</i>Detail</a>
-                                                                </li>
-                                                                <li><a href="{{ route('kategori.edit', $value->id) }}"><i
-                                                                            class="material-icons">edit</i>Edit</a></li>
-                                                                <li><a onclick="fungsiDelete({{$value->id}})"><i
-                                                                            class="material-icons">delete</i>Hapus</a></li>
-                                                            </ul>
-                                                        </form>
-                                                    </td>
-                                                </tr>
+                                                                <!-- Dropdown Structure -->
+                                                                <ul id='aksi{{ $value->id }}' class='dropdown-content'>
+                                                                    <li><a href="{{ route('kategori.show', $value->id) }}"><i
+                                                                                class="material-icons">remove_red_eye</i>Detail</a>
+                                                                    </li>
+                                                                    <li><a href="{{ route('kategori.edit', $value->id) }}"><i
+                                                                                class="material-icons">edit</i>Edit</a></li>
+                                                                    <li><a onclick="fungsiDelete({{ $value->id }})"><i
+                                                                                class="material-icons">delete</i>Hapus</a>
+                                                                    </li>
+                                                                </ul>
+                                                            </form>
+                                                        </td>
+                                                    </tr>
+                                                @endif
                                             @endforeach
                                         </tbody>
                                     </table>
@@ -130,7 +136,7 @@
     <script src="{{ asset('assets/vendor/data-tables/js/script.js') }}"></script>
     <script>
         function fungsiDelete(id) {
-            if(confirm('Apakah kamu yakin akan menghapus data ini?')) {
+            if (confirm('Apakah kamu yakin akan menghapus data ini?')) {
                 document.getElementById('delete' + id).submit();
             }
         }

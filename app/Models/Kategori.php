@@ -19,4 +19,8 @@ class Kategori extends Model
     public function pertanyaan() {
         return $this->belongsToMany(Pertanyaan::class);
     }
+
+    public function tajwid() {
+        return $this->belongsToMany(Tajwid::class);
+    }
 }

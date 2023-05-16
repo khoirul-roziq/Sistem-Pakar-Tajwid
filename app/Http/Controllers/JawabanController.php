@@ -34,7 +34,7 @@ class JawabanController extends Controller
             'kode' => $request->input('kode'),
             'nama_jawaban' => $request->input('namaJawaban'),
             'representasi' => $request->input('representasi'),
-            'kategori' => $request->input('kategori'),
+            'type' => $request->input('type'),
         ]);
 
         return redirect('jawaban')->with('message', 'Berhasil menambahkan data pertanyaan!');
@@ -68,7 +68,7 @@ class JawabanController extends Controller
         $data->kode = $request->input('kode');
         $data->nama_jawaban = $request->input('namaJawaban');
         $data->representasi = $request->input('representasi');
-        $data->kategori = $request->input('kategori');
+        $data->type = $request->input('type');
 
         $data->save();
 

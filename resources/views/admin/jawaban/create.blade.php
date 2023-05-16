@@ -56,9 +56,10 @@
                                     @enderror
                                 </div>
                                 <div class="input-field col m6 s12">
-                                    <select name="kategori" id="kategori">
+                                    <select name="type" id="type">
                                         <option value="tanda">Tanda</option>
                                         <option value="hukum">Hukum</option>
+                                        <option value="kategori">Kategori</option>
                                     </select>
                                 </div>
                             </div>

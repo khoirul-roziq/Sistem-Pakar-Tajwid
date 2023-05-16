@@ -32,11 +32,11 @@
   <body class="vertical-layout vertical-menu-collapsible page-header-dark vertical-modern-menu preload-transitions 2-columns" data-open="click" data-menu="vertical-modern-menu" data-col="2-columns" onload = "autoClick();">
     <div id="app">
       <header class="page-topbar" id="header">
-        @include('partials.admin.header')
+        @include('partials.header')
       </header>
     
       <aside class="sidenav-main nav-expanded nav-lock nav-collapsible sidenav-light sidenav-active-square">
-        @include('partials.admin.sidebar')
+        @include('partials.sidebar')
       </aside>
     
       <div id="main">

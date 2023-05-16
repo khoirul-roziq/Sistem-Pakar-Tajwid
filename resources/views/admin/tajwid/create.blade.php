@@ -5,6 +5,9 @@
 @endsection
 
 @section('styles')
+    <link rel="stylesheet"
+        href="https://pixinvent.com/materialize-material-design-admin-template/app-assets/vendors/select2/select2-materialize.css"
+        type="text/css">
 @endsection
 
 @section('content')
@@ -46,7 +49,7 @@
                         <form action="{{ route('tajwid.store') }}" method="post" enctype="multipart/form-data">
                             @csrf
                             <div class="row">
-                                <div class="input-field col m6 s12">
+                                <div class="input-field col m4 s12">
                                     <label for="namaTajwid">Nama Tajwid<span class="red-text">*</span></label>
                                     <input type="text" id="namaTajwid" name="namaTajwid"
                                         class="validate @error('namaTajwid') is-invalid @enderror" required
@@ -55,7 +58,7 @@
                                         <small class="red-text">{{ $message }}</small>
                                     @enderror
                                 </div>
-                                <div class="input-field col m6 s12">
+                                <div class="input-field col m4 s12">
                                     <label for="kode">Kode<span class="red-text">*</span></label>
                                     <input type="text" id="kode" name="kode"
                                         class="validate @error('kode') is-invalid @enderror" required
@@ -63,6 +66,16 @@
                                     @error('kode')
                                         <small class="red-text">{{ $message }}</small>
                                     @enderror
+                                </div>
+                                <div class="input-field col m4 s12">
+                                    <select class="select2 browser-default" name="kategori">
+                                        <option value="" disabled selected>--- Pilih Kategori ---</option>
+                                        @foreach ($kategori as $value)
+                                            
+                                                <option value="{{ $value->id }}">{{ $value->nama_kategori }}</option>
+                                            
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
                             <div class="row">
@@ -89,6 +102,16 @@
 @endsection
 
 @section('scripts')
+    <script
+        src="https://pixinvent.com/materialize-material-design-admin-template/app-assets/vendors/select2/select2.full.min.js">
+    </script>
+    {{-- Select --}}
+    <script>
+        $(".select2").select2({
+            dropdownAutoWidth: true,
+            width: '100%'
+        });
+    </script>
     <script src="{{ asset('assets/vendor/tinymce/tinymce.min.js') }}"></script>
     <script>
         // tinymce.init({

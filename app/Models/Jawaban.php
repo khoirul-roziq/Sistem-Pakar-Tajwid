@@ -15,7 +15,7 @@ class Jawaban extends Model
         'kode',
         'nama_jawaban',
         'representasi',
-        'kategori'
+        'type'
     ];
 
     public function pertanyaan() {

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Tajwid;
+use App\Models\Kategori;
 
 class TajwidController extends Controller
 {
@@ -22,7 +23,21 @@ class TajwidController extends Controller
      */
     public function create()
     {
-        return view('admin.tajwid.create');
+        // Cek ketersediaan K000
+        if(Kategori::where('kode', 'K000')->exists()) {
+            $idK000 = Kategori::where('kode', 'K000')->first()->id;
+        }
+
+        // Cek apakah kode K000 (Inisialisasi kategori) sudah dipilih berdasarkan id
+        if(Tajwid::where('kategori_id', $idK000)->exists()) {
+            // ambil data kategori kecuali Inisialisasi kategori
+            $kategori = Kategori::whereNotIn('id', [$idK000])->get();
+        } else {
+            // ambil semua data kategori
+            $kategori = Kategori::all();
+        }
+
+        return view('admin.tajwid.create', compact('kategori'));
     }
 
     /**
@@ -34,6 +49,7 @@ class TajwidController extends Controller
             'kode' => $request->kode,
             'nama_tajwid' => $request->namaTajwid,
             'penjelasan' => $request->penjelasan,
+            'kategori_id' => $request->kategori,
         ]);
 
         return redirect('tajwid')->with('message', 'Berhasil menambahkan hukum tajwid!');
@@ -54,7 +70,9 @@ class TajwidController extends Controller
     public function edit(string $id)
     {
         $data = Tajwid::findorfail($id);
-        return view('admin.tajwid.edit', compact('data'));
+        $kategori = Kategori::all();
+
+        return view('admin.tajwid.edit', compact('data', 'kategori'));
     }
 
     /**
@@ -66,6 +84,7 @@ class TajwidController extends Controller
             'kode' => $request->kode,
             'nama_tajwid' => $request->namaTajwid,
             'penjelasan' => $request->penjelasan,
+            'kategori_id' => $request->kategori,
         ]);
 
         return redirect('tajwid')->with('message', 'Berhasil mengubah data tajwid!');

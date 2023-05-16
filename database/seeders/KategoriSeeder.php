@@ -14,6 +14,11 @@ class KategoriSeeder extends Seeder
     public function run(): void
     {
         Kategori::create([
+            'kode' => 'K000',
+            'nama_kategori' => 'Inisialisasi',
+        ]);
+
+        Kategori::create([
             'kode' => 'K001',
             'nama_kategori' => 'Nun Mati/ Tanwin',
         ]);
@@ -47,6 +52,5 @@ class KategoriSeeder extends Seeder
             'kode' => 'K007',
             'nama_kategori' => 'Qolqolah',
         ]);
-
     }
 }
