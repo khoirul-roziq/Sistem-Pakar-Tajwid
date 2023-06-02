@@ -58,7 +58,6 @@ class ConsultationController extends Controller
                 $session->put('kategori', $kategori->id);
                 $session->put('pattern', '');
             } elseif ($session->has('pertanyaan')) {
-                
             }
         } elseif ($jawaban->type == 'hukum') {
 
@@ -76,9 +75,7 @@ class ConsultationController extends Controller
                 $pattern = $session->get('pattern');
 
                 return redirect()->route('get.surah')->with('pattern', $pattern);
-                
             }
- 
         } elseif ($jawaban->type == 'tanda') {
 
             // retrive data peryantaan yang belum ditampilkan
@@ -134,9 +131,17 @@ class ConsultationController extends Controller
         //     $textValue
         // );
 
-        $data = [
+        $data = [];
 
-        ];
+
+        $teks = '\u0646\u06e1&nbsp;\u0647';
+
+        if (strpos($teks, '&nbsp;') !== false) {
+            $teks = str_replace('&nbsp;', ' ', $teks);
+        }
+
+        dd($teks);
+
         return view('konsultasi.hasil', compact('data'));
     }
 }

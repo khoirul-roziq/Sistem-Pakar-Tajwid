@@ -12,7 +12,7 @@ class WelcomeController extends Controller
      */
     public function index()
     {
-        return view('konsultasi.welcome');
+        return view('welcome');
     }
 
     /**

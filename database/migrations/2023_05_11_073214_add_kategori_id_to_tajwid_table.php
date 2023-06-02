@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::table('tajwid', function (Blueprint $table) {
             //
-            $table->integer('kategori_id');
+            $table->integer('kategori_id')->nullable();
         });
     }
 
