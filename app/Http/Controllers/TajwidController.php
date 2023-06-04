@@ -37,7 +37,33 @@ class TajwidController extends Controller
             $kategori = Kategori::all();
         }
 
-        return view('admin.tajwid.create', compact('kategori'));
+        // Auto generate kode
+        $newKode = '';
+        if(Tajwid::count() > 0){
+            // aksi ketika table tajwid ada isinya
+
+            // hitung jumlah data pada table tajwid
+            $countTajwid = Tajwid::count();
+
+            // generate kode
+            if($countTajwid < 10) {
+                $newKode = 'H00'.$countTajwid;
+            } elseif ($countTajwid < 100) {
+                $newKode = 'H0'.$countTajwid;
+            } elseif ($countTajwid < 1000) {
+                $newKode = 'H'.$countTajwid;
+            } else {
+                $newKode = 'H'.$countTajwid;
+            }
+            
+        } else {
+            // aksi ketika table tajwid kosong
+
+            // generate kode
+            $newKode = 'H000';
+        }
+
+        return view('admin.tajwid.create', compact('kategori', 'newKode'));
     }
 
     /**

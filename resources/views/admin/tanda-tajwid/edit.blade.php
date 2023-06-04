@@ -5,6 +5,9 @@
 @endsection
 
 @section('styles')
+    <link rel="stylesheet"
+        href="https://pixinvent.com/materialize-material-design-admin-template/app-assets/vendors/select2/select2-materialize.css"
+        type="text/css">
 @endsection
 
 @section('content')
@@ -43,7 +46,8 @@
                 @endif
                 <div class="card">
                     <div class="card-content">
-                        <form action="{{ route('tanda-tajwid.update', $data->id) }}" method="post" enctype="multipart/form-data">
+                        <form action="{{ route('tanda-tajwid.update', $data->id) }}" method="post"
+                            enctype="multipart/form-data">
                             @method('put')
                             @csrf
                             <div class="row">
@@ -74,8 +78,15 @@
                                         <small class="red-text">{{ $message }}</small>
                                     @enderror
                                 </div>
+                                <div class="input-field col m4 s12">
+                                    <select class="select2 browser-default" name="jenis">
+                                        <option value="" disabled>--- Pilih Jenis ---</option>
+                                        <option value="huruf" @if($data->jenis == 'huruf') selected @endif>Huruf</option>
+                                        <option value="tanda" @if($data->jenis == 'tanda') selected @endif>Tanda</option>
+                                    </select>
+                                </div>
                             </div>
-                            
+
                             <div class="row">
                                 <div class="col m6 s12 mb-1 mt-3">
                                     <button class="waves-effect waves-dark btn btn-primary teal" type="submit"><i
@@ -94,5 +105,14 @@
 @endsection
 
 @section('scripts')
-    
+    <script
+        src="https://pixinvent.com/materialize-material-design-admin-template/app-assets/vendors/select2/select2.full.min.js">
+    </script>
+    {{-- Select --}}
+    <script>
+        $(".select2").select2({
+            dropdownAutoWidth: true,
+            width: '100%'
+        });
+    </script>
 @endsection

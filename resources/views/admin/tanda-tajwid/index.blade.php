@@ -69,29 +69,43 @@
                                                     class="material-icons">add_circle</i></a>
                                         </div>
                                     </div>
-                                    
+
                                     <table id="datatable">
                                         <thead>
                                             <tr>
-                                                <th>Nama Huruf/ Tanda</th>
                                                 <th>Kode</th>
-                                                <th>Representasi Arab</th>
+                                                <th>Nama Huruf/ Tanda</th>
+                                                <th>Representasi</th>
+                                                <th>Jenis</th>
                                                 <th>Aksi</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             @foreach ($data as $value)
                                                 <tr>
-                                                    <td>{{ $value->nama_tanda }}</td>
                                                     <td>{{ $value->kode }}</td>
-                                                    <td><span class="font-kitab">{{ html_entity_decode(json_decode('"' . $value->unicode . '"'), ENT_QUOTES, 'UTF-8')}}</span></td>
+                                                    <td>{{ $value->nama_tanda }}</td>
+                                                    <td><span class="font-kitab"
+                                                            style="font-size: 20px;">{{ html_entity_decode(json_decode('"' . $value->unicode . '"'), ENT_QUOTES, 'UTF-8') }}</span>
+                                                    </td>
+                                                    <td>
+                                                        @if ($value->jenis == 'huruf')
+                                                            <span class="blue-text darken-4">Huruf</span>
+                                                        @elseif($value->jenis == 'tanda')
+                                                        <span class="orange-text darken-4">Tanda</span>
+                                                        @else
+                                                            -
+                                                        @endif
+                                                    </td>
                                                     <td>
                                                         <form action="{{ route('tanda-tajwid.destroy', $value->id) }}"
-                                                            method="post" class="delete" id="delete{{ $value->id }}" name="delete">
+                                                            method="post" class="delete" id="delete{{ $value->id }}"
+                                                            name="delete">
                                                             @method('delete')
                                                             @csrf
                                                             <!-- Dropdown Trigger -->
-                                                            <a class='dropdown-trigger btn-small teal white-text' href='#'
+                                                            <a class='dropdown-trigger btn-small teal white-text'
+                                                                href='#'
                                                                 data-target='aksi{{ $value->id }}'><b>Pilih Aksi!</b></a>
 
                                                             <!-- Dropdown Structure -->
@@ -101,7 +115,7 @@
                                                                 </li>
                                                                 <li><a href="{{ route('tanda-tajwid.edit', $value->id) }}"><i
                                                                             class="material-icons">edit</i>Edit</a></li>
-                                                                <li><a onclick="fungsiDelete({{$value->id}})"><i
+                                                                <li><a onclick="fungsiDelete({{ $value->id }})"><i
                                                                             class="material-icons">delete</i>Hapus</a></li>
                                                             </ul>
                                                         </form>
@@ -132,7 +146,7 @@
     <script src="{{ asset('assets/vendor/data-tables/js/script.js') }}"></script>
     <script>
         function fungsiDelete(id) {
-            if(confirm('Apakah kamu yakin akan menghapus data ini?')) {
+            if (confirm('Apakah kamu yakin akan menghapus data ini?')) {
                 document.getElementById('delete' + id).submit();
             }
         }

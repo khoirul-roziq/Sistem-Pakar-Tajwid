@@ -14,7 +14,8 @@ class TandaTajwid extends Model
     protected $fillable = [
         'kode',
         'nama_tanda',
-        'unicode'
+        'unicode',
+        'jenis'
     ];
 
     public function roleBase() {

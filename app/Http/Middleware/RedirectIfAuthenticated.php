@@ -24,7 +24,7 @@ class RedirectIfAuthenticated
                 return redirect()->route('dashboard.index');
             } elseif (Auth::guard('user')->user()->role === 'guest') {
                 // Pengguna memiliki peran guest
-                return redirect()->route('welcome.index');
+                return redirect()->route('dashboard.index');
             } else {
                 // Pengguna memiliki peran lainnya
             }

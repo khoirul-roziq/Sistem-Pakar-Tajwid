@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('kode');
             $table->string('nama_tanda');
             $table->string('unicode');
+            $table->string('jenis');
             $table->timestamps();
         });
     }

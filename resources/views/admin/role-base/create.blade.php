@@ -51,7 +51,6 @@
             opacity: 1;
             visibility: visible;
         }
-
     </style>
 @endsection
 
@@ -114,7 +113,9 @@
                                     <select class="select2 browser-default" name="tajwid">
                                         <option value="" disabled selected>--- Pilih Tajwid ---</option>
                                         @foreach ($data as $value)
-                                            <option value="{{ $value->id }}">{{ $value->nama_tajwid }}</option>
+                                            @if ($value->kode != 'H000')
+                                                <option value="{{ $value->id }}">{{ $value->nama_tajwid }}</option>
+                                            @endif
                                         @endforeach
                                     </select>
                                 </div>
@@ -171,19 +172,27 @@
                             </div>
                             <div class="row center-align mt-2">
                                 <button id="switch" class="btn-small">Sembunyikan Tabel</button>
-                                <button id="delete-btn" class="btn-small"><i class="material-icons left">clear_all</i> Hapus semua data</button>
+                                <button id="delete-btn" class="btn-small"><i class="material-icons left">clear_all</i> Hapus
+                                    semua data</button>
                             </div>
                             <div class="row center-align" id="key-button">
                                 @foreach ($tandaTajwid as $value)
                                     <button
-                                        onclick="addRow(`{{ $value->kode }}`, `{{ $value->nama_tanda }}`, `{{ $value->unicode }}`, `{{ trim(preg_replace('/\\\\u([0-9a-fA-F]{4})/', '\\\\u$1', json_encode($value->unicode)), '"') }}`, `{{ $value->id}}`)"
-                                        class="btn-small tombol-tanda"><span class="font-kitab-bold">
-                                            @if ($value->unicode == '&nbsp;')
-                                                <i class="material-icons">space_bar</i>
-                                            @else
-                                                {{ html_entity_decode(json_decode('"' . $value->unicode . '"'), ENT_QUOTES, 'UTF-8') }}
+                                        onclick="addRow(`{{ $value->kode }}`, `{{ $value->nama_tanda }}`, `{{ $value->unicode }}`, `{{ trim(preg_replace('/\\\\u([0-9a-fA-F]{4})/', '\\\\u$1', json_encode($value->unicode)), '"') }}`, `{{ $value->id }}`)"
+                                        class="btn-small tombol-tanda">
+
+                                        @if ($value->unicode == '&nbsp;')
+                                            <span class="font-kitab-bold"><i class="material-icons">space_bar</i></span>
+                                        @else
+                                            @if ($value->jenis == 'huruf')
+                                                <span
+                                                    class="font-kitab-bold" style="font-size: 18px;">{{ html_entity_decode(json_decode('"' . $value->unicode . '"'), ENT_QUOTES, 'UTF-8') }}</span>
+                                            @elseif($value->jenis == 'tanda')
+                                                <span
+                                                    class="font-kitab-bold" style="font-size: 20px;">{{ html_entity_decode(json_decode('"' . $value->unicode . '"'), ENT_QUOTES, 'UTF-8') }}</span>
                                             @endif
-                                        </span></button>
+                                        @endif
+                                    </button>
                                 @endforeach
                             </div>
                         </div>
@@ -369,7 +378,7 @@
 
         function addRow(kode, nama, representasi, unicode, id) {
             var table = document.getElementById("tbody-role-base");
-            
+
 
             var row = table.insertRow(-1);
 
@@ -410,7 +419,7 @@
         function deleteRow(rowIndex) {
             document.getElementById("table-role-base").deleteRow(rowIndex);
 
-            deleteOption(rowIndex-1);
+            deleteOption(rowIndex - 1);
             updateCombinedValues();
             toggleNoData(); // panggil fungsi untuk menampilkan atau menyembunyikan elemen no-data
         }

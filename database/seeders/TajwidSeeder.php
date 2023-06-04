@@ -14,6 +14,11 @@ class TajwidSeeder extends Seeder
     public function run(): void
     {
         Tajwid::create([
+            'kode' => 'H000',
+            'nama_tajwid' => 'Inisialisasi',
+        ]);
+
+        Tajwid::create([
             'kode' => 'H001',
             'nama_tajwid' => 'Idzhar Halqi',
         ]);

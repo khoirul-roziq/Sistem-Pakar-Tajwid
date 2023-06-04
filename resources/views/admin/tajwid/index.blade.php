@@ -71,8 +71,8 @@
                                     <table id="datatable">
                                         <thead>
                                             <tr>
-                                                <th>Nama Tajwid</th>
                                                 <th>Kode</th>
+                                                <th>Nama Tajwid</th>
                                                 <th>Aksi</th>
                                             </tr>
                                         </thead>
@@ -80,8 +80,8 @@
                                             @foreach ($data as $value)
                                                 @if ($value->kode != 'H000')
                                                     <tr>
-                                                        <td>{{ $value->nama_tajwid }}</td>
                                                         <td>{{ $value->kode }}</td>
+                                                        <td>{{ $value->nama_tajwid }}</td>
                                                         <td>
                                                             <form action="{{ route('tajwid.destroy', $value->id) }}"
                                                                 method="post" class="delete" id="delete{{ $value->id }}"

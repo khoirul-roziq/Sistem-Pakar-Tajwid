@@ -21,7 +21,33 @@ class TandaTajwidController extends Controller
      */
     public function create()
     {
-        return view('admin.tanda-tajwid.create');
+        // Auto generate kode
+        $newKode = '';
+        if(TandaTajwid::count() > 0){
+            // aksi ketika table tajwid ada isinya
+
+            // hitung jumlah data pada table tajwid dan ditambah 1
+            $countTandaTajwid = TandaTajwid::count() + 1;
+
+            // generate kode
+            if($countTandaTajwid < 10) {
+                $newKode = 'T00'.$countTandaTajwid;
+            } elseif ($countTandaTajwid < 100) {
+                $newKode = 'T0'.$countTandaTajwid;
+            } elseif ($countTandaTajwid < 1000) {
+                $newKode = 'T'.$countTandaTajwid;
+            } else {
+                $newKode = 'T'.$countTandaTajwid;
+            }
+            
+        } else {
+            // aksi ketika table tajwid kosong
+
+            // generate kode
+            $newKode = 'T001';
+        }
+
+        return view('admin.tanda-tajwid.create', compact('newKode'));
     }
 
     /**
@@ -33,6 +59,7 @@ class TandaTajwidController extends Controller
             'nama_tanda' => $request->namaTanda,
             'kode' => $request->kode,
             'unicode' => $request->unicode,
+            'jenis' =>$request->jenis
         ]);
 
         return redirect('tanda-tajwid')->with('message', 'Berhasil menambahkan tanda tajwid!');
@@ -65,6 +92,7 @@ class TandaTajwidController extends Controller
             'nama_tanda' => $request->namaTanda,
             'kode' => $request->kode,
             'unicode' => $request->unicode,
+            'jenis' =>$request->jenis
         ]);
 
         return redirect('tanda-tajwid')->with('message', 'Berhasil mengubah tanda tajwid!');

@@ -5,6 +5,9 @@
 @endsection
 
 @section('styles')
+<link rel="stylesheet"
+        href="https://pixinvent.com/materialize-material-design-admin-template/app-assets/vendors/select2/select2-materialize.css"
+        type="text/css">
 @endsection
 
 @section('content')
@@ -59,7 +62,7 @@
                                     <label for="kode">Kode<span class="red-text">*</span></label>
                                     <input type="text" id="kode" name="kode"
                                         class="validate @error('kode') is-invalid @enderror" required
-                                        value="{{ old('kode') }}">
+                                        value="{{ $newKode }}">
                                     @error('kode')
                                         <small class="red-text">{{ $message }}</small>
                                     @enderror
@@ -73,8 +76,15 @@
                                         <small class="red-text">{{ $message }}</small>
                                     @enderror
                                 </div>
+                                <div class="input-field col m4 s12">
+                                    <select class="select2 browser-default" name="jenis">
+                                        <option value="" disabled selected>--- Pilih Jenis ---</option>
+                                        <option value="huruf">Huruf</option>
+                                        <option value="tanda">Tanda</option>
+                                    </select>
+                                </div>
                             </div>
-                            
+
                             <div class="row">
                                 <div class="col m6 s12 mb-1 mt-3">
                                     <button class="waves-effect waves-dark btn btn-primary teal" type="submit"><i
@@ -93,5 +103,14 @@
 @endsection
 
 @section('scripts')
-    
+    <script
+        src="https://pixinvent.com/materialize-material-design-admin-template/app-assets/vendors/select2/select2.full.min.js">
+    </script>
+    {{-- Select --}}
+    <script>
+        $(".select2").select2({
+            dropdownAutoWidth: true,
+            width: '100%'
+        });
+    </script>
 @endsection

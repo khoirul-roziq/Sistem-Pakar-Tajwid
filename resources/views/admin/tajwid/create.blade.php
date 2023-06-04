@@ -62,7 +62,7 @@
                                     <label for="kode">Kode<span class="red-text">*</span></label>
                                     <input type="text" id="kode" name="kode"
                                         class="validate @error('kode') is-invalid @enderror" required
-                                        value="{{ old('kode') }}">
+                                        value="{{ $newKode }}">
                                     @error('kode')
                                         <small class="red-text">{{ $message }}</small>
                                     @enderror
@@ -112,6 +112,7 @@
             width: '100%'
         });
     </script>
+    
     <script src="{{ asset('assets/vendor/tinymce/tinymce.min.js') }}"></script>
     <script>
         // tinymce.init({
