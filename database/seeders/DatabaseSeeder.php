@@ -28,6 +28,7 @@ class DatabaseSeeder extends Seeder
             TajwidSeeder::class,
             JawabanSeeder::class,
             KategoriSeeder::class,
+            PertanyaanSeeder::class,
         ]);
     }
 }
