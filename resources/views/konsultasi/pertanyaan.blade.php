@@ -35,26 +35,44 @@
                     </div>
                     <div class="opsi row">
                         <div class="col s12">
-                            @foreach ($pertanyaan->jawaban as $jawaban)
-                                <form action="{{ route('konsultasi') }}" method="post" class="mt-1 mb-2 col">
-                                    @csrf
-                                    <input type="text" value="{{ $jawaban->id }}" name="jawaban" hidden>
-                                    <button type="submit" class="btn">
-                                        @if ($jawaban->type == 'kategori')
-                                            <span>{{ $jawaban->representasi }}</span>
-                                        @elseif ($jawaban->type == 'hukum')
-                                            <span>{{ $jawaban->representasi }}</span>
-                                        @elseif($jawaban->type == 'tanda')
-                                            <span
-                                                class="font-kitab">{{ html_entity_decode(json_decode('"' . $jawaban->representasi . '"'), ENT_QUOTES, 'UTF-8') }}</span>
-                                        @else
-                                            <span>-</span>
-                                        @endif
-                                    </button>
-                                </form>
-                            @endforeach
+                            @if ($kode == 'K000')
+                                @foreach ($pertanyaan->kategoriJawaban as $kategori)
+                                    <form action="{{ route('konsultasi') }}" method="post" class="mt-1 mb-2 col">
+                                        @csrf
+                                        <input type="text" value="{{ $pertanyaan->id }}" name="reference" hidden>
+                                        <input type="text" value="{{ $kategori->kode }}" name="jawaban" hidden>
+                                        <button type="submit" class="btn">
+                                            {{ $kategori->nama_kategori }}
+                                        </button>
+                                    </form>
+                                @endforeach
+                            @else
+                                @if ($kode == 'H000')
+                                    @foreach ($pertanyaan->tajwidJawaban as $tajwid)
+                                        <form action="{{ route('konsultasi') }}" method="post" class="mt-1 mb-2 col">
+                                            @csrf
+                                            <input type="text" value="{{ $pertanyaan->id }}" name="reference" hidden>
+                                            <input type="text" value="{{ $tajwid->kode }}" name="jawaban" hidden>
+                                            <button type="submit" class="btn">
+                                                {{ $tajwid->nama_tajwid }}
+                                            </button>
+                                        </form>
+                                    @endforeach
+                                @else
+                                    @foreach ($pertanyaan->tandaTajwidJawaban as $tandaTajwid)
+                                        <form action="{{ route('konsultasi') }}" method="post" class="mt-1 mb-2 col">
+                                            @csrf
+                                            <input type="text" value="{{ $pertanyaan->id }}" name="reference" hidden>
+                                            <input type="text" value="{{ $kode }}" name="kode" hidden>
+                                            <input type="text" value="{{ $tandaTajwid->kode }}" name="jawaban" hidden>
+                                            <button type="submit" class="btn-large">
+                                                <span class="font-kitab" style="font-size:25px;">{{ html_entity_decode(json_decode('"' . $tandaTajwid->unicode . '"'), ENT_QUOTES, 'UTF-8') }}</span>
+                                            </button>
+                                        </form>
+                                    @endforeach
+                                @endif
+                            @endif
                         </div>
-
                     </div>
                 </div>
             </div>

@@ -23,12 +23,10 @@ class Pertanyaan extends Model
         parent::boot();
 
         static::deleting(function ($pertanyaan) {
-            $pertanyaan->jawaban()->detach();
+            $pertanyaan->kategoriJawaban()->detach();
+            $pertanyaan->tajwidJawaban()->detach();
+            $pertanyaan->tandaTajwidJawaban()->detach();
         });
-    }
-
-    public function jawaban() {
-        return $this->belongsToMany(Jawaban::class);
     }
 
     public function kategori() {
@@ -37,5 +35,17 @@ class Pertanyaan extends Model
 
     public function tajwid() {
         return $this->belongsTo(Tajwid::class, 'tajwid_id');
+    }
+
+    public function kategoriJawaban() {
+        return $this->belongsToMany(Kategori::class);
+    }
+
+    public function tajwidJawaban() {
+        return $this->belongsToMany(Tajwid::class);
+    }
+
+    public function tandaTajwidJawaban() {
+        return $this->belongsToMany(TandaTajwid::class);
     }
 }

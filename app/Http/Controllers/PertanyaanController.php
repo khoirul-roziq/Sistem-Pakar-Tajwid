@@ -7,6 +7,7 @@ use App\Models\Jawaban;
 use App\Models\Pertanyaan;
 use App\Models\Kategori;
 use App\Models\Tajwid;
+use App\Models\TandaTajwid;
 
 class PertanyaanController extends Controller
 {
@@ -67,9 +68,10 @@ class PertanyaanController extends Controller
 
         $jawaban = Jawaban::all(); 
         $tajwid = Tajwid::all();
-        $pertanyaan = Pertanyaan::all();       
+        $pertanyaan = Pertanyaan::all(); 
+        $tandaTajwid = TandaTajwid::all();      
 
-        return view('admin.pertanyaan.create', compact('jawaban', 'kategori', 'tajwid', 'pertanyaan', 'newKode'));
+        return view('admin.pertanyaan.create', compact('jawaban', 'kategori', 'tajwid', 'pertanyaan', 'tandaTajwid', 'newKode'));
     }
 
     /**
@@ -77,15 +79,32 @@ class PertanyaanController extends Controller
      */
     public function store(Request $request)
     {
+        $kategori = Kategori::findorfail($request->input('kategori'));
+        $tajwid = Tajwid::findorfail($request->input('tajwid'));
+
+        if($kategori->kode == 'K000') {
+            $ref = 0;
+        } else {
+            $ref = $request->reference;
+        }
+
         $data = Pertanyaan::create([
             'kode' => $request->kode,
             'soal' => $request->soal,
             'kategori_id' => $request->kategori,
             'tajwid_id' => $request->tajwid,
-            'reference' => $request->reference,
+            'reference' => $ref,
         ]);
-
-        $data->jawaban()->sync($request->jawaban);
+        
+        if($kategori->kode == 'K000'){
+            $data->kategoriJawaban()->sync($request->jawaban);
+        } else {
+            if($tajwid->kode == 'H000') {
+                $data->tajwidJawaban()->sync($request->jawaban);
+            } else {
+                $data->tandaTajwidJawaban()->sync($request->jawaban);
+            }
+        }
 
         return redirect('pertanyaan')->with('message', 'Berhasil menambahkan data pertanyaan!');
     }

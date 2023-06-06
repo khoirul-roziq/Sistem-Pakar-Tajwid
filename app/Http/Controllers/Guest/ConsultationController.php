@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Models\Pertanyaan;
 use App\Models\Kategori;
+use App\Models\Tajwid;
+use App\Models\TandaTajwid;
 
 
 class ConsultationController extends Controller
@@ -19,93 +21,132 @@ class ConsultationController extends Controller
         // Cek ketersediaan K000
         if (Kategori::where('kode', 'K000')->exists()) {
             $idK000 = Kategori::where('kode', 'K000')->first()->id;
-        }
 
-        // Cek apakah kode K000 (Inisialisasi kategori) sudah dipilih berdasarkan id
-        if (Pertanyaan::where('kategori_id', $idK000)->exists()) {
-            // ambil data pertanyaan yang memiliki kategori inisialisasi berdasarkan kategori id
-            $pertanyaan = Pertanyaan::where('kategori_id', $idK000)->first();
+            // Cek apakah kode K000 (Inisialisasi kategori) sudah dipilih berdasarkan id
+            if (Pertanyaan::where('kategori_id', $idK000)->exists()) {
+                // ambil data pertanyaan yang memiliki kategori inisialisasi berdasarkan kategori id
+                $pertanyaan = Pertanyaan::where('kategori_id', $idK000)->first();
+            } else {
+                return 'kategori_id not found.';
+            }
         } else {
-            $pertanyaan = false;
+            return 'K000 not found.';
         }
 
-        return view('konsultasi.pertanyaan', compact('pertanyaan'));
+        return view('konsultasi.pertanyaan', compact('pertanyaan'))->with('kode', 'K000');
     }
+
+    // public function konsultasi(Request $request)
+    // {
+
+    //     // retrive data jawaban berdasarkan request
+    //     $jawaban = Jawaban::findorfail($request->jawaban);
+
+    //     $session = session();
+
+    //     // cek tipe jawaban
+    //     if ($jawaban->type == 'kategori') {
+
+    //         // retrive data kategori berdasarkan representasi jawaban
+    //         $kategori = Kategori::where('nama_kategori', $jawaban->representasi)->first();
+
+    //         // temporary storage menggunakan session
+    //         // cek ketersediaan session pertanyaan
+    //         if ($session->has('pertanyaan') == null) {
+
+    //             // retrive data pertanyaan berdasarkan kategori 
+    //             $pertanyaan = Pertanyaan::where('kategori_id', $kategori->id)->first();
+
+    //             // create session pertanyaan
+    //             $session->put('pertanyaan', [$pertanyaan->id]);
+    //             $session->put('kategori', $kategori->id);
+    //             $session->put('pattern', '');
+    //         } elseif ($session->has('pertanyaan')) {
+    //         }
+    //     } elseif ($jawaban->type == 'hukum') {
+
+    //         // 
+    //         $pertanyaan = Pertanyaan::where('kategori_id', $session->get('kategori'))
+    //             ->whereNotIn('id', $session->get('pertanyaan'))
+    //             ->get();
+
+    //         if ($pertanyaan->isNotEmpty()) {
+    //             $pertanyaan = $pertanyaan[0];
+    //             $session->push('pertanyaan', $pertanyaan->id);
+    //         } else {
+    //             // Lakukan penanganan jika array kosong, misalnya mengembalikan pesan error atau melakukan tindakan alternatif
+
+    //             $pattern = $session->get('pattern');
+
+    //             return redirect()->route('get.surah')->with('pattern', $pattern);
+    //         }
+    //     } elseif ($jawaban->type == 'tanda') {
+
+    //         // retrive data peryantaan yang belum ditampilkan
+    //         $pertanyaan = Pertanyaan::where('kategori_id', $session->get('kategori'))
+    //             ->whereNotIn('id', $session->get('pertanyaan'))
+    //             ->get();
+
+    //         if ($pertanyaan->isNotEmpty()) {
+    //             $pertanyaan = $pertanyaan[0];
+
+    //             // tambah id pertanyaan yang sudah dikeluarkan berdasarkan id
+    //             $session->push('pertanyaan', $pertanyaan->id);
+
+    //             // merge pattern dari session dan jawaban
+    //             $pattern = $session->get('pattern') . $jawaban->representasi;
+    //             $session->put('pattern', $pattern);
+    //         } else {
+    //             // Lakukan penanganan jika array kosong, misalnya mengembalikan pesan error atau melakukan tindakan alternatif
+    //             $pattern = $session->get('pattern') . $jawaban->representasi;
+
+    //             // simpan pattern baru
+    //             $session->put('pattern', $pattern);
+
+    //             $pattern = $session->get('pattern');
+
+    //             return redirect()->route('get.surah')->with('pattern', $pattern);
+    //         }
+    //     }
+
+    //     return view('konsultasi.pertanyaan', compact('pertanyaan'));
+    // }
 
     public function konsultasi(Request $request)
     {
 
-        // retrive data jawaban berdasarkan request
-        $jawaban = Jawaban::findorfail($request->jawaban);
+        $kodeJawaban = $request->input('jawaban');
 
-        $session = session();
+        if ($kodeJawaban[0] == 'K') {
+            // cari kategori berdasarkan kode
+            $kategori = Kategori::where('kode', $kodeJawaban)->first();
+            $pertanyaan = Pertanyaan::where('reference', $request->input('reference'))->where('kategori_id', $kategori->id)->first();
 
-        // cek tipe jawaban
-        if ($jawaban->type == 'kategori') {
+            // menenentukan kode untuk tipe jawaban
+            $kode = Tajwid::findorfail($pertanyaan->tajwid_id)->kode;
+        } else {
+            if ($kodeJawaban[0] == 'H') {
+                $tajwid = Tajwid::where('kode', $kodeJawaban)->first();
 
-            // retrive data kategori berdasarkan representasi jawaban
-            $kategori = Kategori::where('nama_kategori', $jawaban->representasi)->first();
+                $pertanyaan = Pertanyaan::where('reference', $request->input('reference'))->where('kategori_id', $tajwid->kategori_id)->where('tajwid_id', $tajwid->id)->first();
 
-            // temporary storage menggunakan session
-            // cek ketersediaan session pertanyaan
-            if ($session->has('pertanyaan') == null) {
-
-                // retrive data pertanyaan berdasarkan kategori 
-                $pertanyaan = Pertanyaan::where('kategori_id', $kategori->id)->first();
-
-                // create session pertanyaan
-                $session->put('pertanyaan', [$pertanyaan->id]);
-                $session->put('kategori', $kategori->id);
-                $session->put('pattern', '');
-            } elseif ($session->has('pertanyaan')) {
-            }
-        } elseif ($jawaban->type == 'hukum') {
-
-            // 
-            $pertanyaan = Pertanyaan::where('kategori_id', $session->get('kategori'))
-                ->whereNotIn('id', $session->get('pertanyaan'))
-                ->get();
-
-            if ($pertanyaan->isNotEmpty()) {
-                $pertanyaan = $pertanyaan[0];
-                $session->push('pertanyaan', $pertanyaan->id);
+                // menenentukan kode untuk tipe jawaban
+                $kode = Tajwid::findorfail($pertanyaan->tajwid_id)->kode;
             } else {
-                // Lakukan penanganan jika array kosong, misalnya mengembalikan pesan error atau melakukan tindakan alternatif
+                // ambil data tajwid berdasarkan kode tajwid yang dikirim pertanyaan sebelumnya
+                $tajwid = Tajwid::where('kode', $request->input('kode'))->first();
 
-                $pattern = $session->get('pattern');
+                // tanda tajwid
+                $tanda = TandaTajwid::where('kode', $kodeJawaban)->first();
 
-                return redirect()->route('get.surah')->with('pattern', $pattern);
-            }
-        } elseif ($jawaban->type == 'tanda') {
+                $pertanyaan = Pertanyaan::where('reference', $request->input('reference'))->where('kategori_id', $tajwid->kategori_id)->where('tajwid_id', $tajwid->id)->first();
 
-            // retrive data peryantaan yang belum ditampilkan
-            $pertanyaan = Pertanyaan::where('kategori_id', $session->get('kategori'))
-                ->whereNotIn('id', $session->get('pertanyaan'))
-                ->get();
-
-            if ($pertanyaan->isNotEmpty()) {
-                $pertanyaan = $pertanyaan[0];
-
-                // tambah id pertanyaan yang sudah dikeluarkan berdasarkan id
-                $session->push('pertanyaan', $pertanyaan->id);
-
-                // merge pattern dari session dan jawaban
-                $pattern = $session->get('pattern') . $jawaban->representasi;
-                $session->put('pattern', $pattern);
-            } else {
-                // Lakukan penanganan jika array kosong, misalnya mengembalikan pesan error atau melakukan tindakan alternatif
-                $pattern = $session->get('pattern') . $jawaban->representasi;
-
-                // simpan pattern baru
-                $session->put('pattern', $pattern);
-
-                $pattern = $session->get('pattern');
-
-                return redirect()->route('get.surah')->with('pattern', $pattern);
+                // menenentukan kode untuk tipe jawaban
+                $kode = Tajwid::findorfail($pertanyaan->tajwid_id)->kode;
             }
         }
 
-        return view('konsultasi.pertanyaan', compact('pertanyaan'));
+        return view('konsultasi.pertanyaan', compact('pertanyaan', 'kode'));
     }
 
     public function hasil(Request $request)

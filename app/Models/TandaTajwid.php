@@ -21,4 +21,8 @@ class TandaTajwid extends Model
     public function roleBase() {
         return $this->belongsToMany(RoleBase::class);
     }
+
+    public function pertanyaan() {
+        return $this->belongsToMany(Pertanyaan::class);
+    }
 }
