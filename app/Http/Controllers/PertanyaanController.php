@@ -39,10 +39,37 @@ class PertanyaanController extends Controller
             $kategori = Kategori::all();
         }
 
-        $jawaban = Jawaban::all(); 
-        $tajwid = Tajwid::all();       
+        // Auto generate kode
+        $newKode = '';
+        if(Pertanyaan::count() > 0){
+            // aksi ketika table tajwid ada isinya
 
-        return view('admin.pertanyaan.create', compact('jawaban', 'kategori', 'tajwid'));
+            // hitung jumlah data pada table tajwid
+            $countPertanyaan = Pertanyaan::count();
+
+            // generate kode
+            if($countPertanyaan < 10) {
+                $newKode = 'P00'.$countPertanyaan;
+            } elseif ($countPertanyaan < 100) {
+                $newKode = 'P0'.$countPertanyaan;
+            } elseif ($countPertanyaan < 1000) {
+                $newKode = 'P'.$countPertanyaan;
+            } else {
+                $newKode = 'P'.$countPertanyaan;
+            }
+            
+        } else {
+            // aksi ketika table tajwid kosong
+
+            // generate kode
+            $newKode = 'P000';
+        }
+
+        $jawaban = Jawaban::all(); 
+        $tajwid = Tajwid::all();
+        $pertanyaan = Pertanyaan::all();       
+
+        return view('admin.pertanyaan.create', compact('jawaban', 'kategori', 'tajwid', 'pertanyaan', 'newKode'));
     }
 
     /**
@@ -55,6 +82,7 @@ class PertanyaanController extends Controller
             'soal' => $request->soal,
             'kategori_id' => $request->kategori,
             'tajwid_id' => $request->tajwid,
+            'reference' => $request->reference,
         ]);
 
         $data->jawaban()->sync($request->jawaban);

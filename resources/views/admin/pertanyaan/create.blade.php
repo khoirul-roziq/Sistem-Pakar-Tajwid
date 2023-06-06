@@ -105,7 +105,7 @@
                                     <label for="kode">Kode Pertanyaan<span class="red-text">*</span></label>
                                     <input type="text" id="kode" name="kode"
                                         class="validate @error('kode') is-invalid @enderror" required
-                                        value="{{ old('kode') }}">
+                                        value="{{ $newKode }}">
                                     @error('kode')
                                         <small class="red-text">{{ $message }}</small>
                                     @enderror
@@ -129,6 +129,17 @@
                                     </select>
                                 </div>
 
+                            </div>
+
+                            <div class="row">
+                                <div class="input-field col m12 s12">
+                                    <select class="select2 browser-default" name="reference">
+                                        <option value="" disabled selected>--- Pilih Referensi ---</option>
+                                        @foreach ($pertanyaan as $value)
+                                            <option value="{{ $value->id }}">{!! $value->kode . ' - ' . $value->soal !!}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
                             </div>
 
                             <div class="row">
@@ -511,7 +522,7 @@
             ],
             template_cdate_format: '[Date Created (CDATE): %m/%d/%Y : %H:%M:%S]',
             template_mdate_format: '[Date Modified (MDATE): %m/%d/%Y : %H:%M:%S]',
-            height: 600,
+            height: 300,
             image_caption: true,
             quickbars_selection_toolbar: 'bold italic | quicklink h2 h3 blockquote quickimage quicktable',
             noneditable_noneditable_class: "mceNonEditable",
