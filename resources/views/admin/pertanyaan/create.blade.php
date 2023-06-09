@@ -142,6 +142,15 @@
                             </div>
 
                             <div class="row">
+                                <div class="input-field col m12 s12 mb-5">
+                                    <label>
+                                        <input type="checkbox" class="filled-in" name="last-question" />
+                                        <span>Pertanyaan Terakhir</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="row">
                                 <div class="input-field col m12 s12">
                                     <span>Pertanyaan</span>
                                     <textarea id="soal" name="soal" rows="5"></textarea>
@@ -191,26 +200,16 @@
                             </div>
                             <div class="row center-align mt-2">
                                 <button id="switch" class="btn-small">Sembunyikan Tabel</button>
-                                <button id="delete-btn" class="btn-small"><i class="material-icons left">clear_all</i> Hapus
+                                <button id="delete-btn" class="btn-small"><i class="material-icons left">clear_all</i>
+                                    Hapus
                                     semua data</button>
                             </div>
                             <div class="row center-align" id="key-button">
-                                {{-- @foreach ($jawaban as $value)
-                                    <button
-                                        onclick="addRow(`{{ $value->kode }}`, `{{ $value->nama_jawaban }}`, `{{ $value->representasi }}`, `{{ trim(preg_replace('/\\\\u([0-9a-fA-F]{4})/', '\\\\u$1', json_encode($value->representasi)), '"') }}`, `{{ $value->id}}`)"
-                                        class="btn-small tombol-tanda"><span class="font-kitab-bold">
-                                            @if ($value->representasi == '&nbsp;')
-                                                <i class="material-icons">space_bar</i>
-                                            @else
-                                                {{ html_entity_decode(json_decode('"' . $value->representasi . '"'), ENT_QUOTES, 'UTF-8') }}
-                                            @endif
-                                        </span></button>
-                                @endforeach --}}
                                 @foreach ($tandaTajwid as $value)
                                     <button
-                                        onclick="addRow(`{{ $value->kode }}`, `{{ $value->nama_tanda }}`, `{{ $value->unicode }}`, `{{ trim(preg_replace('/\\\\u([0-9a-fA-F]{4})/', '\\\\u$1', json_encode($value->unicode)), '"') }}`, `{{ $value->id }}`)"
+                                        onclick="addRow(`{{ $value->kode }}`, `{{ $value->nama_tanda }}`, `{{ $value->unicode }}`, `{{ trim(preg_replace('/\\\\u([0-9a-fA-F]{4})/', '\\\\u$1', json_encode(preg_replace('/[—]/', '', $value->unicode))), '"') }}`, `{{ $value->id }}`)"
                                         class="btn-small tombol-tanda"><span class="font-kitab-bold">
-                                            @if ($value->unicode == '&nbsp;')
+                                            @if ($value->unicode == '\u0020')
                                                 <i class="material-icons">space_bar</i>
                                             @else
                                                 {{ html_entity_decode(json_decode('"' . $value->unicode . '"'), ENT_QUOTES, 'UTF-8') }}

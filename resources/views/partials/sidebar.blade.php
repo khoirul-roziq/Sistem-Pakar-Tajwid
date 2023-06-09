@@ -20,8 +20,7 @@
     <li class="bold"><a class="{{ Route::is('kategori.*') ? 'actived' : '' }} waves-effect waves-cyan" href="{{ route('kategori.index') }}"><i class="material-icons dp48">list</i><span class="menu-title">Kategori</span></a>  
 
   <li class="navigation-header"><a class="navigation-header-text">Kelola Konsultasi</a><i class="navigation-header-icon material-icons">more_horiz</i>
-  <li class="bold"><a class="{{ Route::is('pertanyaan.*') ? 'actived' : '' }} waves-effect waves-cyan" href="{{ route('pertanyaan.index') }}"><i class="material-icons dp48">help</i><span class="menu-title">Pertanyaan</span></a>
-  <li class="bold"><a class="{{ Route::is('jawaban.*') ? 'actived' : '' }} waves-effect waves-cyan" href="{{ route('jawaban.index') }}"><i class="material-icons dp48">reply</i><span class="menu-title">Jawaban</span></a>  
+  <li class="bold"><a class="{{ Route::is('pertanyaan.*') ? 'actived' : '' }} waves-effect waves-cyan" href="{{ route('pertanyaan.index') }}"><i class="material-icons dp48">help</i><span class="menu-title">Pertanyaan</span></a> 
 
   @endcan
 

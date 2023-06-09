@@ -19,9 +19,8 @@ class RetriveAlQuranController extends Controller
         $data = json_decode($response->getBody(), true);
 
         $surahs = $data['data']['surahs']['references'];
-        $pattern = $session->get('pattern');
         
-        return view('konsultasi.pilih-surah', compact('surahs','pattern'));
+        return view('konsultasi.pilih-surah', compact('surahs'));
     }
 
     public function getAyah(Request $request)
@@ -33,8 +32,6 @@ class RetriveAlQuranController extends Controller
         $referenceSurah = $request->input('surah')-1;
         $dataSurah = $data['data']['surahs']['references'][$referenceSurah];
 
-        $pattern = $request->input('pattern');
-
-        return view('konsultasi.pilih-ayah', compact('dataSurah', 'pattern'));
+        return view('konsultasi.pilih-ayah', compact('dataSurah'));
     }
 }

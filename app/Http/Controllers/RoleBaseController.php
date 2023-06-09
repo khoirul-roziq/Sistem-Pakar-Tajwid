@@ -55,10 +55,29 @@ class RoleBaseController extends Controller
      */
     public function store(Request $request)
     {
+
+        // START: Generate Second Role
+        if($request->input('second-role') == null) {
+            $secondRole = null;
+        } else {
+            if(strlen($request->input('role')) >= 6){
+                // ambil unicode terakhir
+                $lastUnicode = substr($request->input('role'), -6);
+                
+                // generate second role
+                $secondRole = str_replace($lastUnicode, '\u0020'.$lastUnicode, $request->input('role'));
+                
+            } else {
+                return 'Role Base Invalid';
+            }
+        }
+        // END: Generate Second Role
+
         $data = RoleBase::create([
             'kode' => $request->kode,
             'id_tajwid' => $request->tajwid,
             'role' => $request->role,
+            'second_role' => $secondRole,
             'keterangan' => $request->keterangan,
         ]);
 
@@ -92,12 +111,29 @@ class RoleBaseController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        // START: Generate Second Role
+        if($request->input('second-role') == null) {
+            $secondRole = null;
+        } else {
+            if(strlen($request->input('role')) >= 6){
+                // ambil unicode terakhir
+                $lastUnicode = substr($request->input('role'), -6);
+                
+                // generate second role
+                $secondRole = str_replace($lastUnicode, '\u0020'.$lastUnicode, $request->input('role'));
+                
+            } else {
+                return 'Role Base Invalid';
+            }
+        }
+        // END: Generate Second Role
 
         $roleBase = RoleBase::findOrFail($id);
 
         $roleBase->kode = $request->kode;
         $roleBase->id_tajwid = $request->tajwid;
         $roleBase->role = $request->role;
+        $roleBase->second_role = $secondRole;
         $roleBase->keterangan = $request->keterangan;
         
         $roleBase->save();

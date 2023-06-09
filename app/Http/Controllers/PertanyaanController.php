@@ -79,6 +79,7 @@ class PertanyaanController extends Controller
      */
     public function store(Request $request)
     {
+
         $kategori = Kategori::findorfail($request->input('kategori'));
         $tajwid = Tajwid::findorfail($request->input('tajwid'));
 
@@ -88,12 +89,20 @@ class PertanyaanController extends Controller
             $ref = $request->reference;
         }
 
+        // cek apakah pertanyaan terakhir untuk setiap hukum tajwid
+        if ($request->input('last-question')) {
+            $lastQuestion = true;
+        } else {
+            $lastQuestion = false;
+        }
+
         $data = Pertanyaan::create([
             'kode' => $request->kode,
             'soal' => $request->soal,
             'kategori_id' => $request->kategori,
             'tajwid_id' => $request->tajwid,
             'reference' => $ref,
+            'last_question' => $lastQuestion,
         ]);
         
         if($kategori->kode == 'K000'){
@@ -123,11 +132,13 @@ class PertanyaanController extends Controller
     public function edit(string $id)
     {
         $pertanyaan = Pertanyaan::findorfail($id);
+        $dataPertanyaan = Pertanyaan::all();
         $jawaban = Jawaban::all();
         $kategori = Kategori::all();
         $tajwid = Tajwid::all();  
+        $tandaTajwid = TandaTajwid::all();
 
-        return view('admin.pertanyaan.edit', compact('pertanyaan', 'jawaban', 'kategori', 'tajwid'));
+        return view('admin.pertanyaan.edit', compact('pertanyaan', 'jawaban', 'kategori', 'tajwid', 'tandaTajwid', 'dataPertanyaan'));
     }
 
     /**
@@ -136,15 +147,34 @@ class PertanyaanController extends Controller
     public function update(Request $request, string $id)
     {
         $data = Pertanyaan::findorfail($id);
+        $kategori = Kategori::findorfail($request->input('kategori'));
+        $tajwid = Tajwid::findorfail($request->input('tajwid'));
+
+        // cek apakah pertanyaan terakhir untuk setiap hukum tajwid
+        if ($request->input('last-question')) {
+            $lastQuestion = true;
+        } else {
+            $lastQuestion = false;
+        }
 
         $data->kode = $request->input('kode');
         $data->soal = $request->input('soal');
         $data->kategori_id = $request->input('kategori');
         $data->tajwid_id = $request->input('tajwid');
+        $data->reference = $request->input('reference');
+        $data->last_question = $lastQuestion;
 
         $data->save();
 
-        $data->jawaban()->sync($request->jawaban);
+        if($kategori->kode == 'K000'){
+            $data->kategoriJawaban()->sync($request->jawaban);
+        } else {
+            if($tajwid->kode == 'H000') {
+                $data->tajwidJawaban()->sync($request->jawaban);
+            } else {
+                $data->tandaTajwidJawaban()->sync($request->jawaban);
+            }
+        }
 
         return redirect('pertanyaan')->with('message', 'Berhasil mengubah data pertanyaan!');
     }

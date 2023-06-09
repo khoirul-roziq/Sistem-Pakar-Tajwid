@@ -66,10 +66,9 @@
                         <div class="row" id="send">
                             <form action="{{ route('konsultasi.hasil') }}" method="post" id="submitData">
                                 @csrf
-                                <input type="text" value="" name="valueText" id="valueText">
-                                <input type="text" value="" name="valueAyah" id="valueAyah">
-                                <input type="text" value="{{ $dataSurah['number'] }}" name="valueSurah">
-                                <input type="text" value="{{ $pattern }}" name="valuePattern">
+                                <input type="text" value="" name="valueText" id="valueText" hidden>
+                                <input type="text" value="" name="valueAyah" id="valueAyah" hidden>
+                                <input type="text" value="{{ $dataSurah['number'] }}" name="valueSurah" hidden>
                             </form>
                         </div>
                         <div class="row">

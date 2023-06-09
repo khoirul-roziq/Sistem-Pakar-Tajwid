@@ -123,6 +123,15 @@
                             </div>
 
                             <div class="row">
+                                <div class="input-field col m12 s12 mb-5">
+                                    <label>
+                                        <input type="checkbox" class="filled-in" name="second-role" />
+                                        <span>Role Kedua</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="row">
                                 <div class="input-field col m12 s12">
                                     <span>Keterangan</span>
                                     <textarea id="keterangan" name="keterangan" rows="5"></textarea>
@@ -181,7 +190,7 @@
                                         onclick="addRow(`{{ $value->kode }}`, `{{ $value->nama_tanda }}`, `{{ $value->unicode }}`, `{{ trim(preg_replace('/\\\\u([0-9a-fA-F]{4})/', '\\\\u$1', json_encode($value->unicode)), '"') }}`, `{{ $value->id }}`)"
                                         class="btn-small tombol-tanda">
 
-                                        @if ($value->unicode == '&nbsp;')
+                                        @if ($value->unicode == '\u0020')
                                             <span class="font-kitab-bold"><i class="material-icons">space_bar</i></span>
                                         @else
                                             @if ($value->jenis == 'huruf')

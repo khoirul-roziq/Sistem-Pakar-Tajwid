@@ -41,7 +41,13 @@
                                         @csrf
                                         <input type="text" value="{{ $pertanyaan->id }}" name="reference" hidden>
                                         <input type="text" value="{{ $kategori->kode }}" name="jawaban" hidden>
-                                        <button type="submit" class="btn">
+                                        <button type="submit" class="btn 
+                                        @if(session()->has('kategori'))
+                                            @if(session('kategori') == $kategori->id)
+                                            pink darken-3
+                                            @endif`
+                                        @endif
+                                        ">
                                             {{ $kategori->nama_kategori }}
                                         </button>
                                     </form>
@@ -53,7 +59,13 @@
                                             @csrf
                                             <input type="text" value="{{ $pertanyaan->id }}" name="reference" hidden>
                                             <input type="text" value="{{ $tajwid->kode }}" name="jawaban" hidden>
-                                            <button type="submit" class="btn">
+                                            <button type="submit" class="btn
+                                            @if(session()->has('tajwid'))
+                                                @if(session('tajwid') == $tajwid->id)
+                                                pink darken-3
+                                                @endif`
+                                            @endif
+                                            ">
                                                 {{ $tajwid->nama_tajwid }}
                                             </button>
                                         </form>
@@ -63,10 +75,20 @@
                                         <form action="{{ route('konsultasi') }}" method="post" class="mt-1 mb-2 col">
                                             @csrf
                                             <input type="text" value="{{ $pertanyaan->id }}" name="reference" hidden>
+                                            <input type="text" value="{{ $pertanyaan->last_question }}"
+                                                name="lastQuestion" hidden>
                                             <input type="text" value="{{ $kode }}" name="kode" hidden>
                                             <input type="text" value="{{ $tandaTajwid->kode }}" name="jawaban" hidden>
-                                            <button type="submit" class="btn-large">
-                                                <span class="font-kitab" style="font-size:25px;">{{ html_entity_decode(json_decode('"' . $tandaTajwid->unicode . '"'), ENT_QUOTES, 'UTF-8') }}</span>
+                                            <button type="submit"
+                                                class="btn-large 
+                                                @if (session()->has('pertanyaan'))
+                                                    @if (in_array($pertanyaan->id, session('pertanyaan')))
+                                                        @if ($tandaTajwid->kode == session('jawaban')[array_search($pertanyaan->id, session('pertanyaan'))]) pink darken-3 @endif
+                                                    @endif
+                                                @endif
+                                                ">
+                                                <span class="font-kitab"
+                                                    style="font-size:25px;">{{ html_entity_decode(json_decode('"' . $tandaTajwid->unicode . '"'), ENT_QUOTES, 'UTF-8') }}</span>
                                             </button>
                                         </form>
                                     @endforeach

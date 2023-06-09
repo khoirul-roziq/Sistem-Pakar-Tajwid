@@ -38,9 +38,6 @@
                     </div>
                     <form action="{{ route('get.ayah') }}" method="post">
                         @csrf
-                        <div id="pattern">
-                            <input type="text" value="{{ $pattern }}" name="pattern">
-                        </div>
                         <div class="row">
                             <div class="col s12">
                                 <div class="input-field col m6 s12">

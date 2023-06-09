@@ -16,7 +16,8 @@ class Pertanyaan extends Model
         'soal',
         'kategori_id',
         'tajwid_id',
-        'reference'
+        'reference',
+        'last_question'
     ];
 
     protected static function boot() {

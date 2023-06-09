@@ -40,15 +40,15 @@
                                 <tbody>
                                     <tr>
                                         <th>Nama Tajwid</th>
-                                        <td>: <span class="badge teal lighten-1">Idzhar Halqi</span></td>
+                                        <td>: <span class="badge teal lighten-1">{{ $trueTajwid->nama_tajwid}}</span></td>
                                     </tr>
                                     <tr>
                                         <th>Kategori</th>
-                                        <td>: Nun Mati/ Tanwin</td>
+                                        <td>: {{ $trueTajwid->kategori->nama_kategori }}</td>
                                     </tr>
                                     <tr>
                                         <th>Sebab Tajwid</th>
-                                        <td>: Nun mati bertemu dengan ngain</td>
+                                        <td>: {{ strip_tags($trueRoleBase->keterangan) }}</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -56,7 +56,12 @@
                     </div>
                     <div class="row">
                         <div class="col s12 mt-3">
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis architecto id cum omnis illo numquam itaque aperiam nostrum labore sapiente! Earum nemo placeat non ab reprehenderit, dolorum ullam deserunt voluptatum?</p>
+                            <p><b>Penjelasan :</b></p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col s12" style="margin-top: -15px; margin-left: -3px;">
+                            {!! $trueTajwid->penjelasan !!}
                         </div>
                     </div>
                     <div class="row">

@@ -17,6 +17,7 @@ return new class extends Migration
             $table->integer('id_tajwid');
             $table->string('deleted_tajwid_name')->nullable();
             $table->string('role')->unique();
+            $table->string('second_role')->unique()->nullable();
             $table->text('keterangan');
             $table->timestamps();
         });

@@ -51,7 +51,6 @@
             opacity: 1;
             visibility: visible;
         }
-
     </style>
 @endsection
 
@@ -91,8 +90,9 @@
                 @endif
                 <div class="card">
                     <div class="card-content">
-                        <form action="{{ route('pertanyaan.update', $pertanyaan->id ) }}" method="post" enctype="multipart/form-data">
-                        @method('put')
+                        <form action="{{ route('pertanyaan.update', $pertanyaan->id) }}" method="post"
+                            enctype="multipart/form-data">
+                            @method('put')
                             @csrf
                             <div class="row">
                                 <div class="col m12 s12 mb-3">
@@ -117,7 +117,8 @@
                                         <option value="" disabled>--- Pilih Kategori ---</option>
                                         @foreach ($kategori as $value)
                                             <option value="{{ $value->id }}"
-                                                @if ($value->id == $pertanyaan->kategori_id) selected @endif>{{ $value->nama_kategori }}
+                                                @if ($value->id == $pertanyaan->kategori_id) selected @endif>
+                                                {{ $value->nama_kategori }}
                                             </option>
                                         @endforeach
                                     </select>
@@ -134,6 +135,25 @@
                                     </select>
                                 </div>
                             </div>
+                            <div class="row">
+                                <div class="input-field col m12 s12">
+                                    <select class="select2 browser-default" name="reference">
+                                        <option value="" disabled selected>--- Pilih Referensi ---</option>
+                                        @foreach ($dataPertanyaan as $value)
+                                            <option value="{{ $value->id }}" @if($value->id == $pertanyaan->reference) selected @endif>{!! $value->kode . ' - ' . $value->soal !!}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="input-field col m12 s12 mb-5">
+                                    <label>
+                                        <input type="checkbox" class="filled-in" name="last-question" @if($pertanyaan->last_question) checked="checked" @endif />
+                                        <span>Pertanyaan Terakhir</span>
+                                    </label>
+                                </div>
+                            </div>
 
                             <div class="row">
                                 <div class="input-field col m12 s12">
@@ -146,9 +166,21 @@
 
                             <div class="selectHiden" hidden>
                                 <select name="jawaban[]" id="tanda-tajwid" multiple>
-                                    @foreach($pertanyaan->jawaban as $value ) 
-                                        <option value="{{ $value->id }}" selected></option>
-                                    @endforeach
+                                    @if ($pertanyaan->kode == 'P000')
+                                        @foreach ($pertanyaan->kategoriJawaban as $value)
+                                            <option value="{{ $value->id }}" selected></option>
+                                        @endforeach
+                                    @else
+                                        @if ($pertanyaan->tajwid_id == 1)
+                                            @foreach ($pertanyaan->tajwidJawaban as $value)
+                                                <option value="{{ $value->id }}" selected></option>
+                                            @endforeach
+                                        @else
+                                            @foreach ($pertanyaan->tandaTajwidJawaban as $value)
+                                                <option value="{{ $value->id }}" selected></option>
+                                            @endforeach
+                                        @endif
+                                    @endif
                                 </select>
                             </div>
 
@@ -181,16 +213,50 @@
                                 </thead>
                                 <tbody id="tbody-role-base">
                                     <!-- data role base dari script -->
-                                    
-                                    @foreach($pertanyaan->jawaban as $value ) 
-                                        <tr>
-                                            <td>{{ $value->kode }}</td>
-                                            <td>{{ $value->nama_jawaban }}</td>
-                                            <td><span class="font-kitab">{{ html_entity_decode(json_decode('"' . $value->representasi . '"'), ENT_QUOTES, 'UTF-8') }}</span></td>
-                                            <td>{{ $value->representasi }}</td>
-                                            <td><button class="btn-small" onclick="deleteRow(this.parentNode.parentNode.rowIndex)"><i class="material-icons">delete_sweep</i></button></td>
-                                        </tr>
-                                    @endforeach
+
+                                    @if ($pertanyaan->kode == 'P000')
+                                        @foreach ($pertanyaan->kategoriJawaban as $value)
+                                            <tr>
+                                                <td>{{ $value->kode }}</td>
+                                                <td>{{ $value->nama_kategori }}</td>
+                                                <td>{{ $value->nama_kategori }}</td>
+                                                <td>{{ $value->nama_kategori }}</td>
+                                                <td><button class="btn-small"
+                                                        onclick="deleteRow(this.parentNode.parentNode.rowIndex)"><i
+                                                            class="material-icons">delete_sweep</i></button></td>
+                                            </tr>
+                                        @endforeach
+                                    @else
+                                        @if ($pertanyaan->tajwid_id == 1)
+                                            @foreach ($pertanyaan->tajwidJawaban as $value)
+                                                <tr>
+                                                    <td>{{ $value->kode }}</td>
+                                                    <td>{{ $value->nama_tajwid }}</td>
+                                                    <td>{{ $value->nama_tajwid }}</td>
+                                                    <td>{{ $value->nama_tajwid }}</td>
+                                                    <td><button class="btn-small"
+                                                            onclick="deleteRow(this.parentNode.parentNode.rowIndex)"><i
+                                                                class="material-icons">delete_sweep</i></button></td>
+                                                </tr>
+                                            @endforeach
+                                        @else
+                                            @foreach ($pertanyaan->tandaTajwidJawaban as $value)
+                                                <tr>
+                                                    <td>{{ $value->kode }}</td>
+                                                    <td>{{ $value->nama_tanda }}</td>
+                                                    <td><span
+                                                            class="font-kitab">{{ html_entity_decode(json_decode('"' . $value->unicode . '"'), ENT_QUOTES, 'UTF-8') }}</span>
+                                                    </td>
+                                                    <td>{{ preg_replace('/[—]/', '', $value->unicode) }}</td>
+                                                    <td><button class="btn-small"
+                                                            onclick="deleteRow(this.parentNode.parentNode.rowIndex)"><i
+                                                                class="material-icons">delete_sweep</i></button></td>
+                                                </tr>
+                                            @endforeach
+                                        @endif
+                                    @endif
+
+
 
                                 </tbody>
                             </table>
@@ -199,19 +265,40 @@
                             </div>
                             <div class="row center-align mt-2">
                                 <button id="switch" class="btn-small">Sembunyikan Tabel</button>
-                                <button id="delete-btn" class="btn-small"><i class="material-icons left">clear_all</i> Hapus semua data</button>
+                                <button id="delete-btn" class="btn-small"><i class="material-icons left">clear_all</i>
+                                    Hapus
+                                    semua data</button>
                             </div>
                             <div class="row center-align" id="key-button">
-                                @foreach ($jawaban as $value)
+                                @foreach ($tandaTajwid as $value)
                                     <button
-                                        onclick="addRow(`{{ $value->kode }}`, `{{ $value->nama_jawaban }}`, `{{ $value->representasi }}`, `{{ trim(preg_replace('/\\\\u([0-9a-fA-F]{4})/', '\\\\u$1', json_encode($value->representasi)), '"') }}`, `{{ $value->id}}`)"
+                                        onclick="addRow(`{{ $value->kode }}`, `{{ $value->nama_tanda }}`, `{{ $value->unicode }}`, `{{ trim(preg_replace('/\\\\u([0-9a-fA-F]{4})/', '\\\\u$1', json_encode($value->unicode)), '"') }}`, `{{ $value->id }}`)"
                                         class="btn-small tombol-tanda"><span class="font-kitab-bold">
-                                            @if ($value->representasi == '&nbsp;')
+                                            @if ($value->unicode == '&nbsp;')
                                                 <i class="material-icons">space_bar</i>
                                             @else
-                                                {{ html_entity_decode(json_decode('"' . $value->representasi . '"'), ENT_QUOTES, 'UTF-8') }}
+                                                {{ html_entity_decode(json_decode('"' . $value->unicode . '"'), ENT_QUOTES, 'UTF-8') }}
                                             @endif
                                         </span></button>
+                                @endforeach
+                                @foreach ($kategori as $value)
+                                    @if ($value->kode != 'K000')
+                                        <button
+                                            onclick="addRow(`{{ $value->kode }}`, `{{ $value->nama_kategori }}`, `{{ $value->nama_kategori }}`, `{{ $value->nama_kategori }}`, `{{ $value->id }}`)"
+                                            class="btn-small tombol-tanda">
+                                            {{ $value->nama_kategori }} <i class="material-icons"
+                                                style="font-size:8px; color:yellow;">brightness_1</i>
+                                        </button>
+                                    @endif
+                                @endforeach
+                                @foreach ($tajwid as $value)
+                                    @if ($value->kode != 'H000')
+                                        <button
+                                            onclick="addRow(`{{ $value->kode }}`, `{{ $value->nama_tajwid }}`, `{{ $value->nama_tajwid }}`, `{{ $value->nama_tajwid }}`, `{{ $value->id }}`)"
+                                            class="btn-small tombol-tanda">
+                                            {{ $value->nama_tajwid }}
+                                        </button>
+                                    @endif
                                 @endforeach
                             </div>
                         </div>
@@ -397,7 +484,7 @@
 
         function addRow(kode, nama, representasi, unicode, id) {
             var table = document.getElementById("tbody-role-base");
-            
+
 
             var row = table.insertRow(-1);
 
@@ -438,7 +525,7 @@
         function deleteRow(rowIndex) {
             document.getElementById("table-role-base").deleteRow(rowIndex);
 
-            deleteOption(rowIndex-1);
+            deleteOption(rowIndex - 1);
             updateCombinedValues();
             toggleNoData(); // panggil fungsi untuk menampilkan atau menyembunyikan elemen no-data
         }

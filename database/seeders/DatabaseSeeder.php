@@ -26,7 +26,6 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             TandaTajwidSeeder::class,
             TajwidSeeder::class,
-            JawabanSeeder::class,
             KategoriSeeder::class,
             PertanyaanSeeder::class,
         ]);

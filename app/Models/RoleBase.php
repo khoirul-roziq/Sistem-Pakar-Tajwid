@@ -15,6 +15,7 @@ class RoleBase extends Model
         'kode',
         'id_tajwid',
         'role',
+        'second_role',
         'deleted_tajwid_name',
         'keterangan'
     ];
