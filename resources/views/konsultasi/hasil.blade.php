@@ -5,6 +5,11 @@
 @endsection
 
 @section('styles')
+<style>
+    tajwid {
+        color:red;
+    }
+</style>
 @endsection
 
 @section('content')
@@ -71,7 +76,12 @@
                     </div>
                     <div class="row">
                         <div class="col s12 mt-2">
-                            <span class="font-kitab" style="font-size: 35px; color:salmon;">{{ html_entity_decode(json_decode('"\u0633\u064f\u0648\u0631\u064e\u0629\u064f \u0627\u0644\u0628\u064e\u0642\u064e\u0631\u064e\u0629\u0650"'), ENT_QUOTES, 'UTF-8') }}</span>
+                            <span class="font-kitab" style="font-size: 35px;">{{ html_entity_decode(json_decode('"'.$ayahUnicode.'"'), ENT_QUOTES, 'UTF-8') }}</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col s12 mt-2">
+                            <span class="font-kitab" style="font-size: 35px;">{!! html_entity_decode(json_decode('"'.$coba.'"'), ENT_QUOTES, 'UTF-8') !!}</span>
                         </div>
                     </div>
                 </div>
