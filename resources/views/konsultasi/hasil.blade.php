@@ -9,6 +9,15 @@
     tajwid {
         color:red;
     }
+
+    .contoh {
+        font-size: 32px;
+        line-height: 65px;
+        text-align: right;
+        padding: 20px;
+        border-radius: 5px;
+    }
+
 </style>
 @endsection
 
@@ -76,14 +85,10 @@
                     </div>
                     <div class="row">
                         <div class="col s12 mt-2">
-                            <span class="font-kitab" style="font-size: 35px;">{{ html_entity_decode(json_decode('"'.$ayahUnicode.'"'), ENT_QUOTES, 'UTF-8') }}</span>
+                            <h1 class="font-kitab contoh" style="font-size: 35px;">{!! html_entity_decode(json_decode('"'.$ayahUnicode.'"'), ENT_QUOTES, 'UTF-8') !!}</h1>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col s12 mt-2">
-                            <span class="font-kitab" style="font-size: 35px;">{!! html_entity_decode(json_decode('"'.$coba.'"'), ENT_QUOTES, 'UTF-8') !!}</span>
-                        </div>
-                    </div>
+                    
                 </div>
             </div>
 

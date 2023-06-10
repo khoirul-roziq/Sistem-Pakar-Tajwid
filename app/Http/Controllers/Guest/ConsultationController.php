@@ -203,54 +203,6 @@ class ConsultationController extends Controller
         session()->put('pattern', $pattern);
         // END: generate pattern
 
-        // START: Request Data dari API
-
-        try {
-            $response = Http::get('https://api.alquran.cloud/v1/ayah/' . $request->input('valueSurah') . ':' . $request->input('valueAyah'));
-            $response = $response->json();
-
-            // Tangani masalah ketersediaan data
-            if ($response['code'] == 200) {
-                $ayah = $response['data']['text'];
-                $ayahUnicode = trim(preg_replace('/\\\\u([0-9a-fA-F]{4})/', '\\\\u$1', json_encode($ayah)), '"');
-
-                $coba = json_decode(json_encode('\u0671\u0644\u06e1\u062d\u064e\u0645\u06e1\u062f\u064f <tajwid>\u0644\u0650\u0644\u0651\u064e\u0647\u0650</tajwid> \u0631\u064e\u0628\u0651\u0650 \u0671\u0644\u06e1\u0639\u064e\u0640\u0670\u0644\u064e\u0645\u0650\u06cc\u0646\u064e\n'));
-                // dd($ayahUnicode, $coba);
-
-                // START: Cari Hukum Tajwid pada Ayat
-                $text = '\u0671 \u0644\u06e1 \u0671';
-                $pattern = '\u0671';
-
-                $kmp = new KMP();
-                $result = $kmp->kmpSearch($pattern, $text);
-
-                if ($result != -1) {
-                    return "Pola ditemukan pada indeks: " . implode(', ', $result);
-                } else {
-                    return "Pola tidak ditemukan dalam teks.";
-                }
-                // END: Cari Hukum Tajwid pada Ayat
-
-            } else {
-                return 'Data ayat tidak tersedia.';
-            }
-        } catch (RequestException $exception) {
-            // Tangani kesalahan permintaan HTTP di sini
-
-            if ($exception->getCode() === 404) {
-                // Tangani kesalahan 404 (Not Found) di sini
-                return response()->json(['error' => 'Data tidak ditemukan'], 404);
-            } elseif ($exception->getCode() === 500) {
-                // Tangani kesalahan 500 (Internal Server Error) di sini
-                return response()->json(['error' => 'Terjadi kesalahan server'], 500);
-            } else {
-                // Tangani kesalahan umum di sini
-                return response()->json(['error' => 'Gagal mengambil data dari API'], 500);
-            }
-        }
-
-        // END: Request Data dari API       
-
         // START: cek similariti pada role base
 
         $roleBase = RoleBase::all();
@@ -275,6 +227,87 @@ class ConsultationController extends Controller
             return 'Role Base Tidak Tersedia';
         }
 
-        return view('konsultasi.hasil', compact('trueRoleBase', 'trueTajwid', 'ayahUnicode', 'coba'));
+        // START: Request Data dari API
+        try {
+            $response = Http::get('https://api.alquran.cloud/v1/ayah/' . $request->input('valueSurah') . ':' . $request->input('valueAyah'));
+            $response = $response->json();
+
+            // Tangani masalah ketersediaan data
+            if ($response['code'] == 200) {
+
+                // START: Cari Hukum Tajwid pada Ayat
+                $kmp = new KMP();
+
+                $ayah = $response['data']['text'];
+                $ayahUnicode = trim(preg_replace('/\\\\u([0-9a-fA-F]{4})/', '\\\\u$1', json_encode($ayah)), '"');
+                $ayahUnicode = preg_replace('/\s/', '\\\\u0020', $ayahUnicode);
+                
+                // dd($ayahUnicode);
+
+                $resultSearch = $kmp->kmpSearch($trueRoleBase->role, $ayahUnicode);
+
+
+                // $ambil = substr($ayahUnicode, $resultSearch[0], 18);
+                // dd($ambil, $trueRoleBase->role);
+
+                if (!empty($resultSearch)) {
+
+                    foreach($resultSearch as $indexResult) {
+
+                        // Pisahkan string
+                        $firstPattern = substr($ayahUnicode, 0, $indexResult);
+                        $midPattern = substr($ayahUnicode, $indexResult, strlen($trueRoleBase->role));
+                        $lastPattern = substr($ayahUnicode, $indexResult+strlen($trueRoleBase->role), strlen($ayahUnicode)-1);
+
+                        // tambah tag pada unicode yang ditemukan
+                        $midPattern = "<tajwid>".$midPattern."</tajwid>";
+
+                        // gabungkan string
+                        $ayahUnicode = $firstPattern.$midPattern.$lastPattern;
+                    }
+
+                    // cek apakah ada nilai pada second role
+                    if($trueRoleBase->second_role != null) {
+                        foreach($resultSearch as $indexResult) {
+
+                            // Pisahkan string
+                            $firstPattern = substr($ayahUnicode, 0, $indexResult);
+                            $midPattern = substr($ayahUnicode, $indexResult, strlen($trueRoleBase->role));
+                            $lastPattern = substr($ayahUnicode, $indexResult+strlen($trueRoleBase->role), strlen($ayahUnicode)-1);
+    
+                            // tambah tag pada unicode yang ditemukan
+                            $midPattern = "<tajwid>".$midPattern."</tajwid>";
+    
+                            // gabungkan string
+                            $ayahUnicode = $firstPattern.$midPattern.$lastPattern;
+                        }
+                    }
+
+                } else {
+                    // return "Pola tidak ditemukan dalam teks.";
+                }
+                // END: Cari Hukum Tajwid pada Ayat
+
+            } else {
+                return 'Data ayat tidak tersedia.';
+            }
+        } catch (RequestException $exception) {
+            // Tangani kesalahan permintaan HTTP di sini
+
+            if ($exception->getCode() === 404) {
+                // Tangani kesalahan 404 (Not Found) di sini
+                return response()->json(['error' => 'Data tidak ditemukan'], 404);
+            } elseif ($exception->getCode() === 500) {
+                // Tangani kesalahan 500 (Internal Server Error) di sini
+                return response()->json(['error' => 'Terjadi kesalahan server'], 500);
+            } else {
+                // Tangani kesalahan umum di sini
+                return response()->json(['error' => 'Gagal mengambil data dari API'], 500);
+            }
+        }
+
+        // END: Request Data dari API 
+
+        return view('konsultasi.hasil', compact('trueRoleBase', 'trueTajwid', 'ayahUnicode'));
     }
 }
