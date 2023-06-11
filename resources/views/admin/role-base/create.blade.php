@@ -119,7 +119,17 @@
                                         @endforeach
                                     </select>
                                 </div>
+                            </div>
 
+                            <div class="row">
+                                <div class="input-field col m12 s12">
+                                    <select class="select2 browser-default" name="synonym">
+                                        <option value="" disabled selected>--- Pilih Referensi Sinonim ---</option>
+                                        @foreach ($roleBase as $value)
+                                            <option value="{{ $value->kode }}">{!! $value->kode . ' - ' . $value->keterangan . ' ('. html_entity_decode(json_decode('"' . $value->role. '"'), ENT_QUOTES, 'UTF-8') .')' !!}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
                             </div>
 
                             <div class="row">

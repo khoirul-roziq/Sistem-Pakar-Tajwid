@@ -197,9 +197,6 @@ class ConsultationController extends Controller
             $pattern = $pattern . $unicode;
         }
 
-        // cleaning string
-        $pattern = preg_replace('/[-— ]/', '', $pattern);
-
         session()->put('pattern', $pattern);
         // END: generate pattern
 
@@ -241,51 +238,124 @@ class ConsultationController extends Controller
                 $ayah = $response['data']['text'];
                 $ayahUnicode = trim(preg_replace('/\\\\u([0-9a-fA-F]{4})/', '\\\\u$1', json_encode($ayah)), '"');
                 $ayahUnicode = preg_replace('/\s/', '\\\\u0020', $ayahUnicode);
-                
+
                 // dd($ayahUnicode);
 
-                $resultSearch = $kmp->kmpSearch($trueRoleBase->role, $ayahUnicode);
+                $resultRole = $kmp->kmpSearch($trueRoleBase->role, $ayahUnicode);
+                $resultSecondRole = $kmp->kmpSearch($trueRoleBase->second_role, $ayahUnicode);
 
 
-                // $ambil = substr($ayahUnicode, $resultSearch[0], 18);
-                // dd($ambil, $trueRoleBase->role);
+                // ambil data rolebase yang memiliki hukum tajwid sama dengan role base terpilih
+                $RoleBasetajwidSejenis = RoleBase::where('id_tajwid', $trueTajwid->id)->get();
 
-                if (!empty($resultSearch)) {
+                if (!$RoleBasetajwidSejenis->isEmpty()) {
+                    foreach ($RoleBasetajwidSejenis as $dataRB) {
+                        if ($dataRB->id == $trueRoleBase->id) {
+                            $countIndex = 0;
+                            if (!empty($resultRole)) {
 
-                    foreach($resultSearch as $indexResult) {
+                                foreach ($resultRole as $indexResult) {
 
-                        // Pisahkan string
-                        $firstPattern = substr($ayahUnicode, 0, $indexResult);
-                        $midPattern = substr($ayahUnicode, $indexResult, strlen($trueRoleBase->role));
-                        $lastPattern = substr($ayahUnicode, $indexResult+strlen($trueRoleBase->role), strlen($ayahUnicode)-1);
+                                    // Pisahkan string
+                                    $firstPattern = substr($ayahUnicode, 0, $indexResult + $countIndex);
+                                    $midPattern = substr($ayahUnicode, $indexResult + $countIndex, strlen($trueRoleBase->role));
+                                    $lastPattern = substr($ayahUnicode, $indexResult + $countIndex + strlen($trueRoleBase->role), strlen($ayahUnicode) + $countIndex - 1);
 
-                        // tambah tag pada unicode yang ditemukan
-                        $midPattern = "<tajwid>".$midPattern."</tajwid>";
+                                    // tambah tag pada unicode yang ditemukan
+                                    $lengMidPattern = strlen($midPattern);
+                                    $midPattern = "<tajwid>" . $midPattern . "</tajwid>";
+                                    $countIndex = $countIndex + (strlen($midPattern) - $lengMidPattern);
 
-                        // gabungkan string
-                        $ayahUnicode = $firstPattern.$midPattern.$lastPattern;
-                    }
+                                    // gabungkan string
+                                    $ayahUnicode = $firstPattern . $midPattern . $lastPattern;
+                                }
+                            } else {
+                                // return "Pola tidak ditemukan dalam teks.";
+                            }
 
-                    // cek apakah ada nilai pada second role
-                    if($trueRoleBase->second_role != null) {
-                        foreach($resultSearch as $indexResult) {
+                            // cek apakah ada nilai pada second role
+                            $countIndex = 0;
+                            if (!empty($resultSecondRole)) {
+                                foreach ($resultSecondRole as $indexResult) {
 
-                            // Pisahkan string
-                            $firstPattern = substr($ayahUnicode, 0, $indexResult);
-                            $midPattern = substr($ayahUnicode, $indexResult, strlen($trueRoleBase->role));
-                            $lastPattern = substr($ayahUnicode, $indexResult+strlen($trueRoleBase->role), strlen($ayahUnicode)-1);
-    
-                            // tambah tag pada unicode yang ditemukan
-                            $midPattern = "<tajwid>".$midPattern."</tajwid>";
-    
-                            // gabungkan string
-                            $ayahUnicode = $firstPattern.$midPattern.$lastPattern;
+                                    // Pisahkan string
+                                    $firstPattern = substr($ayahUnicode, 0, $indexResult + $countIndex);
+                                    $midPattern = substr($ayahUnicode, $indexResult + $countIndex, strlen($trueRoleBase->second_role));
+                                    $lastPattern = substr($ayahUnicode, $indexResult + $countIndex + strlen($trueRoleBase->second_role), strlen($ayahUnicode) + $countIndex - 1);
+
+                                    // tambah tag pada unicode yang ditemukan
+                                    $lengMidPattern = strlen($midPattern);
+                                    $midPattern = "<tajwid>" . $midPattern . "</tajwid>";
+                                    $countIndex = $countIndex + (strlen($midPattern) - $lengMidPattern);
+
+                                    // gabungkan string
+                                    $ayahUnicode = $firstPattern . $midPattern . $lastPattern;
+                                }
+                            } else {
+                                // jika pola tidak ditemukan
+                            }
+                            
+                        } else {
+                            // aksi role base tajwid sejenis
+
+                            $resultRB = $kmp->kmpSearch($dataRB->role, $ayahUnicode);
+                            $resultSecondRB = $kmp->kmpSearch($dataRB->second_role, $ayahUnicode);
+
+                            $countIndex = 0;
+                            if (!empty($dataRB)) {
+
+                                foreach ($resultRB as $indexResult) {
+
+                                    // Pisahkan string
+                                    $firstPattern = substr($ayahUnicode, 0, $indexResult + $countIndex);
+                                    $midPattern = substr($ayahUnicode, $indexResult + $countIndex, strlen($dataRB->role));
+                                    $lastPattern = substr($ayahUnicode, $indexResult + $countIndex + strlen($dataRB->role), strlen($ayahUnicode) + $countIndex - 1);
+
+                                    // tambah tag pada unicode yang ditemukan
+                                    $lengMidPattern = strlen($midPattern);
+                                    $midPattern = "<tajwidSec>" . $midPattern . "</tajwidSec>";
+                                    $countIndex = $countIndex + (strlen($midPattern) - $lengMidPattern);
+
+                                    // gabungkan string
+                                    $ayahUnicode = $firstPattern . $midPattern . $lastPattern;
+                                }
+                            } else {
+                                // return "Pola tidak ditemukan dalam teks.";
+                            }
+
+                            // cek apakah ada nilai pada second role
+                            $countIndex = 0;
+                            if ($dataRB->second_role != null) {
+                                foreach ($resultSecondRB as $indexResult) {
+
+                                    // Pisahkan string
+                                    $firstPattern = substr($ayahUnicode, 0, $indexResult + $countIndex);
+                                    $midPattern = substr($ayahUnicode, $indexResult + $countIndex, strlen($dataRB->second_role));
+                                    $lastPattern = substr($ayahUnicode, $indexResult + $countIndex + strlen($dataRB->second_role), strlen($ayahUnicode) + $countIndex - 1);
+
+                                    // tambah tag pada unicode yang ditemukan
+                                    $lengMidPattern = strlen($midPattern);
+                                    $midPattern = "<tajwidSec>" . $midPattern . "</tajwidSec>";
+                                    $countIndex = $countIndex + (strlen($midPattern) - $lengMidPattern);
+
+                                    // gabungkan string
+                                    $ayahUnicode = $firstPattern . $midPattern . $lastPattern;
+                                }
+                            } else {
+                                // jika pola tidak ditemukan
+                            }
+
                         }
                     }
-
                 } else {
-                    // return "Pola tidak ditemukan dalam teks.";
                 }
+
+                // bersikan karakter tidak perlu
+                // $ayahUnicode = str_replace(['\\', 'n'], '', $ayahUnicode);
+
+                // $out = html_entity_decode(preg_replace("/\\\\u([0-9A-F]{4})/i", "&#x$1;", $ayahUnicode), ENT_QUOTES, 'UTF-8');
+                // dd($out, $ayahUnicode);
+
                 // END: Cari Hukum Tajwid pada Ayat
 
             } else {
@@ -307,6 +377,7 @@ class ConsultationController extends Controller
         }
 
         // END: Request Data dari API 
+
 
         return view('konsultasi.hasil', compact('trueRoleBase', 'trueTajwid', 'ayahUnicode'));
     }

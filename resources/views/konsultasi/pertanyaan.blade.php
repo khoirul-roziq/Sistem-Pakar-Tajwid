@@ -88,7 +88,15 @@
                                                 @endif
                                                 ">
                                                 <span class="font-kitab"
-                                                    style="font-size:25px;">{{ html_entity_decode(json_decode('"' . $tandaTajwid->unicode . '"'), ENT_QUOTES, 'UTF-8') }}</span>
+                                                    style="font-size:25px;">
+                                                    @if($tandaTajwid->jenis == 'huruf')
+                                                    {{ html_entity_decode(json_decode('"' . $tandaTajwid->unicode . '"'), ENT_QUOTES, 'UTF-8') }}
+                                                    @elseif($tandaTajwid->jenis == 'tanda')
+                                                    {{ html_entity_decode(json_decode('"' . '—'.$tandaTajwid->unicode . '"'), ENT_QUOTES, 'UTF-8') }}
+                                                    @else
+                                                    -
+                                                    @endif
+                                                </span>
                                             </button>
                                         </form>
                                     @endforeach

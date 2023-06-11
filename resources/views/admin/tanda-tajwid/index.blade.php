@@ -85,16 +85,23 @@
                                                 <tr>
                                                     <td>{{ $value->kode }}</td>
                                                     <td>{{ $value->nama_tanda }}</td>
-                                                    <td><span class="font-kitab"
-                                                            style="font-size: 20px;">{{ html_entity_decode(json_decode('"' . $value->unicode . '"'), ENT_QUOTES, 'UTF-8') }}</span>
+                                                    <td><span class="font-kitab" style="font-size: 20px;">
+                                                            @if ($value->jenis == 'huruf')
+                                                                {{ html_entity_decode(json_decode('"' . $value->unicode . '"'), ENT_QUOTES, 'UTF-8') }}
+                                                            @elseif($value->jenis == 'tanda')
+                                                                {{ html_entity_decode(json_decode('"' . '—' . $value->unicode . '"'), ENT_QUOTES, 'UTF-8') }}
+                                                            @else
+                                                                -
+                                                            @endif
+                                                        </span>
                                                     </td>
                                                     <td>
                                                         @if ($value->jenis == 'huruf')
                                                             <span class="blue-text darken-4">Huruf</span>
                                                         @elseif($value->jenis == 'tanda')
-                                                        <span class="orange-text darken-4">Tanda</span>
+                                                            <span class="orange-text darken-4">Tanda</span>
                                                         @else
-                                                            -
+                                                            -—
                                                         @endif
                                                     </td>
                                                     <td>
@@ -106,7 +113,8 @@
                                                             <!-- Dropdown Trigger -->
                                                             <a class='dropdown-trigger btn-small teal white-text'
                                                                 href='#'
-                                                                data-target='aksi{{ $value->id }}'><b>Pilih Aksi!</b></a>
+                                                                data-target='aksi{{ $value->id }}'><b>Pilih
+                                                                    Aksi!</b></a>
 
                                                             <!-- Dropdown Structure -->
                                                             <ul id='aksi{{ $value->id }}' class='dropdown-content'>

@@ -8,14 +8,29 @@
 <style>
     tajwid {
         color:red;
+        
+    }
+
+    tajwid:hover {
+        background-color: rgb(255, 160, 160);
+    }
+    
+    tajwidSec {
+        color:orange;
+        
+    }
+
+    tajwidSec:hover {
+        background-color: rgb(255, 219, 160);
     }
 
     .contoh {
         font-size: 32px;
-        line-height: 65px;
+        line-height: 80px;
         text-align: right;
         padding: 20px;
         border-radius: 5px;
+        color: #666666;
     }
 
 </style>
@@ -84,8 +99,8 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col s12 mt-2">
-                            <h1 class="font-kitab contoh" style="font-size: 35px;">{!! html_entity_decode(json_decode('"'.$ayahUnicode.'"'), ENT_QUOTES, 'UTF-8') !!}</h1>
+                        <div class="col s12">
+                            <h1 class="font-kitab contoh" style="font-size: 35px;">{!! str_replace(['\\n'], '', html_entity_decode(preg_replace("/\\\\u([0-9A-F]{4})/i", "&#x$1;", $ayahUnicode), ENT_QUOTES, 'UTF-8')) !!}</h1>
                         </div>
                     </div>
                     

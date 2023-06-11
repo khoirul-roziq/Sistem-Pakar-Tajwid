@@ -46,8 +46,9 @@ class RoleBaseController extends Controller
 
         $data = Tajwid::all();
         $tandaTajwid = TandaTajwid::all();
+        $roleBase = RoleBase::all();
 
-        return view('admin.role-base.create', compact('data', 'tandaTajwid', 'newKodeRoleBase'));
+        return view('admin.role-base.create', compact('data', 'tandaTajwid', 'newKodeRoleBase', 'roleBase'));
     }
 
     /**
@@ -79,6 +80,7 @@ class RoleBaseController extends Controller
             'role' => $request->role,
             'second_role' => $secondRole,
             'keterangan' => $request->keterangan,
+            'synonym' => $request->synonym
         ]);
 
         $data->tandaTajwid()->sync($request->tandaTajwid);
@@ -102,8 +104,9 @@ class RoleBaseController extends Controller
         $data = Tajwid::all();
         $tandaTajwid = TandaTajwid::all();
         $roleBase = RoleBase::findorfail($id);
+        $dataRoleBase = RoleBase::all();
 
-        return view('admin.role-base.edit', compact('data', 'tandaTajwid', 'roleBase'));
+        return view('admin.role-base.edit', compact('data', 'tandaTajwid', 'roleBase', 'dataRoleBase'));
     }
 
     /**
@@ -135,6 +138,7 @@ class RoleBaseController extends Controller
         $roleBase->role = $request->role;
         $roleBase->second_role = $secondRole;
         $roleBase->keterangan = $request->keterangan;
+        $roleBase->synonym = $request->synonym;
         
         $roleBase->save();
     

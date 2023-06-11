@@ -123,6 +123,17 @@
                             </div>
 
                             <div class="row">
+                                <div class="input-field col m12 s12">
+                                    <select class="select2 browser-default" name="synonym">
+                                        <option value="" disabled selected>--- Pilih Referensi Sinonim ---</option>
+                                        @foreach ($dataRoleBase as $value)
+                                            <option value="{{ $value->kode }}" @if ($value->kode == $roleBase->synonym) selected @endif>{!! $value->kode . ' - ' . $value->keterangan . ' ('. html_entity_decode(json_decode('"' . $value->role. '"'), ENT_QUOTES, 'UTF-8') .')' !!}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="row">
                                 <div class="input-field col m12 s12 mb-5">
                                     <label>
                                         <input type="checkbox" class="filled-in" name="second-role" 

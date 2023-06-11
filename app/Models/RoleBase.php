@@ -17,7 +17,8 @@ class RoleBase extends Model
         'role',
         'second_role',
         'deleted_tajwid_name',
-        'keterangan'
+        'keterangan',
+        'synonym'
     ];
 
     protected static function boot() {
@@ -35,4 +36,5 @@ class RoleBase extends Model
     public function tandaTajwid() {
         return $this->belongsToMany(TandaTajwid::class);
     }
+
 }
