@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Http\Client\RequestException;
 use App\Algorithms\KMP;
 use App\Algorithms\DLD;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Collection;
 
 
 class ConsultationController extends Controller
@@ -120,6 +122,8 @@ class ConsultationController extends Controller
     {
         $session = session();
 
+        dd($session->get('kategori'), $session->get('tajwid'), $session->get('pertanyaan'), $session->get('jawaban'), $session->get('pattern'));
+
         $kodeJawaban = $request->input('jawaban');
 
         if ($kodeJawaban[0] == 'K') {
@@ -131,7 +135,21 @@ class ConsultationController extends Controller
             $kode = Tajwid::findorfail($pertanyaan->tajwid_id)->kode;
 
             // simpan data jawaban kategori di sesi
-            $session->put('kategori', $kategori->id);
+            if ($session->has('kategori')) {
+                if ($session->get('kategori') == $kategori->id) {
+                    $session->put('kategori', $kategori->id);
+                } else {
+                    $this->deleteSession('kategori');
+                    $this->deleteSession('tajwid');
+                    $this->deleteSession('pertanyaan');
+                    $this->deleteSession('jawaban');
+                    $this->deleteSession('pattern');
+
+                    $session->put('kategori', $kategori->id);
+                }
+            } else {
+                $session->put('kategori', $kategori->id);
+            }
         } else {
             if ($kodeJawaban[0] == 'H') {
                 $tajwid = Tajwid::where('kode', $kodeJawaban)->first();
@@ -142,9 +160,21 @@ class ConsultationController extends Controller
                 $kode = Tajwid::findorfail($pertanyaan->tajwid_id)->kode;
 
                 // simpan data jawaban tajwid di sesi
-                $session->put('tajwid', $tajwid->id);
+                if ($session->has('tajwid')) {
+                    if ($session->get('tajwid') == $tajwid->id) {
+                        $session->put('tajwid', $tajwid->id);
+                    } else {
+                        $this->deleteSession('tajwid');
+                        $this->deleteSession('pertanyaan');
+                        $this->deleteSession('jawaban');
+                        $this->deleteSession('pattern');
+
+                        $session->put('tajwid', $tajwid->id);
+                    }
+                } else {
+                    $session->put('tajwid', $tajwid->id);
+                }
             } else {
-                // dd($session->get('pertanyaan'), $session->get('jawaban'));
                 if (!$session->has('pertanyaan')) {
                     // buat sesi ketika sesi pertanyaan kosong
 
@@ -158,8 +188,18 @@ class ConsultationController extends Controller
 
                         $tempArr = $session->get('jawaban');
                         $index = array_search($request->input('reference'), $session->get('pertanyaan'));
-                        $tempArr[$index] = $request->input('jawaban');
-                        session(['jawaban' => $tempArr]);
+
+                        // cek apakah jawaban sama
+                        if ($tempArr[$index] == $request->input('jawaban')) {
+                            // aksi ketika jawaban sama
+                        } else {
+                            // aksi ketika jawaban tidak sama
+                            $tempArr[$index] = $request->input('jawaban');
+                            session(['jawaban' => $tempArr]);
+
+                            // hapus pattern jika jawaban tidak sama
+                            $this->deleteSession('pattern');
+                        }
                     } else {
                         // aksi ketika pertanyaan belum dijawab
                         $session->push('pertanyaan', $request->input('reference'));
@@ -294,7 +334,6 @@ class ConsultationController extends Controller
                             } else {
                                 // jika pola tidak ditemukan
                             }
-                            
                         } else {
                             // aksi role base tajwid sejenis
 
@@ -344,7 +383,6 @@ class ConsultationController extends Controller
                             } else {
                                 // jika pola tidak ditemukan
                             }
-
                         }
                     }
                 } else {
@@ -380,5 +418,10 @@ class ConsultationController extends Controller
 
 
         return view('konsultasi.hasil', compact('trueRoleBase', 'trueTajwid', 'ayahUnicode'));
+    }
+
+    public function deleteSession($key)
+    {
+        Session::forget($key);
     }
 }

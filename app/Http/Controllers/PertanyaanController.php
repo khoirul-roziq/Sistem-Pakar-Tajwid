@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Jawaban;
 use App\Models\Pertanyaan;
 use App\Models\Kategori;
 use App\Models\Tajwid;
@@ -66,12 +65,11 @@ class PertanyaanController extends Controller
             $newKode = 'P000';
         }
 
-        $jawaban = Jawaban::all(); 
         $tajwid = Tajwid::all();
         $pertanyaan = Pertanyaan::all(); 
         $tandaTajwid = TandaTajwid::all();      
 
-        return view('admin.pertanyaan.create', compact('jawaban', 'kategori', 'tajwid', 'pertanyaan', 'tandaTajwid', 'newKode'));
+        return view('admin.pertanyaan.create', compact('kategori', 'tajwid', 'pertanyaan', 'tandaTajwid', 'newKode'));
     }
 
     /**
@@ -133,12 +131,11 @@ class PertanyaanController extends Controller
     {
         $pertanyaan = Pertanyaan::findorfail($id);
         $dataPertanyaan = Pertanyaan::all();
-        $jawaban = Jawaban::all();
         $kategori = Kategori::all();
         $tajwid = Tajwid::all();  
         $tandaTajwid = TandaTajwid::all();
 
-        return view('admin.pertanyaan.edit', compact('pertanyaan', 'jawaban', 'kategori', 'tajwid', 'tandaTajwid', 'dataPertanyaan'));
+        return view('admin.pertanyaan.edit', compact('pertanyaan', 'kategori', 'tajwid', 'tandaTajwid', 'dataPertanyaan'));
     }
 
     /**
