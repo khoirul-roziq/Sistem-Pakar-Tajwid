@@ -122,7 +122,7 @@ class ConsultationController extends Controller
     {
         $session = session();
 
-        dd($session->get('kategori'), $session->get('tajwid'), $session->get('pertanyaan'), $session->get('jawaban'), $session->get('pattern'));
+        // dd($session->get('kategori'), $session->get('tajwid'), $session->get('pertanyaan'), $session->get('jawaban'), $session->get('pattern'));
 
         $kodeJawaban = $request->input('jawaban');
 
@@ -423,5 +423,16 @@ class ConsultationController extends Controller
     public function deleteSession($key)
     {
         Session::forget($key);
+    }
+
+    public function reset()
+    {
+        $this->deleteSession('kategori');
+        $this->deleteSession('tajwid');
+        $this->deleteSession('pertanyaan');
+        $this->deleteSession('jawaban');
+        $this->deleteSession('pattern');
+
+        return redirect('konsultasi')->with('message', 'Data konsultasi sebelumnya berhasil dibersihkan!');
     }
 }

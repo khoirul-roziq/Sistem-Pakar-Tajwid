@@ -5,35 +5,34 @@
 @endsection
 
 @section('styles')
-<style>
-    tajwid {
-        color:red;
-        
-    }
+    <style>
+        tajwid {
+            color: red;
 
-    tajwid:hover {
-        background-color: rgb(255, 160, 160);
-    }
-    
-    tajwidSec {
-        color:orange;
-        
-    }
+        }
 
-    tajwidSec:hover {
-        background-color: rgb(255, 219, 160);
-    }
+        tajwid:hover {
+            background-color: rgb(255, 160, 160);
+        }
 
-    .contoh {
-        font-size: 32px;
-        line-height: 80px;
-        text-align: right;
-        padding: 20px;
-        border-radius: 5px;
-        color: #666666;
-    }
+        tajwidSec {
+            color: orange;
 
-</style>
+        }
+
+        tajwidSec:hover {
+            background-color: rgb(255, 219, 160);
+        }
+
+        .contoh {
+            font-size: 32px;
+            line-height: 80px;
+            text-align: right;
+            padding: 20px;
+            border-radius: 5px;
+            color: #666666;
+        }
+    </style>
 @endsection
 
 @section('content')
@@ -64,12 +63,12 @@
                     </div>
                     <div class="row">
                         <div class="col s12">
-                            
+
                             <table>
                                 <tbody>
                                     <tr>
                                         <th>Nama Tajwid</th>
-                                        <td>: <span class="badge teal lighten-1">{{ $trueTajwid->nama_tajwid}}</span></td>
+                                        <td>: <span class="badge teal lighten-1">{{ $trueTajwid->nama_tajwid }}</span></td>
                                     </tr>
                                     <tr>
                                         <th>Kategori</th>
@@ -100,10 +99,22 @@
                     </div>
                     <div class="row">
                         <div class="col s12">
-                            <h1 class="font-kitab contoh" style="font-size: 35px;">{!! str_replace(['\\n'], '', html_entity_decode(preg_replace("/\\\\u([0-9A-F]{4})/i", "&#x$1;", $ayahUnicode), ENT_QUOTES, 'UTF-8')) !!}</h1>
+                            <h1 class="font-kitab contoh" style="font-size: 35px;">{!! str_replace(
+                                ['\\n'],
+                                '',
+                                html_entity_decode(preg_replace('/\\\\u([0-9A-F]{4})/i', "&#x$1;", $ayahUnicode), ENT_QUOTES, 'UTF-8'),
+                            ) !!}</h1>
                         </div>
                     </div>
-                    
+
+                    <div class="row center">
+                        <div class="col">
+                            <form action="{{ route('konsultasi.reset') }}" method="post">
+                                @csrf
+                                <button class="btn-large"><b>Konsultasi Lagi</b></button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
 

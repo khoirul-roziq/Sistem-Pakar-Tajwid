@@ -26,6 +26,31 @@
         </div>
     </div>
 
+    @if (session('message'))
+        <div class="col s12">
+            <div class="container mt-3">
+                <div class="card">
+                    <div class="card-content">
+                        <div class="row">
+                            <div class="col s10 m12 l12">
+                                <div class="card-alert card cyan">
+                                    <div class="card-content white-text">
+                                        <p>
+                                            <i class="material-icons">check</i> {{ session('message') }}
+                                        </p>
+                                    </div>
+                                    <button type="button" class="close white-text" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">×</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
+
     <div class="col s12">
         <div class="container mt-3">
             <div class="card">
@@ -41,11 +66,10 @@
                                         @csrf
                                         <input type="text" value="{{ $pertanyaan->id }}" name="reference" hidden>
                                         <input type="text" value="{{ $kategori->kode }}" name="jawaban" hidden>
-                                        <button type="submit" class="btn 
-                                        @if(session()->has('kategori'))
-                                            @if(session('kategori') == $kategori->id)
-                                            pink darken-3
-                                            @endif`
+                                        <button type="submit"
+                                            class="btn 
+                                        @if (session()->has('kategori')) @if (session('kategori') == $kategori->id)
+                                            pink darken-3 @endif`
                                         @endif
                                         ">
                                             {{ $kategori->nama_kategori }}
@@ -59,11 +83,10 @@
                                             @csrf
                                             <input type="text" value="{{ $pertanyaan->id }}" name="reference" hidden>
                                             <input type="text" value="{{ $tajwid->kode }}" name="jawaban" hidden>
-                                            <button type="submit" class="btn
-                                            @if(session()->has('tajwid'))
-                                                @if(session('tajwid') == $tajwid->id)
-                                                pink darken-3
-                                                @endif`
+                                            <button type="submit"
+                                                class="btn
+                                            @if (session()->has('tajwid')) @if (session('tajwid') == $tajwid->id)
+                                                pink darken-3 @endif`
                                             @endif
                                             ">
                                                 {{ $tajwid->nama_tajwid }}
@@ -81,20 +104,18 @@
                                             <input type="text" value="{{ $tandaTajwid->kode }}" name="jawaban" hidden>
                                             <button type="submit"
                                                 class="btn-large 
-                                                @if (session()->has('pertanyaan'))
-                                                    @if (in_array($pertanyaan->id, session('pertanyaan')))
+                                                @if (session()->has('pertanyaan')) @if (in_array($pertanyaan->id, session('pertanyaan')))
                                                         @if ($tandaTajwid->kode == session('jawaban')[array_search($pertanyaan->id, session('pertanyaan'))]) pink darken-3 @endif
                                                     @endif
                                                 @endif
                                                 ">
-                                                <span class="font-kitab"
-                                                    style="font-size:25px;">
-                                                    @if($tandaTajwid->jenis == 'huruf')
-                                                    {{ html_entity_decode(json_decode('"' . $tandaTajwid->unicode . '"'), ENT_QUOTES, 'UTF-8') }}
+                                                <span class="font-kitab" style="font-size:25px;">
+                                                    @if ($tandaTajwid->jenis == 'huruf')
+                                                        {{ html_entity_decode(json_decode('"' . $tandaTajwid->unicode . '"'), ENT_QUOTES, 'UTF-8') }}
                                                     @elseif($tandaTajwid->jenis == 'tanda')
-                                                    {{ html_entity_decode(json_decode('"' . '—'.$tandaTajwid->unicode . '"'), ENT_QUOTES, 'UTF-8') }}
+                                                        {{ html_entity_decode(json_decode('"' . '—' . $tandaTajwid->unicode . '"'), ENT_QUOTES, 'UTF-8') }}
                                                     @else
-                                                    -
+                                                        -
                                                     @endif
                                                 </span>
                                             </button>
