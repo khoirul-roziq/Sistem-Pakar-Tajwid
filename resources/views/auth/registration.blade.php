@@ -22,13 +22,13 @@
                     <h6>Registrasi</h6>
                 </div>
                 <div class="row">
-                    <form class="col s12" action="" method="post">
+                    <form class="col s12" action="{{ route('registration.process') }}" method="post">
                         @csrf
                         <div class="row">
                             <div class="input-field col s12 login-mi">
                                 <i class="material-icons prefix">person</i>
-                                <input id="nama-lengkap" type="text" class="" name="nama-lengkap">
-                                <label for="nama-lengkap">Nama Lengkap</label>
+                                <input id="nama" type="text" class="" name="nama">
+                                <label for="nama">Nama Lengkap</label>
                             </div>
                         </div>
                         <div class="row">
@@ -41,7 +41,7 @@
                         <div class="row">
                             <div class="input-field col s6">
                                 <i class="material-icons prefix">lock</i>
-                                <input id="icon_prefix" type="password" class="validate">
+                                <input id="icon_prefix" type="password" class="validate" name="password">
                                 <label for="icon_prefix">Kata Sandi</label>
                             </div>
                             <div class="input-field col s6">
@@ -54,10 +54,10 @@
                         <div class="row">
                             <div class="input-field col s6">
                                 <i class="material-icons prefix">wc</i>
-                                <select>
+                                <select name="jenis-kelamin">
                                   <option value="" disabled selected>Jenis Kelamin</option>
-                                  <option value="1">Laki-laki</option>
-                                  <option value="2">Perempuan</option>
+                                  <option value="L">Laki-laki</option>
+                                  <option value="P">Perempuan</option>
                                 </select>
                                 {{-- <label>Jenis Kelamin</label> --}}
                               </div>

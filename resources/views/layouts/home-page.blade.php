@@ -22,7 +22,7 @@
     <!-- END: Custom CSS-->
 
 
-    <title>@yield('title') &mdash; Sistem Pakar Tajwid</title>
+    <title>Beranda &mdash; Sistem Pakar Tajwid</title>
 
 </head>
 
@@ -36,7 +36,7 @@
             @include('partials.home.main')
     </main>
 
-    <footer class="page-footer">
+    <footer class="page-footer teal center">
             @include('partials.home.footer')
             @include('partials.home.sosmed')
             @include('partials.home.scripts')

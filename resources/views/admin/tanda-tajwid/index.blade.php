@@ -19,7 +19,7 @@
                     <div class="col s10 m6 l6">
                         <h5 class="breadcrumbs-title mt-0 mb-0"><b>HURUF/ TANDA TAJWID</b></h5>
                         <ol class="breadcrumbs mb-0">
-                            <li class="breadcrumb-item"><a href="{{ route('home') }}">Beranda</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('home.index') }}">Beranda</a></li>
                             <li class="breadcrumb-item active white-text"><b>Huruf/ Tanda Tajwid</b></li>
                         </ol>
                     </div>

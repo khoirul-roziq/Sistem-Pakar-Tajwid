@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Controllers\Guest\WelcomeController;
@@ -7,6 +8,10 @@ use App\Http\Controllers\Guest\ConsultationController;
 use App\Http\Controllers\Guest\RetriveAlQuranController;
 use App\Http\Controllers\JawabanController;
 use App\Http\Controllers\KategoriController;
+use App\Http\Controllers\HomeController;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -23,13 +28,15 @@ Route::get('/', function () {
     return redirect('login');
 });
 
-Route::get('/home', function () {
-    return view('home/index');
-})->name('home');
+Route::get('/email/verify', function () {
+    return view('auth.verify-email');
+})->middleware('auth')->name('verification.notice');
 
-Route::get('/test', function () {
-    return view('konsultasi/pilih-ayat');
-})->name('test');
+Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+    $request->fulfill();
+
+    return redirect('dashboard');
+})->middleware(['auth', 'signed'])->name('verification.verify');
 
 Route::group(
     [
@@ -41,6 +48,10 @@ Route::group(
         Route::post('login', 'AuthController@login');
         Route::post('logout', 'AuthController@logout')->name('logout');
         Route::get('registrasi', 'AuthController@formRegistration')->name('registration');
+        Route::post('registrasi', [AuthController::class, 'registrationProcess'])->name('registration.process');
+
+
+        Route::resource('home', HomeController::class);
 
         Route::middleware(['auth:user', 'can:role,"admin"'])->group(function () {
 
@@ -89,7 +100,6 @@ Route::group(
             Route::post('ayah', [RetriveAlQuranController::class, 'getAyah'])->name('get.ayah');
             Route::post('hasil', [ConsultationController::class, 'hasil'])->name('konsultasi.hasil');
             Route::post('reset', [ConsultationController::class, 'reset'])->name('konsultasi.reset');
-
         });
     }
 );

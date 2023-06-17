@@ -1,2 +1,2 @@
 @include('partials.home.navbar')
-@include('partials.home.carousel')
+@include('partials.home.jumbotron')

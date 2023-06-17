@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Auth\Events\Registered;
 
 class AuthController extends Controller
 {
@@ -43,5 +46,26 @@ class AuthController extends Controller
 
     public function formRegistration () {
         return view('auth/registration');
+    }
+
+    public function registrationProcess (Request $request) {
+
+        $password = Hash::make($request->input('password'));
+        $role = 'guest';
+
+        $user = User::create([
+            'name' => $request->input('nama'),
+            'email' => $request->input('email'),
+            'password' => $password,
+            'role' => $role,
+            'jenis_kelamin' => $request->input('jenis-kelamin')
+        ]);
+
+        event(new Registered($user));
+
+        Auth::login($user);
+
+        return redirect('email/verify');
+
     }
 }

@@ -3,21 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\User;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 
-class DataUserController extends Controller
+class HomeController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-
-        $data = User::all();
-
-        return view('admin.data-user.index', compact('data'));
+        
+        return view('home.index');
     }
 
     /**
@@ -25,7 +21,7 @@ class DataUserController extends Controller
      */
     public function create()
     {
-        return view('admin.data-user.create');
+        //
     }
 
     /**
@@ -33,22 +29,7 @@ class DataUserController extends Controller
      */
     public function store(Request $request)
     {
-        // $validated = $request->validate([
-        //     'password' => ['confirmed']
-        // ]);
-
-        $password = Hash::make($request->input('password'));
-        $role = 'guest';
-
-        $data = User::create([
-            'name' => $request->input('nama'),
-            'email' => $request->input('email'),
-            'password' => $password,
-            'role' => $role,
-            'jenis_kelamin' => $request->input('jenis-kelamin')
-        ]);
-
-        return redirect('data-user')->with('message', 'Berhasil menambahkan user!');
+        //
     }
 
     /**
