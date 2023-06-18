@@ -61,8 +61,8 @@
                                         <div class="actions">
                                             <a href="#" class="search-toggle waves-effect btn-flat nopadding"><i
                                                     class="material-icons">search</i></a>
-                                            <a href="#" class="modal-trigger waves-effect btn-flat nopadding"><i
-                                                    class="material-icons">file_download</i></a>
+                                            {{-- <a href="#" class="modal-trigger waves-effect btn-flat nopadding"><i
+                                                    class="material-icons">file_download</i></a> --}}
                                             <a href="{{ route('tajwid.create') }}"
                                                 class="modal-trigger waves-effect btn-flat nopadding"><i
                                                     class="material-icons">add_circle</i></a>
