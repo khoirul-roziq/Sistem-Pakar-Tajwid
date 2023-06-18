@@ -82,7 +82,14 @@
                                             <option value="L" @if(old('jenis-kelamin') == 'L') selected @endif>Laki-laki</option>
                                             <option value="P" @if(old('jenis-kelamin') == 'P') selected @endif>Perempuan</option>
                                         </select>
-                                        {{-- <label>Jenis Kelamin</label> --}}
+                                    </div>
+                                    <div class="input-field col s6">
+                                        <i class="material-icons prefix">assignment_ind</i>
+                                        <select name="role">
+                                            <option value="" disabled selected>Role</option>
+                                            <option value="admin" @if(old('role') == 'admin') selected @endif>Admin</option>
+                                            <option value="guest" @if(old('role') == 'guest') selected @endif>Guest</option>
+                                        </select>
                                     </div>
                                 </div>
                     

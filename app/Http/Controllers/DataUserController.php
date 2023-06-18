@@ -38,13 +38,12 @@ class DataUserController extends Controller
         // ]);
 
         $password = Hash::make($request->input('password'));
-        $role = 'guest';
 
         $data = User::create([
             'name' => $request->input('nama'),
             'email' => $request->input('email'),
             'password' => $password,
-            'role' => $role,
+            'role' => $request->input('role'),
             'jenis_kelamin' => $request->input('jenis-kelamin')
         ]);
 
@@ -64,7 +63,9 @@ class DataUserController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $data = User::findorfail($id);
+
+        return view('admin.data-user.edit', compact('data'));
     }
 
     /**
@@ -72,7 +73,17 @@ class DataUserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $password = Hash::make($request->input('password'));
+
+        $data = User::findorfail($id)->update([
+            'name' => $request->input('nama'),
+            'email' => $request->input('email'),
+            'password' => $password,
+            'role' => $request->input('role'),
+            'jenis_kelamin' => $request->input('jenis-kelamin')
+        ]);
+
+        return redirect('data-user')->with('message', 'Berhasil mengubah data user!');
     }
 
     /**
