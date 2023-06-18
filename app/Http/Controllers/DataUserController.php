@@ -91,6 +91,7 @@ class DataUserController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $data = User::findorfail($id)->delete();
+        return redirect('data-user')->with('message', 'Berhasil menghapus data user!');
     }
 }
