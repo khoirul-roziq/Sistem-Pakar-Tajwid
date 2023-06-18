@@ -118,9 +118,6 @@
 
                                                             <!-- Dropdown Structure -->
                                                             <ul id='aksi{{ $value->id }}' class='dropdown-content'>
-                                                                <li><a href="{{ route('tanda-tajwid.show', $value->id) }}"><i
-                                                                            class="material-icons">remove_red_eye</i>Detail</a>
-                                                                </li>
                                                                 <li><a href="{{ route('tanda-tajwid.edit', $value->id) }}"><i
                                                                             class="material-icons">edit</i>Edit</a></li>
                                                                 <li><a onclick="fungsiDelete({{ $value->id }})"><i
