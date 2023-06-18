@@ -1,11 +1,7 @@
 <div class="brand-sidebar">
-  <h1 class="logo-wrapper"><a class="brand-logo darken-1" href="{{ url('/') }}"><img class="hide-on-med-and-down" src="{{ asset('assets/images/logo/Al-Qur\'an_logo.jpg') }}" alt="Logo KMNU"/><img class="show-on-medium-and-down hide-on-med-and-up" src="{{ asset('assets/images/logo/logo-kmnu(210x140).jpg') }}" alt="materialize logo"/><span class="logo-text hide-on-med-and-down"> SP Tajwid</span></a><a class="navbar-toggler" href="#"><i class="material-icons">radio_button_checked</i></a></h1>
+  <h1 class="logo-wrapper"><a class="brand-logo darken-1" href="{{ url('/') }}"><img class="hide-on-med-and-down" src="{{ asset('assets/images/logo/Al-Qur\'an_logo.jpg') }}" alt="materialize logo"/><span class="logo-text hide-on-med-and-down"> SP Tajwid</span></a><a class="navbar-toggler" href="#"><i class="material-icons">radio_button_checked</i></a></h1>
 </div>
 <ul class="sidenav leftside-navigation collapsible sidenav-fixed menu-shadow" id="slide-out" data-menu="menu-navigation" data-collapsible="menu-accordion">
-  
-  {{-- @can('role',['administrator', 'admin-pt', 'admin-reg'])
-    <li class="active bold"><a class="{{ Route::is(Auth::user()->role) ? 'active' : '' }} waves-effect waves-cyan" href="{{ route(Auth::user()->role) }}"><i class="material-icons">settings_input_svideo</i><span class="menu-title" data-i18n="Dashboard">Dashboard</span></a></li>
-  @endcan --}}
   
   @can('role',['admin'])
   
