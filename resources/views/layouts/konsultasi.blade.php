@@ -28,7 +28,10 @@
     <!-- BEGIN: Custom CSS-->
     <link rel="stylesheet" type="text/css"
         href="https://pixinvent.com/materialize-material-design-admin-template/app-assets/css/custom/custom.css">
+    <link rel="stylesheet" href="{{ asset('assets/styles/css/konsultasi.css') }}">
+    @if(Auth::user()->role == 'guest')
     <link rel="stylesheet" href="{{ asset('assets/styles/css/guest.css') }}">
+    @endif
     <!-- END: Custom CSS-->
 
     @yield('styles')
@@ -43,9 +46,11 @@
             @include('partials.header')
         </header>
 
-        {{-- <aside class="sidenav-main nav-expanded nav-lock nav-collapsible sidenav-light sidenav-active-square">
+        @if(Auth::user()->role == 'admin')
+        <aside class="sidenav-main nav-expanded nav-lock nav-collapsible sidenav-light sidenav-active-square">
             @include('partials.sidebar')
-        </aside> --}}
+        </aside>
+        @endif
 
         <div id="main">
             @yield('content')

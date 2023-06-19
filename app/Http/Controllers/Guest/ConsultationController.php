@@ -42,82 +42,6 @@ class ConsultationController extends Controller
         return view('konsultasi.pertanyaan', compact('pertanyaan'))->with('kode', 'K000');
     }
 
-    // public function konsultasi(Request $request)
-    // {
-
-    //     // retrive data jawaban berdasarkan request
-    //     $jawaban = Jawaban::findorfail($request->jawaban);
-
-    //     $session = session();
-
-    //     // cek tipe jawaban
-    //     if ($jawaban->type == 'kategori') {
-
-    //         // retrive data kategori berdasarkan representasi jawaban
-    //         $kategori = Kategori::where('nama_kategori', $jawaban->representasi)->first();
-
-    //         // temporary storage menggunakan session
-    //         // cek ketersediaan session pertanyaan
-    //         if ($session->has('pertanyaan') == null) {
-
-    //             // retrive data pertanyaan berdasarkan kategori 
-    //             $pertanyaan = Pertanyaan::where('kategori_id', $kategori->id)->first();
-
-    //             // create session pertanyaan
-    //             $session->put('pertanyaan', [$pertanyaan->id]);
-    //             $session->put('kategori', $kategori->id);
-    //             $session->put('pattern', '');
-    //         } elseif ($session->has('pertanyaan')) {
-    //         }
-    //     } elseif ($jawaban->type == 'hukum') {
-
-    //         // 
-    //         $pertanyaan = Pertanyaan::where('kategori_id', $session->get('kategori'))
-    //             ->whereNotIn('id', $session->get('pertanyaan'))
-    //             ->get();
-
-    //         if ($pertanyaan->isNotEmpty()) {
-    //             $pertanyaan = $pertanyaan[0];
-    //             $session->push('pertanyaan', $pertanyaan->id);
-    //         } else {
-    //             // Lakukan penanganan jika array kosong, misalnya mengembalikan pesan error atau melakukan tindakan alternatif
-
-    //             $pattern = $session->get('pattern');
-
-    //             return redirect()->route('get.surah')->with('pattern', $pattern);
-    //         }
-    //     } elseif ($jawaban->type == 'tanda') {
-
-    //         // retrive data peryantaan yang belum ditampilkan
-    //         $pertanyaan = Pertanyaan::where('kategori_id', $session->get('kategori'))
-    //             ->whereNotIn('id', $session->get('pertanyaan'))
-    //             ->get();
-
-    //         if ($pertanyaan->isNotEmpty()) {
-    //             $pertanyaan = $pertanyaan[0];
-
-    //             // tambah id pertanyaan yang sudah dikeluarkan berdasarkan id
-    //             $session->push('pertanyaan', $pertanyaan->id);
-
-    //             // merge pattern dari session dan jawaban
-    //             $pattern = $session->get('pattern') . $jawaban->representasi;
-    //             $session->put('pattern', $pattern);
-    //         } else {
-    //             // Lakukan penanganan jika array kosong, misalnya mengembalikan pesan error atau melakukan tindakan alternatif
-    //             $pattern = $session->get('pattern') . $jawaban->representasi;
-
-    //             // simpan pattern baru
-    //             $session->put('pattern', $pattern);
-
-    //             $pattern = $session->get('pattern');
-
-    //             return redirect()->route('get.surah')->with('pattern', $pattern);
-    //         }
-    //     }
-
-    //     return view('konsultasi.pertanyaan', compact('pertanyaan'));
-    // }
-
     public function konsultasi(Request $request)
     {
         $session = session();
@@ -260,8 +184,10 @@ class ConsultationController extends Controller
 
         if ($trueRoleBase != null) {
             $trueTajwid = Tajwid::findorfail($trueRoleBase->id_tajwid);
+            $roleEmpty = false;
         } else {
-            return 'Role Base Tidak Tersedia';
+            $roleEmpty = true;
+            return view('konsultasi.hasil', compact('roleEmpty'));
         }
 
         // START: Request Data dari API
@@ -417,7 +343,7 @@ class ConsultationController extends Controller
         // END: Request Data dari API 
 
 
-        return view('konsultasi.hasil', compact('trueRoleBase', 'trueTajwid', 'ayahUnicode'));
+        return view('konsultasi.hasil', compact('trueRoleBase', 'trueTajwid', 'ayahUnicode', 'roleEmpty'));
     }
 
     public function deleteSession($key)

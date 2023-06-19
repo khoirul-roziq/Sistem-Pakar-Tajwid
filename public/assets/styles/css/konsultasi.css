@@ -1,0 +1,40 @@
+.sidenav-main .actived {
+  background-color: #26a69a;
+  border-radius: 0 8px 8px 0;
+  color: white;
+  box-shadow: 1px 1px 10px rgba(38, 166, 153, 0.5764705882);
+}
+.sidenav-main .actived i {
+  color: white !important;
+}
+.sidenav-main .actived:hover {
+  color: black;
+}
+.sidenav-main .actived:hover i {
+  color: rgba(0, 0, 0, 0.54) !important;
+}
+.sidenav-main .btn-sidenav-toggle i {
+  color: teal !important;
+}
+
+#salam {
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+}
+#salam .font-kitab {
+  font-size: 30px;
+}
+
+.card-content h1 {
+  font-size: 20px;
+}
+
+@media only screen and (max-width: 600px) {
+  #salam {
+    margin-bottom: 2rem;
+    margin-top: 1.5rem;
+  }
+  #salam .font-kitab {
+    font-size: 25px;
+  }
+}/*# sourceMappingURL=konsultasi.css.map */

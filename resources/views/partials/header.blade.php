@@ -5,6 +5,11 @@
         <input class="header-search-input z-depth-2" type="text" name="Search" placeholder="Cari ..." data-search="template-list">
         <ul class="search-list collection display-none"></ul>
       </div> --}}
+      @if(Auth::user()->role == 'guest')
+      <ul class="navbar-list left">
+        <li><a href="{{ url('home') }}"><b>Sistem Pakar Tajwid</b></a></li>
+      </ul>
+      @endif
     
       <ul class="navbar-list right">
         {{-- <li class="hide-on-large-only search-input-wrapper"><a class="waves-effect waves-block waves-light search-button" href="javascript:void(0);"><i class="material-icons">search</i></a></li> --}}

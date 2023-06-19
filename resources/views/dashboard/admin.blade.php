@@ -31,7 +31,7 @@
                 <div class="card">
                     <div class="card-content">
                         <h1>Selamat Datang, {{ Auth::user()->name }}!</h1>
-                        <h2>Anda sekarang masuk sebagai {{ Auth::user()->role }}.</h2>
+                        <h2>Kamu berhasil masuk sebagai admin</h2>
                     </div>
                 </div>
             </div>

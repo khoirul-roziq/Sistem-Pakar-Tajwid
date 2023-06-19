@@ -1,4 +1,4 @@
-@extends('layouts.guest')
+@extends('layouts.konsultasi')
 
 @section('title')
     Konsultasi
@@ -61,6 +61,13 @@
                     <div class="judul">
                         <h1>Hasil Konsultasi</h1>
                     </div>
+                    @if($roleEmpty)
+                        <div class="row">
+                            <div class="col s12">
+                                <h5 class="mb-3 red-text">Role Base tidak ditemukan!</h5>
+                            </div>
+                        </div>
+                    @else
                     <div class="row">
                         <div class="col s12">
 
@@ -106,6 +113,7 @@
                             ) !!}</h1>
                         </div>
                     </div>
+                    @endif
 
                     <div class="row center">
                         <div class="col">

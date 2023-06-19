@@ -1,11 +1,12 @@
 @extends('layouts.guest')
 
 @section('title')
-    Welcome
+    Dashboard
 @endsection
 
 @section('styles')
 <link rel="stylesheet" href="https://alquran.cloud/public/css/font-kitab.css?v=1">
+<link rel="stylesheet" href="{{ asset('assets/styles/css/dashboard.css') }}">
 @endsection
 
 @section('content')
@@ -30,7 +31,8 @@
             <div class="card">
                 <div class="card-content">
                     <h1>Selamat Datang, {{ Auth::user()->name }}!</h1>
-                    <a class="btn-small" href="{{ route('konsultasi.mulai') }}">Konsultasi</a>
+                    <h2>Kamu berhasil masuk sebagai tamu</h2>
+                    <a class="btn-large mt-3" href="{{ route('konsultasi.mulai') }}">Mulai Konsultasi</a>
                 </div>
             </div>
 
@@ -41,15 +43,5 @@
 @endsection
 
 @section('scripts')
-<!-- BEGIN PAGE VENDOR JS-->
-{{-- <script src="https://pixinvent.com/materialize-material-design-admin-template/laravel/demo-1/vendors/chartjs/chart.min.js"></script> --}}
-{{-- <script src="https://pixinvent.com/materialize-material-design-admin-template/laravel/demo-1/vendors/chartist-js/chartist.min.js"></script> --}}
-{{-- <script src="https://pixinvent.com/materialize-material-design-admin-template/laravel/demo-1/vendors/chartist-js/chartist-plugin-tooltip.js"></script> --}}
-{{-- <script src="https://pixinvent.com/materialize-material-design-admin-template/laravel/demo-1/vendors/chartist-js/chartist-plugin-fill-donut.min.js"></script> --}}
-<!-- END PAGE VENDOR JS-->
 
-<!-- BEGIN PAGE LEVEL JS-->
-{{-- <script src="https://pixinvent.com/materialize-material-design-admin-template/laravel/demo-1/js/scripts/dashboard-modern.js"></script> --}}
-{{-- <script src="https://pixinvent.com/materialize-material-design-admin-template/laravel/demo-1/js/scripts/intro.js"></script> --}}
-<!-- END PAGE LEVEL JS-->
 @endsection

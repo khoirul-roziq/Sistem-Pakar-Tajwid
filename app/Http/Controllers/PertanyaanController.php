@@ -158,7 +158,9 @@ class PertanyaanController extends Controller
         $data->soal = $request->input('soal');
         $data->kategori_id = $request->input('kategori');
         $data->tajwid_id = $request->input('tajwid');
-        $data->reference = $request->input('reference');
+        if($request->input('reference') != null) {
+            $data->reference = $request->input('reference');
+        }
         $data->last_question = $lastQuestion;
 
         $data->save();

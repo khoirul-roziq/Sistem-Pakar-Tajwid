@@ -1,52 +1,5 @@
-.sidenav-main {
-    .actived {
-        background-color: #26a69a;
-        border-radius: 0 8px 8px 0;
-        color: white;
-        box-shadow: 1px 1px 10px #26a69993;
-
-        i {
-            color: white !important;
-        }
-
-        &:hover {
-            color: black;
-
-            i {
-                color: rgba(0, 0, 0, 0.54) !important;
-            }
-        }
-    }
-
-    .btn-sidenav-toggle {
-        i {
-            color: teal !important;
-        }
-    }
-}
-
-#salam {
-    .font-kitab {
-        font-size: 30px;
-    }
-
-    margin-bottom: 1rem;
-    margin-top: 1rem;
-}
-
-.card-content {
-    h1 {
-        font-size: 20px;
-    }
-}
-
-@media only screen and (max-width: 600px) {
-    #salam {
-        .font-kitab {
-            font-size: 25px;
-        }
-
-        margin-bottom: 2rem;
-        margin-top: 1.5rem;
+@media only screen and (min-width: 993px) {
+    #main {
+        padding-left: 10px !important;
     }
 }

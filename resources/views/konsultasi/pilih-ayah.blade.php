@@ -1,4 +1,4 @@
-@extends('layouts.guest')
+@extends('layouts.konsultasi')
 
 @section('title')
     Konsultasi
