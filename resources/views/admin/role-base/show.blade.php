@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('title')
-    Detail Role Base
+    Detail Basis Pengetahuan
 @endsection
 
 @section('styles')

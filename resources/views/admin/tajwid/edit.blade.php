@@ -20,8 +20,8 @@
                     <div class="col s10 m6 l6">
                         <h5 class="breadcrumbs-title mt-0 mb-0"><b>DATA TAJWID</b></h5>
                         <ol class="breadcrumbs mb-0">
-                            <li class="breadcrumb-item"><a href="{{ route('home.index') }}">Beranda</a></li>
-                            <li class="breadcrumb-item"><a href="{{ route('tajwid.index') }}">Data Tajwid</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('dashboard.index') }}">Dashboard</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('tajwid.index') }}">Tajwid</a></li>
                             <li class="breadcrumb-item active white-text"><b>Edit</b></li>
                         </ol>
                     </div>

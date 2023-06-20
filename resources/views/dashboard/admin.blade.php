@@ -46,7 +46,7 @@
                         <div class="card">
                             <div class="card-content">
                                 <img src="{{ asset('assets/images/icons/data-tajwid.jpg') }}" alt="data-tajwid" width="80%">
-                                <p>Data Tajwid</p>
+                                <p>Tajwid</p>
                             </div>
                         </div>
                     </a>
@@ -56,7 +56,7 @@
                         <div class="card">
                             <div class="card-content">
                                 <img src="{{ asset('assets/images/icons/role-base.jpg') }}" alt="role-base" width="80%">
-                                <p>Role Base</p>
+                                <p>Basis Pengetahuan</p>
                             </div>
                         </div>
                     </a>
@@ -108,7 +108,7 @@
                         <div class="card">
                             <div class="card-content">
                                 <img src="{{ asset('assets/images/icons/data-user.jpg') }}" alt="data-user" width="80%">
-                                <p>Data User</p>
+                                <p>Pengguna</p>
                             </div>
                         </div>
                     </a>

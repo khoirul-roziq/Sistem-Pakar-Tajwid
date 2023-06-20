@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('title')
-    Edit Tanda Tajwid
+    Edit Huruf/ Tanda
 @endsection
 
 @section('styles')
@@ -18,11 +18,11 @@
             <div class="container">
                 <div class="row">
                     <div class="col s10 m6 l6">
-                        <h5 class="breadcrumbs-title mt-0 mb-0"><b>TANDA TAJWID</b></h5>
+                        <h5 class="breadcrumbs-title mt-0 mb-0"><b>DATA HURUF/ TANDA</b></h5>
                         <ol class="breadcrumbs mb-0">
-                            <li class="breadcrumb-item"><a href="{{ route('home.index') }}">Beranda</a></li>
-                            <li class="breadcrumb-item"><a href="{{ route('tanda-tajwid.index') }}">Tanda Tajwid</a></li>
-                            <li class="breadcrumb-item active white-text"><b>Edit Tanda Tajwid</b></li>
+                            <li class="breadcrumb-item"><a href="{{ route('dashboard.index') }}">Dashboard</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('tanda-tajwid.index') }}">Huruf/ Tanda</a></li>
+                            <li class="breadcrumb-item active white-text"><b>Edit</b></li>
                         </ol>
                     </div>
                 </div>
