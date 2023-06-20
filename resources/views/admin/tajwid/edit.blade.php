@@ -22,7 +22,7 @@
                         <ol class="breadcrumbs mb-0">
                             <li class="breadcrumb-item"><a href="{{ route('home.index') }}">Beranda</a></li>
                             <li class="breadcrumb-item"><a href="{{ route('tajwid.index') }}">Data Tajwid</a></li>
-                            <li class="breadcrumb-item active white-text"><b>Edit Tajwid</b></li>
+                            <li class="breadcrumb-item active white-text"><b>Edit</b></li>
                         </ol>
                     </div>
                 </div>
