@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('title')
-    Edit Basis Pengetahuan
+    Edit Rule Tajwid
 @endsection
 
 @section('styles')
@@ -62,10 +62,10 @@
             <div class="container">
                 <div class="row">
                     <div class="col s10 m6 l6">
-                        <h5 class="breadcrumbs-title mt-0 mb-0"><b>BASIS PENGETAHUAN</b></h5>
+                        <h5 class="breadcrumbs-title mt-0 mb-0"><b>RULE TAJWID</b></h5>
                         <ol class="breadcrumbs mb-0">
                             <li class="breadcrumb-item"><a href="{{ route('dashboard.index') }}">Dashboard</a></li>
-                            <li class="breadcrumb-item"><a href="{{ route('role-base.index') }}">Basis Pengetahuan</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('role-base.index') }}">Rule Tajwid</a></li>
                             <li class="breadcrumb-item active white-text"><b>Edit</b></li>
                         </ol>
                     </div>
@@ -102,7 +102,7 @@
                             <div class="row">
 
                                 <div class="input-field col m6 s12">
-                                    <label for="kode">Kode Role Base<span class="red-text">*</span></label>
+                                    <label for="kode">Kode Rule Tajwid<span class="red-text">*</span></label>
                                     <input type="text" id="kode" name="kode"
                                         class="validate @error('kode') is-invalid @enderror" required
                                         value="{{ $roleBase->kode }}">
@@ -141,7 +141,7 @@
                                         @checked(true)
                                         @endif
                                         />
-                                        <span>Role Kedua</span>
+                                        <span>Rule Kedua</span>
                                     </label>
                                 </div>
                             </div>
@@ -164,7 +164,7 @@
                             </div>
 
                             <div class="row center-align">
-                                <span><b>Representasi Role Base</b></span>
+                                <span><b>Representasi Rule Tajwid</b></span>
                                 <div class="wrap">
                                     <div class="panel">
                                         <div class="content">

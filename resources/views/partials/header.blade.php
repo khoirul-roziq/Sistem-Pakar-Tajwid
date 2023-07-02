@@ -34,7 +34,7 @@
           @endif
         </span></li>
         <li class="divider"></li>
-        <li><a class="grey-text text-darken-1" href=""><i class="material-icons">person_outline</i> Profil</a></li>
+        <li><a class="grey-text text-darken-1" href="{{ route('profile.index') }}"><i class="material-icons">person_outline</i> Profil</a></li>
         <li><a class="grey-text text-darken-1" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="material-icons">keyboard_tab</i> Keluar</a></li>
         <form action="
         {{ route('logout') }}" id="logout-form" method="post">

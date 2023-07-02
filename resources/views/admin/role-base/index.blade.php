@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('title')
-    Basis Pengetahuan
+    Rule Tajwid
 @endsection
 
 @section('styles')
@@ -17,10 +17,10 @@
             <div class="container">
                 <div class="row">
                     <div class="col s10 m6 l6">
-                        <h5 class="breadcrumbs-title mt-0 mb-0"><b>BASIS PENGETAHUAN</b></h5>
+                        <h5 class="breadcrumbs-title mt-0 mb-0"><b>RULE TAJWID</b></h5>
                         <ol class="breadcrumbs mb-0">
                             <li class="breadcrumb-item"><a href="{{ route('dashboard.index') }}">Dashboard</a></li>
-                            <li class="breadcrumb-item active white-text"><b>Basis Pengetahuan</b></li>
+                            <li class="breadcrumb-item active white-text"><b>Rule Tajwid</b></li>
                         </ol>
                     </div>
                 </div>
@@ -73,8 +73,8 @@
                                             <tr>
                                                 <th>Kode</th>
                                                 <th>Nama Tajwid</th>
-                                                <th>Role Pertama</th>
-                                                <th>Role Kedua</th>
+                                                <th>Rule Pertama</th>
+                                                <th>Rule Kedua</th>
                                                 <th>Aksi</th>
                                             </tr>
                                         </thead>

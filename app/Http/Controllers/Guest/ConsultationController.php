@@ -208,7 +208,9 @@ class ConsultationController extends Controller
                 // dd($ayahUnicode);
 
                 $resultRole = $kmp->kmpSearch($trueRoleBase->role, $ayahUnicode);
-                $resultSecondRole = $kmp->kmpSearch($trueRoleBase->second_role, $ayahUnicode);
+                if ($trueRoleBase->second_role != null) {
+                    $resultSecondRole = $kmp->kmpSearch($trueRoleBase->second_role, $ayahUnicode);
+                }
 
 
                 // ambil data rolebase yang memiliki hukum tajwid sama dengan role base terpilih
@@ -264,7 +266,9 @@ class ConsultationController extends Controller
                             // aksi role base tajwid sejenis
 
                             $resultRB = $kmp->kmpSearch($dataRB->role, $ayahUnicode);
-                            $resultSecondRB = $kmp->kmpSearch($dataRB->second_role, $ayahUnicode);
+                            if ($dataRB->second_role != null) {
+                                $resultSecondRB = $kmp->kmpSearch($dataRB->second_role, $ayahUnicode);
+                            }
 
                             $countIndex = 0;
                             if (!empty($dataRB)) {

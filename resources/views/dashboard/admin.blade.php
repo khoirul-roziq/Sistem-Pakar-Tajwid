@@ -56,7 +56,7 @@
                         <div class="card">
                             <div class="card-content">
                                 <img src="{{ asset('assets/images/icons/role-base.jpg') }}" alt="role-base" width="80%">
-                                <p>Basis Pengetahuan</p>
+                                <p>Rule Tajwid</p>
                             </div>
                         </div>
                     </a>

@@ -81,6 +81,9 @@ Route::group(
             // Welcome Route
             Route::get('welcome', [WelcomeController::class, 'index'])->name('welcome.index');
 
+            // Profile Route
+            Route::resource('profile', ProfileController::class);
+
             // Dashboard Route
             Route::resource('dashboard', DashboardController::class);
 

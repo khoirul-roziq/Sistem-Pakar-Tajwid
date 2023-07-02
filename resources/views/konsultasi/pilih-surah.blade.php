@@ -34,7 +34,7 @@
             <div class="card">
                 <div class="card-content">
                     <div class="judul">
-                        <h1>Pilih ayat!</h1>
+                        <h1>Pilih salah satu surah dari 114 surah yang ada pada Al-Qur'an!</h1>
                     </div>
                     <form action="{{ route('get.ayah') }}" method="post">
                         @csrf
@@ -42,7 +42,7 @@
                             <div class="col s12">
                                 <div class="input-field col m6 s12">
                                     <select class="select2 browser-default" name="surah">
-                                        <option value="" disabled selected>--- Pilih Surat ---</option>
+                                        <option value="" disabled selected>--- Pilih Surah ---</option>
                                         @foreach ($surahs as $surah)
                                             <option value="{{ $surah['number'] }}">
                                                 {{ $surah['number'] . '. ' . $surah['englishName'] }}</option>
