@@ -85,7 +85,7 @@ class RoleBaseController extends Controller
 
         $data->tandaTajwid()->sync($request->tandaTajwid);
 
-        return redirect('role-base')->with('message', 'Berhasil menambahkan role base!');
+        return redirect('role-base')->with('message', 'Berhasil menambahkan rule tajwid!');
     }
 
     /**
@@ -144,7 +144,7 @@ class RoleBaseController extends Controller
     
         $roleBase->tandaTajwid()->sync($request->tandaTajwid);
         
-        return redirect('role-base')->with('message', 'Berhasil mengubah data role base!');
+        return redirect('role-base')->with('message', 'Berhasil mengubah data rule tajwid!');
     }
 
     /**
@@ -153,6 +153,6 @@ class RoleBaseController extends Controller
     public function destroy(string $id)
     {
         $data = RoleBase::findorfail($id)->delete();
-        return redirect('role-base')->with('message', 'Berhasil menghapus data role base!');
+        return redirect('role-base')->with('message', 'Berhasil menghapus data rule tajwid!');
     }
 }

@@ -61,7 +61,7 @@
                     <div class="judul">
                         <h1>Hasil Konsultasi</h1>
                     </div>
-                    @if($roleEmpty)
+                    @if($ruleEmpty)
                         <div class="row">
                             <div class="col s12">
                                 <h5 class="mb-3 red-text">Role Base tidak ditemukan!</h5>
@@ -90,18 +90,18 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col s12 mt-3">
+                        <div class="col s12 mt-3 mb-2">
                             <p><b>Penjelasan :</b></p>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col s12" style="margin-top: -15px; margin-left: -3px;">
+                        <div class="col s12" style="margin-left: -3px;">
                             {!! $trueTajwid->penjelasan !!}
                         </div>
                     </div>
                     <div class="row">
                         <div class="col s12 mt-3">
-                            <span>Contoh :</span>
+                            <span><b>Hukum bacaan pada ayat :</b></span>
                         </div>
                     </div>
                     <div class="row">

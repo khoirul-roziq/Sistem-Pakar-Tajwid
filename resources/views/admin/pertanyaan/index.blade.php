@@ -121,8 +121,7 @@
 
 @section('scripts')
     <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
-    <script src="https://pixinvent.com/materialize-material-design-admin-template/laravel/demo-1/js/scripts/ui-alerts.js">
-    </script>
+    <script src="{{ asset('assets/vendor/materialize-adm/js/scripts/ui-alerts.js') }}"></script>
     <script src="{{ asset('assets/vendor/data-tables/js/script.js') }}"></script>
     <script>
         function fungsiDelete(id) {

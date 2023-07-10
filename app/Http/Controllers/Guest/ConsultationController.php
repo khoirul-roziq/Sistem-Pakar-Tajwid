@@ -154,7 +154,7 @@ class ConsultationController extends Controller
     public function hasil(Request $request)
     {
 
-        // START: generate pattern
+        // START: gabungkan unicode jawaban
         $pattern = '';
         foreach (session()->get('jawaban') as $tanda) {
             $unicode = TandaTajwid::where('kode', $tanda)->first()->unicode;
@@ -162,9 +162,10 @@ class ConsultationController extends Controller
         }
 
         session()->put('pattern', $pattern);
-        // END: generate pattern
+        // END: gabungkan unicode jawaban
 
-        // START: cek similariti pada role base
+
+        // START: cek similariti pada rule tajwid
 
         $roleBase = RoleBase::all();
         $trueRoleBase = null;
@@ -180,14 +181,14 @@ class ConsultationController extends Controller
                 $trueRoleBase = $item;
             }
         }
-        // END: cek similariti pada role base
+        // END: cek similariti pada rule tajwid
 
         if ($trueRoleBase != null) {
             $trueTajwid = Tajwid::findorfail($trueRoleBase->id_tajwid);
-            $roleEmpty = false;
+            $ruleEmpty = false;
         } else {
-            $roleEmpty = true;
-            return view('konsultasi.hasil', compact('roleEmpty'));
+            $ruleEmpty = true;
+            return view('konsultasi.hasil', compact('ruleEmpty'));
         }
 
         // START: Request Data dari API
@@ -205,20 +206,25 @@ class ConsultationController extends Controller
                 $ayahUnicode = trim(preg_replace('/\\\\u([0-9a-fA-F]{4})/', '\\\\u$1', json_encode($ayah)), '"');
                 $ayahUnicode = preg_replace('/\s/', '\\\\u0020', $ayahUnicode);
 
-                // dd($ayahUnicode);
-
-                $resultRole = $kmp->kmpSearch($trueRoleBase->role, $ayahUnicode);
-                if ($trueRoleBase->second_role != null) {
-                    $resultSecondRole = $kmp->kmpSearch($trueRoleBase->second_role, $ayahUnicode);
-                }
 
 
-                // ambil data rolebase yang memiliki hukum tajwid sama dengan role base terpilih
-                $RoleBasetajwidSejenis = RoleBase::where('id_tajwid', $trueTajwid->id)->get();
+                // ambil data synonym dari rule yang terpilih
+                $synonymRuleTajwid = RoleBase::where('synonym', $trueRoleBase->kode)->get();
 
-                if (!$RoleBasetajwidSejenis->isEmpty()) {
-                    foreach ($RoleBasetajwidSejenis as $dataRB) {
+
+                // ambil data rulebase yang memiliki hukum tajwid sama dengan rulebase terpilih dan bukan synonym dari rule tajwid yang lain
+                $RuleTajwidSejenis = RoleBase::where('id_tajwid', $trueTajwid->id)->where('synonym', null)->get();
+
+                if (!$RuleTajwidSejenis->isEmpty()) {
+
+                    foreach ($RuleTajwidSejenis as $dataRB) {
+                        // cari index rule
+                        $resultRole = $kmp->kmpSearch($trueRoleBase->role, $ayahUnicode);
+
+
+
                         if ($dataRB->id == $trueRoleBase->id) {
+                            // cara hukum bacaan dengan rule pertama
                             $countIndex = 0;
                             if (!empty($resultRole)) {
 
@@ -241,7 +247,12 @@ class ConsultationController extends Controller
                                 // return "Pola tidak ditemukan dalam teks.";
                             }
 
-                            // cek apakah ada nilai pada second role
+                            // cari index rule kedua
+                            if ($trueRoleBase->second_role != null) {
+                                $resultSecondRole = $kmp->kmpSearch($trueRoleBase->second_role, $ayahUnicode);
+                            }
+                            
+                            // cari hukum bacaan dengan second rule
                             $countIndex = 0;
                             if (!empty($resultSecondRole)) {
                                 foreach ($resultSecondRole as $indexResult) {
@@ -262,6 +273,68 @@ class ConsultationController extends Controller
                             } else {
                                 // jika pola tidak ditemukan
                             }
+
+                            // cari hukum bacaan dengan synonym
+                            if (!$synonymRuleTajwid->isEmpty()) {
+
+                                foreach ($synonymRuleTajwid as $synonym) {
+                                    // cari index rule synonym pada kumpulan unicode ayat
+                                    $resultRS = $kmp->kmpSearch($synonym->role, $ayahUnicode);
+
+                                    // cari hukum bacaan dengan rule pertama synonym
+                                    $countIndex = 0;
+                                    if (!empty($resultRS)) {
+                                        foreach ($resultRS as $indexResult) {
+
+                                            // Pisahkan string
+                                            $firstPattern = substr($ayahUnicode, 0, $indexResult + $countIndex);
+                                            $midPattern = substr($ayahUnicode, $indexResult + $countIndex, strlen($synonym->role));
+                                            $lastPattern = substr($ayahUnicode, $indexResult + $countIndex + strlen($synonym->role), strlen($ayahUnicode) + $countIndex - 1);
+
+                                            // tambah tag pada unicode yang ditemukan
+                                            $lengMidPattern = strlen($midPattern);
+                                            $midPattern = "<tajwid>" . $midPattern . "</tajwid>";
+                                            $countIndex = $countIndex + (strlen($midPattern) - $lengMidPattern);
+
+                                            // gabungkan string
+                                            $ayahUnicode = $firstPattern . $midPattern . $lastPattern;
+                                        }
+                                    } else {
+                                        // return jika hukum tidak ada
+                                    }
+
+                                    // cari index rulu synonym kedua pada kumpulan unicode ayat
+                                    if ($synonym->second_role != null) {
+                                        $resultSecondRS = $kmp->kmpSearch($synonym->second_role, $ayahUnicode);
+                                    }
+
+                                    // cari hukum bacaan dengan rule kedua synonym
+                                    $countIndex = 0;
+                                    if ($synonym->second_role != null) {
+                                        if (!empty($resultSecondRS)) {
+                                            foreach ($resultSecondRS as $indexResult) {
+
+                                                // Pisahkan string
+                                                $firstPattern = substr($ayahUnicode, 0, $indexResult + $countIndex);
+                                                $midPattern = substr($ayahUnicode, $indexResult + $countIndex, strlen($synonym->second_role));
+                                                $lastPattern = substr($ayahUnicode, $indexResult + $countIndex + strlen($synonym->second_role), strlen($ayahUnicode) + $countIndex - 1);
+
+                                                // tambah tag pada unicode yang ditemukan
+                                                $lengMidPattern = strlen($midPattern);
+                                                $midPattern = "<tajwid>" . $midPattern . "</tajwid>";
+                                                $countIndex = $countIndex + (strlen($midPattern) - $lengMidPattern);
+
+                                                // gabungkan string
+                                                $ayahUnicode = $firstPattern . $midPattern . $lastPattern;
+                                            }
+                                        } else {
+                                            // return ketika hukum bacaan tidak ditemukan
+                                        }
+                                    }
+                                }
+                            } else {
+                                // return jika synonym tidak ada
+                            }
                         } else {
                             // aksi role base tajwid sejenis
 
@@ -270,9 +343,11 @@ class ConsultationController extends Controller
                                 $resultSecondRB = $kmp->kmpSearch($dataRB->second_role, $ayahUnicode);
                             }
 
-                            $countIndex = 0;
-                            if (!empty($dataRB)) {
+                            // cari sinonim rule tajwid sejenis
+                            $synonymRuleTajwidSejenis = RoleBase::where('synonym', $dataRB->kode)->get();
 
+                            $countIndex = 0;
+                            if (!empty($resultRB)) {
                                 foreach ($resultRB as $indexResult) {
 
                                     // Pisahkan string
@@ -313,6 +388,71 @@ class ConsultationController extends Controller
                             } else {
                                 // jika pola tidak ditemukan
                             }
+
+                            // cari hukum bacaan dengan synonym
+                            if (!$synonymRuleTajwidSejenis->isEmpty()) {
+
+                                foreach ($synonymRuleTajwidSejenis as $synonym) {
+                                    // cari index rule synonym pada kumpulan unicode ayat
+                                    $resultRTSejenis = $kmp->kmpSearch($synonym->role, $ayahUnicode);
+
+
+
+                                    // cari hukum bacaan dengan rule pertama synonym
+                                    $countIndex = 0;
+                                    if (!empty($resultRTSejenis)) {
+
+                                        foreach ($resultRTSejenis as $indexResult) {
+
+                                            // Pisahkan string
+                                            $firstPattern = substr($ayahUnicode, 0, $indexResult + $countIndex);
+                                            $midPattern = substr($ayahUnicode, $indexResult + $countIndex, strlen($synonym->role));
+                                            $lastPattern = substr($ayahUnicode, $indexResult + $countIndex + strlen($synonym->role), strlen($ayahUnicode) + $countIndex - 1);
+
+                                            // tambah tag pada unicode yang ditemukan
+                                            $lengMidPattern = strlen($midPattern);
+                                            $midPattern = "<tajwidSec>" . $midPattern . "</tajwidSec>";
+                                            $countIndex = $countIndex + (strlen($midPattern) - $lengMidPattern);
+
+                                            // gabungkan string
+                                            $ayahUnicode = $firstPattern . $midPattern . $lastPattern;
+                                        }
+                                    } else {
+                                        // return jika hukum tidak ada
+                                    }
+
+                                    // cari index rulu synonym kedua pada kumpulan unicode ayat
+                                    if ($synonym->second_role != null) {
+                                        $resultSecondRTSejenis = $kmp->kmpSearch($synonym->second_role, $ayahUnicode);
+                                    }
+
+                                    // cari hukum bacaan dengan rule kedua synonym
+                                    $countIndex = 0;
+                                    if ($synonym->second_role != null) {
+                                        if (!empty($resultSecondRTSejenis)) {
+                                            foreach ($resultSecondRTSejenis as $indexResult) {
+
+                                                // Pisahkan string
+                                                $firstPattern = substr($ayahUnicode, 0, $indexResult + $countIndex);
+                                                $midPattern = substr($ayahUnicode, $indexResult + $countIndex, strlen($synonym->second_role));
+                                                $lastPattern = substr($ayahUnicode, $indexResult + $countIndex + strlen($synonym->second_role), strlen($ayahUnicode) + $countIndex - 1);
+
+                                                // tambah tag pada unicode yang ditemukan
+                                                $lengMidPattern = strlen($midPattern);
+                                                $midPattern = "<tajwidSec>" . $midPattern . "</tajwidSec>";
+                                                $countIndex = $countIndex + (strlen($midPattern) - $lengMidPattern);
+
+                                                // gabungkan string
+                                                $ayahUnicode = $firstPattern . $midPattern . $lastPattern;
+                                            }
+                                        } else {
+                                            // return ketika hukum bacaan tidak ditemukan
+                                        }
+                                    }
+                                }
+                            } else {
+                                // return jika synonym tidak ada
+                            }
                         }
                     }
                 } else {
@@ -347,7 +487,7 @@ class ConsultationController extends Controller
         // END: Request Data dari API 
 
 
-        return view('konsultasi.hasil', compact('trueRoleBase', 'trueTajwid', 'ayahUnicode', 'roleEmpty'));
+        return view('konsultasi.hasil', compact('trueRoleBase', 'trueTajwid', 'ayahUnicode', 'ruleEmpty'));
     }
 
     public function deleteSession($key)

@@ -5,9 +5,7 @@
 @endsection
 
 @section('styles')
-    <link rel="stylesheet"
-        href="https://pixinvent.com/materialize-material-design-admin-template/app-assets/vendors/select2/select2-materialize.css"
-        type="text/css">
+    <link rel="stylesheet" href="{{ asset('assets/vendor/materialize-adm/vendors/select2/select2-materialize.css') }}">
     <link rel="stylesheet" href="https://alquran.cloud/public/css/font-kitab.css?v=1">
     <link rel="stylesheet" href="{{ asset('assets/styles/css/role-base.css') }}">
     <style>
@@ -90,8 +88,9 @@
                 @endif
                 <div class="card">
                     <div class="card-content">
-                        <form action="{{ route('role-base.update', $roleBase->id) }}" method="post" enctype="multipart/form-data">
-                            @method("put")
+                        <form action="{{ route('role-base.update', $roleBase->id) }}" method="post"
+                            enctype="multipart/form-data">
+                            @method('put')
                             @csrf
                             <div class="row">
                                 <div class="col m12 s12 mb-3">
@@ -127,7 +126,14 @@
                                     <select class="select2 browser-default" name="synonym">
                                         <option value="" disabled selected>--- Pilih Referensi Sinonim ---</option>
                                         @foreach ($dataRoleBase as $value)
-                                            <option value="{{ $value->kode }}" @if ($value->kode == $roleBase->synonym) selected @endif>{!! $value->kode . ' - ' . $value->keterangan . ' ('. html_entity_decode(json_decode('"' . $value->role. '"'), ENT_QUOTES, 'UTF-8') .')' !!}</option>
+                                            <option value="{{ $value->kode }}"
+                                                @if ($value->kode == $roleBase->synonym) selected @endif>{!! $value->kode .
+                                                    ' - ' .
+                                                    $value->keterangan .
+                                                    ' (' .
+                                                    html_entity_decode(json_decode('"' . $value->role . '"'), ENT_QUOTES, 'UTF-8') .
+                                                    ')' !!}
+                                            </option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -136,11 +142,8 @@
                             <div class="row">
                                 <div class="input-field col m12 s12 mb-5">
                                     <label>
-                                        <input type="checkbox" class="filled-in" name="second-role" 
-                                        @if($roleBase->second_role != null)
-                                        @checked(true)
-                                        @endif
-                                        />
+                                        <input type="checkbox" class="filled-in" name="second-role"
+                                            @if ($roleBase->second_role != null) @checked(true) @endif />
                                         <span>Rule Kedua</span>
                                     </label>
                                 </div>
@@ -196,7 +199,9 @@
                                         <tr>
                                             <td>{{ $valueTanda->kode }}</td>
                                             <td>{{ $valueTanda->nama_tanda }}</td>
-                                            <td class="font-kitab">{{ html_entity_decode(json_decode('"' . $valueTanda->unicode . '"'), ENT_QUOTES, 'UTF-8') }}</td>
+                                            <td class="font-kitab">
+                                                {{ html_entity_decode(json_decode('"' . $valueTanda->unicode . '"'), ENT_QUOTES, 'UTF-8') }}
+                                            </td>
                                             <td>{{ $valueTanda->unicode }}</td>
                                             <td><button class="btn-small"
                                                     onclick="deleteRow(this.parentNode.parentNode.rowIndex)"><i
@@ -235,10 +240,7 @@
 @endsection
 
 @section('scripts')
-    <script
-        src="https://pixinvent.com/materialize-material-design-admin-template/app-assets/vendors/select2/select2.full.min.js">
-    </script>
-
+    <script src="{{ asset('assets/vendor/materialize-adm/vendors/select2/select2.full.min.js') }}"></script>
     {{-- Select --}}
     <script>
         $(".select2").select2({

@@ -5,9 +5,7 @@
 @endsection
 
 @section('styles')
-    <link rel="stylesheet"
-        href="https://pixinvent.com/materialize-material-design-admin-template/app-assets/vendors/select2/select2-materialize.css"
-        type="text/css">
+<link rel="stylesheet" href="{{ asset('assets/vendor/materialize-adm/vendors/select2/select2-materialize.css') }}">
 
     <style>
         #ayahText {
@@ -101,9 +99,7 @@
 @endsection
 
 @section('scripts')
-    <script
-        src="https://pixinvent.com/materialize-material-design-admin-template/app-assets/vendors/select2/select2.full.min.js">
-    </script>
+<script src="{{ asset('assets/vendor/materialize-adm/vendors/select2/select2.full.min.js') }}"></script>
     <script>
         // fungsi selec2
         $(".select2").select2({

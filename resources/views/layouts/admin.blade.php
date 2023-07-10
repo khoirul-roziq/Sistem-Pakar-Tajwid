@@ -12,16 +12,15 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
     <!-- BEGIN: VENDOR CSS-->
-    <link rel="stylesheet" type="text/css" href="https://pixinvent.com/materialize-material-design-admin-template/app-assets/vendors/vendors.min.css">
+    <link rel="stylesheet" href="{{ asset('assets/vendor/materialize-adm/vendors/vendors.min.css') }}">
     <!-- END: VENDOR CSS-->
 
     <!-- BEGIN: Page Level CSS-->
-    <link rel="stylesheet" type="text/css" href="https://pixinvent.com/materialize-material-design-admin-template/app-assets/css/themes/vertical-modern-menu-template/materialize.min.css">
-    <link rel="stylesheet" type="text/css" href="https://pixinvent.com/materialize-material-design-admin-template/app-assets/css/themes/vertical-modern-menu-template/style.min.css">
+    <link rel="stylesheet" href="{{ asset('assets/vendor/materialize-src/css/materialize.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/vendor/materialize-adm/css/themes/vertical-modern-menu-template/style.min.css') }}">
     <!-- END: Page Level CSS-->
     
     <!-- BEGIN: Custom CSS-->
-    <link rel="stylesheet" type="text/css" href="https://pixinvent.com/materialize-material-design-admin-template/app-assets/css/custom/custom.css">
     <link rel="stylesheet" href="{{ asset('assets/styles/css/admin.css') }}">
     <!-- END: Custom CSS-->
 
@@ -42,24 +41,21 @@
       <div id="main">
         @yield('content')
       </div>
-    
-      {{-- <footer class="page-footer footer footer-static footer-dark gradient-45deg-indigo-purple gradient-shadow navbar-border navbar-shadow">
-        @include('partials.admin.footer')
+
+      {{-- <footer class="page-footer footer footer-static footer-dark teal navbar-border navbar-shadow">
+        @include('partials.footer')
       </footer> --}}
     </div>
 
     <!-- BEGIN VENDOR JS-->
-    <script src="https://pixinvent.com/materialize-material-design-admin-template/app-assets/js/vendors.min.js"></script>
+    <script src="{{ asset('assets/vendor/materialize-adm/js/vendors.min.js') }}"></script>
     <!-- BEGIN VENDOR JS-->
-    <!-- BEGIN PAGE VENDOR JS-->
-    
-    <!-- END PAGE VENDOR JS-->
+
     <!-- BEGIN THEME  JS-->
-    <script src="https://pixinvent.com/materialize-material-design-admin-template/app-assets/js/plugins.min.js"></script>
-    {{-- <script src="https://pixinvent.com/materialize-material-design-admin-template/app-assets/js/search.min.js"></script> --}}
-    {{-- <script src="https://pixinvent.com/materialize-material-design-admin-template/app-assets/js/custom/custom-script.min.js"></script> --}}
-    <script src="https://pixinvent.com/materialize-material-design-admin-template/app-assets/js/scripts/customizer.min.js"></script>
+    <script src="{{ asset('assets/vendor/materialize-adm/js/plugins.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/materialize-adm/js/scripts/customizer.min.js') }}"></script>
     <!-- END THEME  JS-->
+    
     <!-- BEGIN PAGE LEVEL JS-->
     @yield('scripts') 
     <!-- END PAGE LEVEL JS-->

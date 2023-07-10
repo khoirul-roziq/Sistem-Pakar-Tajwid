@@ -11,7 +11,8 @@
 
 {{-- Send content --}}
 @section('main')
-    <a href="https://www.freepik.com/free-photo/islamic-new-year-concept-with-copyspace_9259618.htm#query=al%20quran&position=6&from_view=search&track=ais" class="login-source-bg">Source background</a>
+    <a href="https://www.freepik.com/free-photo/islamic-new-year-concept-with-copyspace_9259618.htm#query=al%20quran&position=6&from_view=search&track=ais"
+        class="login-source-bg">Source background</a>
 
     <div class="row">
         <div class="container mt-4">
@@ -20,6 +21,22 @@
                     <h5>Sistem Pakar Tajwid</h5>
                     <h6>Login</h6>
                 </div>
+                @if (session('message'))
+                    <div class="row">
+                        <div class="col s10 m12 l12">
+                            <div class="card-alert card cyan">
+                                <div class="card-content white-text">
+                                    <p>
+                                        <i class="material-icons">check</i> {{ session('message') }}
+                                    </p>
+                                </div>
+                                <button type="button" class="close white-text" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                @endif
                 <div class="row">
                     <form class="col s12" action="" method="post">
                         @csrf
@@ -43,8 +60,7 @@
                             <div class="input-field col s12 auth-mi">
                                 <i class="material-icons prefix">key</i>
                                 <input id="password" type="password"
-                                    class="validate {{ $errors->has('password') ? ' is-invalid' : '' }}"
-                                    name="password">
+                                    class="validate {{ $errors->has('password') ? ' is-invalid' : '' }}" name="password">
                                 <label for="password">Kata Sandi</label>
                                 @if ($errors->has('password'))
                                     @error('password')
@@ -76,6 +92,10 @@
                                 <a href="{{ route('registration') }}" class="waves-effect waves-light btn-small col s12"><i
                                         class="material-icons right">person_add</i>Registrasi</a>
                             </div>
+                            <div class="input-field col s12">
+                                <a href="{{ url('home') }}" class="waves-effect waves-light col s12"><i
+                                        class="material-icons left">arrow_back</i>Halaman Beranda</a>
+                            </div>
                         </div>
                     </form>
                 </div>
@@ -84,4 +104,9 @@
 
     </div>
 
+@endsection
+
+@section('scripts')
+<script src="https://pixinvent.com/materialize-material-design-admin-template/laravel/demo-1/js/scripts/ui-alerts.js">
+</script>
 @endsection

@@ -75,11 +75,18 @@ class DataUserController extends Controller
     {
         $password = Hash::make($request->input('password'));
 
+        // setting profile sementara
+        if($request->input('role') == null ) {
+            $role = Auth::user()->role;
+        } else {
+            $role = $request->input('role');
+        }
+
         $data = User::findorfail($id)->update([
             'name' => $request->input('nama'),
             'email' => $request->input('email'),
             'password' => $password,
-            'role' => $request->input('role'),
+            'role' => $role,
             'jenis_kelamin' => $request->input('jenis-kelamin')
         ]);
 

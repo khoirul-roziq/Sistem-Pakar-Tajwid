@@ -109,15 +109,21 @@
                                                     @endif
                                                 @endif
                                                 ">
-                                                <span class="font-kitab" style="font-size:25px;">
-                                                    @if ($tandaTajwid->jenis == 'huruf')
-                                                        {{ html_entity_decode(json_decode('"' . $tandaTajwid->unicode . '"'), ENT_QUOTES, 'UTF-8') }}
-                                                    @elseif($tandaTajwid->jenis == 'tanda')
-                                                        {{ html_entity_decode(json_decode('"' . '—' . $tandaTajwid->unicode . '"'), ENT_QUOTES, 'UTF-8') }}
+
+                                                @if ($tandaTajwid->jenis == 'huruf')
+                                                    <span class="font-kitab"
+                                                        style="font-size:25px;">{{ html_entity_decode(json_decode('"' . $tandaTajwid->unicode . '"'), ENT_QUOTES, 'UTF-8') }}</span>
+                                                @elseif($tandaTajwid->jenis == 'tanda')
+                                                    @if ($tandaTajwid->unicode == '\n')
+                                                        Waqof
                                                     @else
-                                                        -
+                                                        <span class="font-kitab"
+                                                            style="font-size:25px;">{{ html_entity_decode(json_decode('"' . '—' . $tandaTajwid->unicode . '"'), ENT_QUOTES, 'UTF-8') }}</span>
                                                     @endif
-                                                </span>
+                                                @else
+                                                    -
+                                                @endif
+
                                             </button>
                                         </form>
                                     @endforeach

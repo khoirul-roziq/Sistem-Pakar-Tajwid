@@ -61,11 +61,13 @@ class AuthController extends Controller
             'jenis_kelamin' => $request->input('jenis-kelamin')
         ]);
 
-        event(new Registered($user));
+        // event(new Registered($user));
 
-        Auth::login($user);
+        // Auth::login($user);
 
-        return redirect('email/verify');
+        // return redirect('email/verify');
+
+        return redirect('login')->with('message', 'Akun berhasil dibuat!');
 
     }
 }

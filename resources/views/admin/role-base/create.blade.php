@@ -5,9 +5,7 @@
 @endsection
 
 @section('styles')
-    <link rel="stylesheet"
-        href="https://pixinvent.com/materialize-material-design-admin-template/app-assets/vendors/select2/select2-materialize.css"
-        type="text/css">
+    <link rel="stylesheet" href="{{ asset('assets/vendor/materialize-adm/vendors/select2/select2-materialize.css') }}">
     <link rel="stylesheet" href="https://alquran.cloud/public/css/font-kitab.css?v=1">
     <link rel="stylesheet" href="{{ asset('assets/styles/css/role-base.css') }}">
     <style>
@@ -126,7 +124,12 @@
                                     <select class="select2 browser-default" name="synonym">
                                         <option value="" disabled selected>--- Pilih Referensi Sinonim ---</option>
                                         @foreach ($roleBase as $value)
-                                            <option value="{{ $value->kode }}">{!! $value->kode . ' - ' . $value->keterangan . ' ('. html_entity_decode(json_decode('"' . $value->role. '"'), ENT_QUOTES, 'UTF-8') .')' !!}</option>
+                                            <option value="{{ $value->kode }}">{!! $value->kode .
+                                                ' - ' .
+                                                $value->keterangan .
+                                                ' (' .
+                                                html_entity_decode(json_decode('"' . $value->role . '"'), ENT_QUOTES, 'UTF-8') .
+                                                ')' !!}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -204,11 +207,11 @@
                                             <span class="font-kitab-bold"><i class="material-icons">space_bar</i></span>
                                         @else
                                             @if ($value->jenis == 'huruf')
-                                                <span
-                                                    class="font-kitab-bold" style="font-size: 18px;">{{ html_entity_decode(json_decode('"' . $value->unicode . '"'), ENT_QUOTES, 'UTF-8') }}</span>
+                                                <span class="font-kitab-bold"
+                                                    style="font-size: 18px;">{{ html_entity_decode(json_decode('"' . $value->unicode . '"'), ENT_QUOTES, 'UTF-8') }}</span>
                                             @elseif($value->jenis == 'tanda')
-                                                <span
-                                                    class="font-kitab-bold" style="font-size: 20px;">{{ html_entity_decode(json_decode('"' . $value->unicode . '"'), ENT_QUOTES, 'UTF-8') }}</span>
+                                                <span class="font-kitab-bold"
+                                                    style="font-size: 20px;">{{ html_entity_decode(json_decode('"' . $value->unicode . '"'), ENT_QUOTES, 'UTF-8') }}</span>
                                             @endif
                                         @endif
                                     </button>
@@ -224,9 +227,7 @@
 @endsection
 
 @section('scripts')
-    <script
-        src="https://pixinvent.com/materialize-material-design-admin-template/app-assets/vendors/select2/select2.full.min.js">
-    </script>
+    <script src="{{ asset('assets/vendor/materialize-adm/vendors/select2/select2.full.min.js') }}"></script>
 
     {{-- Select --}}
     <script>
