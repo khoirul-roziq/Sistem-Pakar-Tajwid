@@ -21,6 +21,22 @@
                     <h5>Sistem Pakar Tajwid</h5>
                     <h6>Registrasi</h6>
                 </div>
+                @if (session('message'))
+                    <div class="row">
+                        <div class="col s10 m12 l12">
+                            <div class="card-alert card red darken-2">
+                                <div class="card-content white-text">
+                                    <p>
+                                        <i class="material-icons">info</i> {{ session('message') }}
+                                    </p>
+                                </div>
+                                <button type="button" class="close white-text" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                @endif
                 <div class="row">
                     <form class="col s12" action="{{ route('registration.process') }}" method="post">
                         @csrf
@@ -46,7 +62,7 @@
                             </div>
                             <div class="input-field col s6">
                                 <i class="material-icons prefix">lock_outline</i>
-                                <input id="icon_telephone" type="password" class="validate">
+                                <input id="icon_telephone" type="password" class="validate" name="password-validation">
                                 <label for="icon_telephone">Konfirmasi Kata Sandi</label>
                             </div>
                         </div>
@@ -84,4 +100,5 @@
 {{-- Send Script --}}
 @section('scripts')
     <script src="{{ asset('assets/vendor/materialize-src/js/plugins.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/materialize-adm/js/scripts/ui-alerts.js') }}"></script>
 @endsection

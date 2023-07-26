@@ -50,7 +50,20 @@ class AuthController extends Controller
 
     public function registrationProcess (Request $request) {
 
-        $password = Hash::make($request->input('password'));
+        if($request->input('nama') == null && $request->input('email') == null && $request->input('password') == null && $request->input('password-validation') == null && $request->input('jenis-kelamin') == null ) {
+            return redirect('registrasi')->with('message', 'Semua data wajib diisi!');
+        }
+
+        if($request->input('password') == null) {
+            return redirect('registrasi')->with('message', 'Kata sandi harus diisi!');
+        } else {
+            if($request->input('password') == $request->input('password-validation')) {
+                $password = Hash::make($request->input('password'));
+            } else {
+                return redirect('registrasi')->with('message', 'Konfirmasi kata sandi salah!');
+            }
+        }
+
         $role = 'guest';
 
         $user = User::create([

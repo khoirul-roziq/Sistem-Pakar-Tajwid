@@ -73,7 +73,15 @@ class DataUserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $password = Hash::make($request->input('password'));
+        if($request->input('password') == null) {
+            $password = Auth::user()->password;
+        } else {
+            if($request->input('password') == $request->input('password-validation')) {
+                $password = Hash::make($request->input('password'));
+            } else {
+                return redirect('data-user/'.Auth::user()->id.'/edit')->with('message', 'Konfirmasi kata sandi salah!');
+            }
+        }
 
         // setting profile sementara
         if($request->input('role') == null ) {

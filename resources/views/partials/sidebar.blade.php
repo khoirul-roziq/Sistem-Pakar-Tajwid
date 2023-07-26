@@ -8,7 +8,7 @@
   <li class="bold"><a class="{{ Route::is('dashboard.*') ? 'actived' : '' }} waves-effect waves-cyan mt-5" href="{{ route('dashboard.index') }}"><i class="material-icons">dashboard</i><span class="menu-title" data-i18n="User Profile">Dashboard</span></a>
   <li class="bold"><a class="{{ Route::is('data-user.*') ? 'actived' : '' }} waves-effect waves-cyan" href="{{ route('data-user.index') }}"><i class="material-icons">people</i><span class="menu-title">Pengguna</span></a>
   
-  <li class="navigation-header"><a class="navigation-header-text">Rule Tajwid</a><i class="navigation-header-icon material-icons">more_horiz</i>
+  <li class="navigation-header"><a class="navigation-header-text">Basis Pengetahuan</a><i class="navigation-header-icon material-icons">more_horiz</i>
 
   <li class="bold"><a class="{{ Route::is('tajwid.*') ? 'actived' : '' }} waves-effect waves-cyan" href="{{ route('tajwid.index') }}"><i class="material-icons">apps</i><span class="menu-title">Tajwid</span></a> 
   <li class="bold"><a class="{{ Route::is('tanda-tajwid.*') ? 'actived' : '' }} waves-effect waves-cyan" href="{{ route('tanda-tajwid.index') }}"><i class="material-icons dp48">new_releases</i><span class="menu-title">Huruf/ Tanda</span></a>

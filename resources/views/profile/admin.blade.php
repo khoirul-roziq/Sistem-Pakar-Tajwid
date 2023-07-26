@@ -44,10 +44,52 @@
                         </div>
                     </div>
                 @endif
+                @if (session('message'))
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="row">
+                                <div class="col s10 m12 l12">
+                                    <div class="card-alert card red darken-2">
+                                        <div class="card-content white-text">
+                                            <p>
+                                                <i class="material-icons">info</i> {{ session('message') }}
+                                            </p>
+                                        </div>
+                                        <button type="button" class="close white-text" data-dismiss="alert"
+                                            aria-label="Close">
+                                            <span aria-hidden="true">×</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endif
+                @if (session('success'))
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="row">
+                                <div class="col s10 m12 l12">
+                                    <div class="card-alert card cyan">
+                                        <div class="card-content white-text">
+                                            <p>
+                                                <i class="material-icons">info</i> {{ session('success') }}
+                                            </p>
+                                        </div>
+                                        <button type="button" class="close white-text" data-dismiss="alert"
+                                            aria-label="Close">
+                                            <span aria-hidden="true">×</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endif
                 <div class="card">
                     <div class="card-content">
                         <div class="row">
-                            <form class="col s12" action="{{ route('data-user.update', $data->id) }}" method="post" enctype="multipart/form-data">
+                            <form class="col s12" action="{{ route('profile.update', $data->id) }}" method="post" enctype="multipart/form-data">
                                 @method('put')
                                 @csrf
                                 <div class="row">
@@ -107,5 +149,5 @@
 @endsection
 
 @section('scripts')
-
+<script src="{{ asset('assets/vendor/materialize-adm/js/scripts/ui-alerts.js') }}"></script>
 @endsection

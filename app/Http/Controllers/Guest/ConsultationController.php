@@ -171,6 +171,8 @@ class ConsultationController extends Controller
         $trueRoleBase = null;
         $trueTajwid = null;
         $dld = new DLD;
+        $countFound = 0;
+        $countFoundKind = 0;
 
         foreach ($roleBase as $item) {
 
@@ -206,8 +208,6 @@ class ConsultationController extends Controller
                 $ayahUnicode = trim(preg_replace('/\\\\u([0-9a-fA-F]{4})/', '\\\\u$1', json_encode($ayah)), '"');
                 $ayahUnicode = preg_replace('/\s/', '\\\\u0020', $ayahUnicode);
 
-
-
                 // ambil data synonym dari rule yang terpilih
                 $synonymRuleTajwid = RoleBase::where('synonym', $trueRoleBase->kode)->get();
 
@@ -242,6 +242,9 @@ class ConsultationController extends Controller
 
                                     // gabungkan string
                                     $ayahUnicode = $firstPattern . $midPattern . $lastPattern;
+
+                                    // counter ditemukan
+                                    $countFound++;
                                 }
                             } else {
                                 // return "Pola tidak ditemukan dalam teks.";
@@ -251,7 +254,7 @@ class ConsultationController extends Controller
                             if ($trueRoleBase->second_role != null) {
                                 $resultSecondRole = $kmp->kmpSearch($trueRoleBase->second_role, $ayahUnicode);
                             }
-                            
+
                             // cari hukum bacaan dengan second rule
                             $countIndex = 0;
                             if (!empty($resultSecondRole)) {
@@ -269,6 +272,9 @@ class ConsultationController extends Controller
 
                                     // gabungkan string
                                     $ayahUnicode = $firstPattern . $midPattern . $lastPattern;
+
+                                    // counter ditemukan
+                                    $countFound++;
                                 }
                             } else {
                                 // jika pola tidak ditemukan
@@ -298,6 +304,9 @@ class ConsultationController extends Controller
 
                                             // gabungkan string
                                             $ayahUnicode = $firstPattern . $midPattern . $lastPattern;
+
+                                            // counter ditemukan
+                                            $countFound++;
                                         }
                                     } else {
                                         // return jika hukum tidak ada
@@ -326,6 +335,9 @@ class ConsultationController extends Controller
 
                                                 // gabungkan string
                                                 $ayahUnicode = $firstPattern . $midPattern . $lastPattern;
+
+                                                // counter ditemukan
+                                                $countFound++;
                                             }
                                         } else {
                                             // return ketika hukum bacaan tidak ditemukan
@@ -362,6 +374,9 @@ class ConsultationController extends Controller
 
                                     // gabungkan string
                                     $ayahUnicode = $firstPattern . $midPattern . $lastPattern;
+
+                                    // counter ditemukan
+                                    $countFoundKind++;
                                 }
                             } else {
                                 // return "Pola tidak ditemukan dalam teks.";
@@ -384,6 +399,9 @@ class ConsultationController extends Controller
 
                                     // gabungkan string
                                     $ayahUnicode = $firstPattern . $midPattern . $lastPattern;
+
+                                    // counter ditemukan
+                                    $countFoundKind++;
                                 }
                             } else {
                                 // jika pola tidak ditemukan
@@ -416,6 +434,9 @@ class ConsultationController extends Controller
 
                                             // gabungkan string
                                             $ayahUnicode = $firstPattern . $midPattern . $lastPattern;
+
+                                            // counter ditemukan
+                                            $countFoundKind++;
                                         }
                                     } else {
                                         // return jika hukum tidak ada
@@ -444,6 +465,9 @@ class ConsultationController extends Controller
 
                                                 // gabungkan string
                                                 $ayahUnicode = $firstPattern . $midPattern . $lastPattern;
+
+                                                // counter ditemukan
+                                                $countFoundKind++;
                                             }
                                         } else {
                                             // return ketika hukum bacaan tidak ditemukan
@@ -469,6 +493,21 @@ class ConsultationController extends Controller
             } else {
                 return 'Data ayat tidak tersedia.';
             }
+
+            // data surah
+            $dataSurah = Http::get('http://api.alquran.cloud/v1/meta');
+            $dataSurah = $dataSurah->json();
+            $dataSurah = $dataSurah['data']['surahs']['references'][$request->input('valueSurah')-1];
+
+            // nomor ayah
+            $numberAyah = $request->input('valueAyah');
+
+            // Audio
+            $sourceAudio = Http::get('https://api.alquran.cloud/v1/surah/' . $request->input('valueSurah') . '/ar.alafasy');
+            $sourceAudio = $sourceAudio->json();
+            $sourceAudio = $sourceAudio['data']['ayahs'][$request->input('valueAyah') - 1]['audio'];
+
+
         } catch (RequestException $exception) {
             // Tangani kesalahan permintaan HTTP di sini
 
@@ -487,7 +526,7 @@ class ConsultationController extends Controller
         // END: Request Data dari API 
 
 
-        return view('konsultasi.hasil', compact('trueRoleBase', 'trueTajwid', 'ayahUnicode', 'ruleEmpty'));
+        return view('konsultasi.hasil', compact('trueRoleBase', 'trueTajwid', 'ayahUnicode', 'ruleEmpty', 'sourceAudio', 'dataSurah', 'numberAyah', 'countFound', 'countFoundKind'));
     }
 
     public function deleteSession($key)

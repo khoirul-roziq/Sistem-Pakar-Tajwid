@@ -41,6 +41,44 @@
                 opacity: 1;
             }
         }
+
+        
+        @media only screen and (max-width: 1014px) {
+            .content-header h1 {
+                font-size: 5rem !important;
+            }
+
+            .content-header {
+                width: 100%;
+
+                margin-left: 5%;
+                margin-top: 5rem;
+            }
+        }
+        @media only screen and (max-width: 528px) {
+            .content-header h1 {
+                font-size: 3rem !important;
+            }
+
+            .content-header {
+                width: 100%;
+
+                margin-left: 5%;
+                margin-top: 4rem;
+            }
+        }
+        @media only screen and (max-width: 350px) {
+            .content-header h1 {
+                font-size: 2.2rem !important;
+            }
+
+            .content-header {
+                width: 100%;
+
+                margin-left: 5%;
+                margin-top: 2rem;
+            }
+        }
     </style>
 
     <img src="{{ asset('assets/images/items/jumbotron.jpg') }}" alt="Jumbotron" class="jumbotron">
@@ -52,5 +90,4 @@
     </div>
 </div>
 
-<script>
-</script>
+<script></script>

@@ -166,9 +166,9 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="show-pattern">
+                                {{-- <div class="show-pattern">
                                     <span id="value-pattern"></span>
-                                </div>
+                                </div> --}}
                             </div>
                         </form>
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 
@@ -59,7 +60,25 @@ class ProfileController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        if($request->input('password') == null) {
+            $password = Auth::user()->password;
+        } else {
+            if($request->input('password') == $request->input('password-validation')) {
+                $password = Hash::make($request->input('password'));
+            } else {
+                return redirect('profile')->with('message', 'Konfirmasi kata sandi salah!');
+            }
+        }
+
+        $data = User::findorfail($id)->update([
+            'name' => $request->input('nama'),
+            'email' => $request->input('email'),
+            'password' => $password,
+            'role' => Auth::user()->role,
+            'jenis_kelamin' => $request->input('jenis-kelamin')
+        ]);
+
+        return redirect('profile')->with('success', 'Berhasil mengubah profil!');
     }
 
     /**
