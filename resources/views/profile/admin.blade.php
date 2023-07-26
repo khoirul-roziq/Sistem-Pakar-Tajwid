@@ -73,7 +73,7 @@
                                     <div class="card-alert card cyan">
                                         <div class="card-content white-text">
                                             <p>
-                                                <i class="material-icons">info</i> {{ session('success') }}
+                                                <i class="material-icons">check</i> {{ session('success') }}
                                             </p>
                                         </div>
                                         <button type="button" class="close white-text" data-dismiss="alert"
