@@ -18,8 +18,8 @@ class Tajwid extends Model
         'kategori_id',
     ];
 
-    public function roleBase() {
-        return $this->belongsToMany(RoleBase::class);
+    public function ruleTajwid() {
+        return $this->belongsToMany(RuleTajwid::class);
     }
 
     public function kategori() {

@@ -12,7 +12,7 @@
 
   <li class="bold"><a class="{{ Route::is('tajwid.*') ? 'actived' : '' }} waves-effect waves-cyan" href="{{ route('tajwid.index') }}"><i class="material-icons">apps</i><span class="menu-title">Tajwid</span></a> 
   <li class="bold"><a class="{{ Route::is('tanda-tajwid.*') ? 'actived' : '' }} waves-effect waves-cyan" href="{{ route('tanda-tajwid.index') }}"><i class="material-icons dp48">new_releases</i><span class="menu-title">Huruf/ Tanda</span></a>
-  <li class="bold"><a class="{{ Route::is('role-base.*') ? 'actived' : '' }} waves-effect waves-cyan" href="{{ route('role-base.index') }}"><i class="material-icons dp48">functions</i><span class="menu-title">Rule Tajwid</span></a>  
+  <li class="bold"><a class="{{ Route::is('rule-tajwid.*') ? 'actived' : '' }} waves-effect waves-cyan" href="{{ route('rule-tajwid.index') }}"><i class="material-icons dp48">functions</i><span class="menu-title">Rule Tajwid</span></a>  
     <li class="bold"><a class="{{ Route::is('kategori.*') ? 'actived' : '' }} waves-effect waves-cyan" href="{{ route('kategori.index') }}"><i class="material-icons dp48">list</i><span class="menu-title">Kategori</span></a>  
 
   <li class="navigation-header"><a class="navigation-header-text">Kelola Konsultasi</a><i class="navigation-header-icon material-icons">more_horiz</i>

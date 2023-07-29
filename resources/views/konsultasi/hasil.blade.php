@@ -105,7 +105,7 @@
                                         </tr>
                                         <tr>
                                             <th>Sebab Tajwid</th>
-                                            <td>: {{ strip_tags($trueRoleBase->keterangan) }}</td>
+                                            <td>: {{ strip_tags($trueRuleTajwid->keterangan) }}</td>
                                         </tr>
                                     </tbody>
                                 </table>

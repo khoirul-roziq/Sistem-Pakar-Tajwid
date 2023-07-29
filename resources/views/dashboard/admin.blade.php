@@ -52,10 +52,10 @@
                     </a>
                 </div>
                 <div class="col s12 m6 l3">
-                    <a href="{{ route('role-base.index') }}">
+                    <a href="{{ route('rule-tajwid.index') }}">
                         <div class="card">
                             <div class="card-content">
-                                <img src="{{ asset('assets/images/icons/role-base.jpg') }}" alt="role-base" width="80%">
+                                <img src="{{ asset('assets/images/icons/rule-tajwid.jpg') }}" alt="rule-tajwid" width="80%">
                                 <p>Rule Tajwid</p>
                             </div>
                         </div>

@@ -2,14 +2,12 @@
 
 use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Redirect;
 use App\Http\Controllers\Guest\WelcomeController;
 use App\Http\Controllers\Guest\ConsultationController;
 use App\Http\Controllers\Guest\RetriveAlQuranController;
 use App\Http\Controllers\JawabanController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\HomeController;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
 
@@ -62,7 +60,7 @@ Route::group(
             Route::resource('tanda-tajwid', TandaTajwidController::class);
 
             // Role Base Route
-            Route::resource('role-base', RoleBaseController::class);
+            Route::resource('rule-tajwid', RuleTajwidController::class);
 
             // Tajwid Route
             Route::resource('tajwid', TajwidController::class);
@@ -90,13 +88,6 @@ Route::group(
             Route::get('konsultasi', [ConsultationController::class, 'index'])->name('konsultasi.mulai');
 
             Route::post('konsultasi', [ConsultationController::class, 'konsultasi'])->name('konsultasi');
-
-            // // kategori
-            // Route::get('kategori/{id}', [ConsultationController::class, 'kategori'])->name('kategori');
-
-            // // ghunnah
-            // Route::get('ghunnah/{page}', [ConsultationController::class, 'ghunnahView'])->name('ghunnah.view');
-            // Route::post('ghunnah/{page}', [ConsultationController::class, 'ghunnah'])->name('ghunnah');
 
             // get surah
             Route::get('surah', [RetriveAlQuranController::class, 'getSurah'])->name('get.surah');

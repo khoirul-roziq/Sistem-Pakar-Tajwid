@@ -18,8 +18,8 @@ class TandaTajwid extends Model
         'jenis'
     ];
 
-    public function roleBase() {
-        return $this->belongsToMany(RoleBase::class);
+    public function ruleTajwid() {
+        return $this->belongsToMany(RuleTajwid::class);
     }
 
     public function pertanyaan() {
