@@ -48,7 +48,6 @@ Route::group(
         Route::get('registrasi', 'AuthController@formRegistration')->name('registration');
         Route::post('registrasi', [AuthController::class, 'registrationProcess'])->name('registration.process');
 
-
         Route::resource('home', HomeController::class);
 
         Route::middleware(['auth:user', 'can:role,"admin"'])->group(function () {
