@@ -94,6 +94,9 @@ Route::group(
             Route::post('ayah', [RetriveAlQuranController::class, 'getAyah'])->name('get.ayah');
             Route::post('hasil', [ConsultationController::class, 'hasil'])->name('konsultasi.hasil');
             Route::post('reset', [ConsultationController::class, 'reset'])->name('konsultasi.reset');
+
+            // materi
+            Route::resource('materi', MateriController::class);
         });
     }
 );
