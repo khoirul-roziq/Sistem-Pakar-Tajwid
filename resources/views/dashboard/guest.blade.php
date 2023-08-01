@@ -20,6 +20,7 @@
                 <div class="row center-align">
                     <div class="col s12 m12 l12">
                         <h1 class="breadcrumbs-title mt-0 mb-0 font-kitab">ٱلسَّلَامُ عَلَيْكُمْ وَرَحْمَةُ ٱللَّٰهِ وَبَرَكَاتُهُ</h1>
+                        <h1 class="breadcrumbs-title"><b>DASHBOARD</b></h1>
                     </div>
                 </div>
             </div>
@@ -32,7 +33,8 @@
                 <div class="card-content">
                     <h1>Selamat Datang, {{ Auth::user()->name }}!</h1>
                     <h2>Kamu berhasil masuk sebagai tamu</h2>
-                    <a class="btn-large mt-3" href="{{ route('konsultasi.mulai') }}">Mulai Konsultasi</a>
+                    <a class="btn-large mt-3 mr-1" href="{{ route('konsultasi.mulai') }}">Mulai Konsultasi</a>
+                    <a class="btn-large mt-3 ml-1" href="{{ route('materi.index') }}">Baca Materi</a>
                 </div>
             </div>
 

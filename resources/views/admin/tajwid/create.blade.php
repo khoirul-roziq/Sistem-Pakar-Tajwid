@@ -71,9 +71,7 @@
                                     <select class="select2 browser-default" name="kategori">
                                         <option value="" disabled selected>--- Pilih Kategori ---</option>
                                         @foreach ($kategori as $value)
-                                            
-                                                <option value="{{ $value->id }}">{{ $value->nama_kategori }}</option>
-                                            
+                                            <option value="{{ $value->id }}">{{ $value->nama_kategori }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -84,6 +82,30 @@
                                     <textarea id="penjelasan" name="penjelasan" rows="5"></textarea>
                                 </div>
                             </div>
+
+                            <div class="row">
+                                <div class="input-field col m4 s12">
+                                    <span>Tentukan contoh dari Al-Qur'an</span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col m4 s12">
+                                    <select class="select2 browser-default" name="surah"
+                                        onchange="updateAyahOptions(this)">
+                                        <option value="" disabled selected>--- Pilih Surah ---</option>
+                                        @foreach ($surahs as $surah)
+                                            <option value="{{ $surah['number'] }}">
+                                                {{ $surah['number'] . '. ' . $surah['englishName'] }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="input-field col m4 s12">
+                                    <select class="select2 browser-default" name="ayah" id="ayahSelect">
+                                        <option value="" disabled selected>--- Pilih Ayah ---</option>
+                                    </select>
+                                </div>
+                            </div>
+
                             <div class="row">
                                 <div class="col m6 s12 mb-1 mt-3">
                                     <button class="waves-effect waves-dark btn btn-primary teal" type="submit"><i
@@ -112,7 +134,7 @@
             width: '100%'
         });
     </script>
-    
+
     <script src="{{ asset('assets/vendor/tinymce/tinymce.min.js') }}"></script>
     <script>
         // tinymce.init({
@@ -205,6 +227,48 @@
             noneditable_noneditable_class: "mceNonEditable",
             toolbar_mode: 'sliding',
             contextmenu: "link image imagetools table",
+        });
+    </script>
+    <script>
+        function updateAyahOptions(select) {
+            const surahNumber = select.value;
+            const ayahSelect = document.getElementById("ayahSelect");
+
+            // Clear existing options
+            while (ayahSelect.firstChild) {
+                ayahSelect.removeChild(ayahSelect.firstChild);
+            }
+
+            // Add new options based on the selected surah
+            if (surahNumber) {
+                const surah = findSurahByNumber(surahNumber);
+                for (let i = 1; i <= surah['numberOfAyahs']; i++) {
+                    const option = document.createElement("option");
+                    option.value = i;
+                    option.textContent = i;
+                    ayahSelect.appendChild(option);
+                }
+            } else {
+                // If no surah is selected, show default option
+                const defaultOption = document.createElement("option");
+                defaultOption.value = "";
+                defaultOption.disabled = true;
+                defaultOption.selected = true;
+                defaultOption.textContent = "--- Pilih Ayah ---";
+                ayahSelect.appendChild(defaultOption);
+            }
+
+            // Initialize Select2 for the updated options
+            $('.select2').select2();
+        }
+
+        function findSurahByNumber(surahNumber) {
+            return @json($surahs).find(surah => surah.number === parseInt(surahNumber));
+        }
+
+        // Initialize Select2 on page load
+        $(document).ready(function() {
+            $('.select2').select2();
         });
     </script>
 @endsection

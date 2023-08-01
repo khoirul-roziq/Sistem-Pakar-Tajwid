@@ -11,9 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('role_base', function (Blueprint $table) {
+        Schema::table('tajwid', function (Blueprint $table) {
             //
-            $table->string('synonym')->nullable();
+            $table->integer('ex_surah')->nullable();
+            $table->integer('ex_ayah')->nullable();
         });
     }
 
@@ -22,7 +23,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('role_base', function (Blueprint $table) {
+        Schema::table('tajwid', function (Blueprint $table) {
             //
         });
     }

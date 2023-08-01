@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Tajwid;
 use App\Models\Kategori;
+use GuzzleHttp\Client;
 
 class TajwidController extends Controller
 {
@@ -63,7 +64,14 @@ class TajwidController extends Controller
             $newKode = 'H000';
         }
 
-        return view('admin.tajwid.create', compact('kategori', 'newKode'));
+        $session = session();
+        $client = new Client();
+        $response = $client->get('http://api.alquran.cloud/v1/meta');
+        $data = json_decode($response->getBody(), true);
+
+        $surahs = $data['data']['surahs']['references'];
+
+        return view('admin.tajwid.create', compact('kategori', 'newKode', 'surahs'));
     }
 
     /**
@@ -76,6 +84,8 @@ class TajwidController extends Controller
             'nama_tajwid' => $request->namaTajwid,
             'penjelasan' => $request->penjelasan,
             'kategori_id' => $request->kategori,
+            'ex_surah' => $request->surah,
+            'ex_ayah' => $request->ayah
         ]);
 
         return redirect('tajwid')->with('message', 'Berhasil menambahkan hukum tajwid!');
@@ -95,10 +105,19 @@ class TajwidController extends Controller
      */
     public function edit(string $id)
     {
-        $data = Tajwid::findorfail($id);
+        $tajwid = Tajwid::findorfail($id);
         $kategori = Kategori::all();
 
-        return view('admin.tajwid.edit', compact('data', 'kategori'));
+        $session = session();
+        $client = new Client();
+        $response = $client->get('http://api.alquran.cloud/v1/meta');
+        $data = json_decode($response->getBody(), true);
+
+        $surahs = $data['data']['surahs']['references'];
+
+        $thisSurah = $surahs[$tajwid->ex_surah-1];
+
+        return view('admin.tajwid.edit', compact('tajwid', 'kategori', 'surahs', 'thisSurah'));
     }
 
     /**
@@ -111,6 +130,8 @@ class TajwidController extends Controller
             'nama_tajwid' => $request->namaTajwid,
             'penjelasan' => $request->penjelasan,
             'kategori_id' => $request->kategori,
+            'ex_surah' => $request->surah,
+            'ex_ayah' => $request->ayah
         ]);
 
         return redirect('tajwid')->with('message', 'Berhasil mengubah data tajwid!');

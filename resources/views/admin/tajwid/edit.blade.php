@@ -48,7 +48,8 @@
                 </div>
                 <div class="card">
                     <div class="card-content">
-                        <form action="{{ route('tajwid.update', $data->id) }}" method="post" enctype="multipart/form-data">
+                        <form action="{{ route('tajwid.update', $tajwid->id) }}" method="post"
+                            enctype="multipart/form-data">
                             @method('put')
                             @csrf
 
@@ -57,7 +58,7 @@
                                     <label for="namaTajwid">Nama Tajwid<span class="red-text">*</span></label>
                                     <input type="text" id="namaTajwid" name="namaTajwid"
                                         class="validate @error('namaTajwid') is-invalid @enderror" required
-                                        value="{{ $data->nama_tajwid }}">
+                                        value="{{ $tajwid->nama_tajwid }}">
                                     @error('namaTajwid')
                                         <small class="red-text">{{ $message }}</small>
                                     @enderror
@@ -66,7 +67,7 @@
                                     <label for="kode">Kode<span class="red-text">*</span></label>
                                     <input type="text" id="kode" name="kode"
                                         class="validate @error('kode') is-invalid @enderror" required
-                                        value="{{ $data->kode }}">
+                                        value="{{ $tajwid->kode }}">
                                     @error('kode')
                                         <small class="red-text">{{ $message }}</small>
                                     @enderror
@@ -77,7 +78,7 @@
                                         @foreach ($kategori as $value)
                                             @if ($value->kode != 'K000')
                                                 <option value="{{ $value->id }}"
-                                                    @if ($value->id == $data->kategori_id) selected @endif>
+                                                    @if ($value->id == $tajwid->kategori_id) selected @endif>
                                                     {{ $value->nama_kategori }}
                                                 </option>
                                             @endif
@@ -88,9 +89,39 @@
                             <div class="row">
                                 <div class="input-field col m12 s12">
                                     <span>Penjelasan Tajwid</span>
-                                    <textarea id="penjelasan" name="penjelasan" rows="5">{{ $data->penjelasan }}</textarea>
+                                    <textarea id="penjelasan" name="penjelasan" rows="5">{{ $tajwid->penjelasan }}</textarea>
                                 </div>
                             </div>
+
+                            <div class="row">
+                                <div class="input-field col m4 s12">
+                                    <span>Tentukan contoh dari Al-Qur'an</span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col m4 s12">
+                                    <select class="select2 browser-default" name="surah"
+                                        onchange="updateAyahOptions(this)">
+                                        <option value="" disabled selected>--- Pilih Surah ---</option>
+                                        @foreach ($surahs as $surah)
+                                            <option value="{{ $surah['number'] }}"
+                                                @if ($surah['number'] == $tajwid->ex_surah) selected @endif>
+                                                {{ $surah['number'] . '. ' . $surah['englishName'] }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="input-field col m4 s12">
+                                    <select class="select2 browser-default" name="ayah" id="ayahSelect">
+                                        <option value="" disabled selected>--- Pilih Ayah ---</option>
+                                        @for ($i = 1; $i <= $thisSurah['numberOfAyahs']; $i++)
+                                            <option value="{{ $i }}"
+                                                @if ($i == $tajwid->ex_ayah) selected @endif>{{ $i }}
+                                            </option>
+                                        @endfor
+                                    </select>
+                                </div>
+                            </div>
+
                             <div class="row">
                                 <div class="col m6 s12 mb-1">
                                     <button class="waves-effect waves-dark btn btn-primary teal" type="submit"><i
@@ -212,6 +243,48 @@
             noneditable_noneditable_class: "mceNonEditable",
             toolbar_mode: 'sliding',
             contextmenu: "link image imagetools table",
+        });
+    </script>
+    <script>
+        function updateAyahOptions(select) {
+            const surahNumber = select.value;
+            const ayahSelect = document.getElementById("ayahSelect");
+
+            // Clear existing options
+            while (ayahSelect.firstChild) {
+                ayahSelect.removeChild(ayahSelect.firstChild);
+            }
+
+            // Add new options based on the selected surah
+            if (surahNumber) {
+                const surah = findSurahByNumber(surahNumber);
+                for (let i = 1; i <= surah['numberOfAyahs']; i++) {
+                    const option = document.createElement("option");
+                    option.value = i;
+                    option.textContent = i;
+                    ayahSelect.appendChild(option);
+                }
+            } else {
+                // If no surah is selected, show default option
+                const defaultOption = document.createElement("option");
+                defaultOption.value = "";
+                defaultOption.disabled = true;
+                defaultOption.selected = true;
+                defaultOption.textContent = "--- Pilih Ayah ---";
+                ayahSelect.appendChild(defaultOption);
+            }
+
+            // Initialize Select2 for the updated options
+            $('.select2').select2();
+        }
+
+        function findSurahByNumber(surahNumber) {
+            return @json($surahs).find(surah => surah.number === parseInt(surahNumber));
+        }
+
+        // Initialize Select2 on page load
+        $(document).ready(function() {
+            $('.select2').select2();
         });
     </script>
 @endsection

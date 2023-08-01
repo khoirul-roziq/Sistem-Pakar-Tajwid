@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Kategori;
+use App\Models\Tajwid;
 
 class MateriController extends Controller
 {
@@ -12,10 +14,13 @@ class MateriController extends Controller
      */
     public function index()
     {
+        $kategori = Kategori::all()->slice(1);
+        $tajwid = Tajwid::all();
+
         if(Auth::user()->role == 'admin') {
-            return view('materi.admin.index');
+            return view('materi.admin.index', compact('kategori', 'tajwid'));
         } else {
-            return view('materi.guest.index');
+            return view('materi.guest.index', compact('kategori', 'tajwid'));
         }
     }
 

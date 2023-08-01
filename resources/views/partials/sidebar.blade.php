@@ -1,5 +1,5 @@
 <div class="brand-sidebar">
-  <h1 class="logo-wrapper"><a class="brand-logo darken-1" href="{{ url('/home') }}"><img class="hide-on-med-and-down" src="{{ asset('assets/images/logo/Al-Qur\'an_logo.jpg') }}" alt="materialize logo"/><span class="logo-text hide-on-med-and-down"> SP Tajwid</span></a><a class="navbar-toggler" href="#"><i class="material-icons">radio_button_checked</i></a></h1>
+  <h1 class="logo-wrapper"><a class="brand-logo darken-1" href="{{ url('/home') }}"><img class="hide-on-med-and-down" src="{{ asset('assets/images/logo/Al-Qur\'an_logo.jpg') }}" alt="SP Tajwid logo"/><span class="logo-text hide-on-med-and-down"> SP Tajwid</span></a><a class="navbar-toggler" href="#"><i class="material-icons">radio_button_checked</i></a></h1>
 </div>
 <ul class="sidenav leftside-navigation collapsible sidenav-fixed menu-shadow" id="slide-out" data-menu="menu-navigation" data-collapsible="menu-accordion">
   

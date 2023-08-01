@@ -9,7 +9,7 @@
         href="https://pixinvent.com/materialize-material-design-admin-template/app-assets/vendors/select2/select2-materialize.css"
         type="text/css">
     <link rel="stylesheet" href="https://alquran.cloud/public/css/font-kitab.css?v=1">
-    <link rel="stylesheet" href="{{ asset('assets/styles/css/role-base.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/styles/css/rule-tajwid.css') }}">
     <style>
         table {
             border-collapse: collapse;
@@ -185,7 +185,7 @@
                             </div>
 
                             <div class="row center-align" hidden>
-                                <span><b>Representasi Role Base</b></span>
+                                <span><b>Representasi Rule Tajwid</b></span>
                                 <div class="wrap">
                                     <div class="panel">
                                         <div class="content">
@@ -201,7 +201,7 @@
 
                         <div class="row center">
                             <div class="title mb-1" id="title-table"><b>Tabel Data</b></div>
-                            <table id="table-role-base" class="show">
+                            <table id="table-rule-tajwid" class="show">
                                 <thead>
                                     <tr>
                                         <th>Kode</th>
@@ -211,8 +211,8 @@
                                         <th>Hapus</th>
                                     </tr>
                                 </thead>
-                                <tbody id="tbody-role-base">
-                                    <!-- data role base dari script -->
+                                <tbody id="tbody-rule-tajwid">
+                                    <!-- data rule tajwid dari script -->
 
                                     @if ($pertanyaan->kode == 'P000')
                                         @foreach ($pertanyaan->kategoriJawaban as $value)
@@ -365,11 +365,11 @@
         });
     </script>
 
-    {{-- Tabel Role Base --}}
+    {{-- Tabel Rule Tajwid --}}
     <script>
         // Tampilkan atau Sembunyikan
         const switchButton = document.getElementById("switch");
-        const table = document.getElementById("table-role-base");
+        const table = document.getElementById("table-rule-tajwid");
         const titleTable = document.getElementById("title-table");
         const valuePatternParent = document.getElementById('value-pattern').parentNode;
         const noData = document.getElementById('no-data');
@@ -483,7 +483,7 @@
         }
 
         function addRow(kode, nama, representasi, unicode, id) {
-            var table = document.getElementById("tbody-role-base");
+            var table = document.getElementById("tbody-rule-tajwid");
 
 
             var row = table.insertRow(-1);
@@ -523,7 +523,7 @@
         });
 
         function deleteRow(rowIndex) {
-            document.getElementById("table-role-base").deleteRow(rowIndex);
+            document.getElementById("table-rule-tajwid").deleteRow(rowIndex);
 
             deleteOption(rowIndex - 1);
             updateCombinedValues();
