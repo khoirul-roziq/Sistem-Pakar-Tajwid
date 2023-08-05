@@ -85,7 +85,8 @@ class TajwidController extends Controller
             'penjelasan' => $request->penjelasan,
             'kategori_id' => $request->kategori,
             'ex_surah' => $request->surah,
-            'ex_ayah' => $request->ayah
+            'ex_ayah' => $request->ayah,
+            'pattern_ex' => $request->patternEx
         ]);
 
         return redirect('tajwid')->with('message', 'Berhasil menambahkan hukum tajwid!');
@@ -115,7 +116,11 @@ class TajwidController extends Controller
 
         $surahs = $data['data']['surahs']['references'];
 
-        $thisSurah = $surahs[$tajwid->ex_surah-1];
+        if($tajwid->ex_surah != null) {
+            $thisSurah = $surahs[$tajwid->ex_surah-1];
+        } else {
+            $thisSurah = null;
+        }
 
         return view('admin.tajwid.edit', compact('tajwid', 'kategori', 'surahs', 'thisSurah'));
     }
@@ -125,13 +130,15 @@ class TajwidController extends Controller
      */
     public function update(Request $request, string $id)
     {
+
         $data = Tajwid::where('id', $id)->update([
             'kode' => $request->kode,
             'nama_tajwid' => $request->namaTajwid,
             'penjelasan' => $request->penjelasan,
             'kategori_id' => $request->kategori,
             'ex_surah' => $request->surah,
-            'ex_ayah' => $request->ayah
+            'ex_ayah' => $request->ayah,
+            'pattern_ex' => $request->patternEx,
         ]);
 
         return redirect('tajwid')->with('message', 'Berhasil mengubah data tajwid!');

@@ -113,12 +113,22 @@
                                 <div class="input-field col m4 s12">
                                     <select class="select2 browser-default" name="ayah" id="ayahSelect">
                                         <option value="" disabled selected>--- Pilih Ayah ---</option>
+                                        @if($thisSurah != null)
                                         @for ($i = 1; $i <= $thisSurah['numberOfAyahs']; $i++)
                                             <option value="{{ $i }}"
                                                 @if ($i == $tajwid->ex_ayah) selected @endif>{{ $i }}
                                             </option>
                                         @endfor
+                                        @endif
                                     </select>
+                                </div>
+                                <div class="input-field col m4 s12">
+                                    <label for="patternEx">Pattern Contoh<span class="red-text">*</span></label>
+                                    <input type="text" id="patternEx" name="patternEx"
+                                        class="validate @error('patternEx') is-invalid @enderror" required value="{{ $tajwid->pattern_ex }}">
+                                    @error('patternEx')
+                                        <small class="red-text">{{ $message }}</small>
+                                    @enderror
                                 </div>
                             </div>
 

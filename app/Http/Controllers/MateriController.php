@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Kategori;
 use App\Models\Tajwid;
+use GuzzleHttp\Client;
 
 class MateriController extends Controller
 {
@@ -17,10 +18,17 @@ class MateriController extends Controller
         $kategori = Kategori::all()->slice(1);
         $tajwid = Tajwid::all();
 
+        $session = session();
+        $client = new Client();
+        $response = $client->get('http://api.alquran.cloud/v1/meta');
+        $data = json_decode($response->getBody(), true);
+
+        $surahs = $data['data']['surahs']['references'];
+
         if(Auth::user()->role == 'admin') {
-            return view('materi.admin.index', compact('kategori', 'tajwid'));
+            return view('materi.admin.index', compact('kategori', 'tajwid', 'surahs'));
         } else {
-            return view('materi.guest.index', compact('kategori', 'tajwid'));
+            return view('materi.guest.index', compact('kategori', 'tajwid', 'surahs'));
         }
     }
 

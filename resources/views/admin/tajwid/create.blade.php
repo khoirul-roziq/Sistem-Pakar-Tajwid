@@ -104,6 +104,14 @@
                                         <option value="" disabled selected>--- Pilih Ayah ---</option>
                                     </select>
                                 </div>
+                                <div class="input-field col m4 s12">
+                                    <label for="patternEx">Pattern Contoh<span class="red-text">*</span></label>
+                                    <input type="text" id="patternEx" name="patternEx"
+                                        class="validate @error('patternEx') is-invalid @enderror" required>
+                                    @error('patternEx')
+                                        <small class="red-text">{{ $message }}</small>
+                                    @enderror
+                                </div>
                             </div>
 
                             <div class="row">

@@ -104,6 +104,16 @@
                     </a>
                 </div>
                 <div class="col s12 m6 l3">
+                    <a href="{{ url('materi') }}">
+                        <div class="card">
+                            <div class="card-content">
+                                <img src="{{ asset('assets/images/icons/materi-tajwid.jpg') }}" alt="konsultasi" width="80%">
+                                <p>Materi Tajwid</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col s12 m6 l3">
                     <a href="{{ route('data-user.index') }}">
                         <div class="card">
                             <div class="card-content">

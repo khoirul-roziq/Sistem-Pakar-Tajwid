@@ -5,7 +5,7 @@
             @if (Auth::user()->role == 'guest')
                 <ul class="navbar-list left">
                     <li><a href="{{ url('home') }}"><i class="material-icons left">developer_board</i><b>Sistem Pakar Tajwid</b></a></li>
-                    <li><a href="{{ url('materi') }}"><i class="material-icons left">dashboard</i><b>Dashboard</b></a></li>
+                    <li><a href="{{ url('dashboard') }}"><i class="material-icons left">dashboard</i><b>Dashboard</b></a></li>
                     <li><a href="{{ url('materi') }}"><i class="material-icons left">book</i><b>Materi</b></a></li>
                 
                 </ul>

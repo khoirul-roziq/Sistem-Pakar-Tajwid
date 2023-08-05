@@ -21,8 +21,9 @@
   @endcan
 
   @can('role',['admin','guest'])
-  <li class="navigation-header"><a class="navigation-header-text">Konsultasi</a><i class="navigation-header-icon material-icons">more_horiz</i>
+  <li class="navigation-header"><a class="navigation-header-text">Menu</a><i class="navigation-header-icon material-icons">more_horiz</i>
   <li class="bold"><a class="{{ Route::is('konsultasi.*') ? 'actived' : '' }} waves-effect waves-cyan" href="{{ route('konsultasi') }}"><i class="material-icons dp48">chat</i><span class="menu-title">Konsultasi</span></a>  
+    <li class="bold"><a class="{{ Route::is('konsultasi.*') ? 'actived' : '' }} waves-effect waves-cyan" href="{{ url('materi') }}"><i class="material-icons dp48">book</i><span class="menu-title">Materi Tajwid</span></a>  
   @endcan
 </ul>
 

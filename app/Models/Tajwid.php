@@ -17,7 +17,8 @@ class Tajwid extends Model
         'penjelasan',
         'kategori_id',
         'ex_ayah',
-        'ex_surah'
+        'ex_surah',
+        'pattern_ex',
     ];
 
     public function ruleTajwid() {
